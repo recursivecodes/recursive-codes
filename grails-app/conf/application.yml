@@ -93,9 +93,6 @@ dataSource:
     jmxExport: true
     username: sa
     password:
-    driverClassName: net.sourceforge.jtds.jdbc.Driver
-    dialect: org.hibernate.dialect.SQLServer2008Dialect
-
 environments:
     development:
         grails:
@@ -126,3 +123,8 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+---
+grails:
+  plugin:
+    databasemigration:
+      changelogFileName: changelog.groovy

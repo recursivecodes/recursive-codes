@@ -30,10 +30,10 @@ databaseChangeLog = {
             column(name: 'version', type: 'INT', defaultValue: 0) {
                 constraints(nullable: false)
             }
-            column(name: 'date_created', type: 'DATETIME', defaultValue: 'getDate()') {
+            column(name: 'date_created', type: 'DATETIME', defaultValueComputed: 'CURRENT_TIMESTAMP') {
                 constraints(nullable: false)
             }
-            column(name: 'last_updated', type: 'DATETIME', defaultValue: 'getDate()') {
+            column(name: 'last_updated', type: 'DATETIME', defaultValueComputed: 'CURRENT_TIMESTAMP') {
                 constraints(nullable: false)
             }
         }
@@ -48,13 +48,14 @@ databaseChangeLog = {
             column(name: 'version', type: 'INT', defaultValue: 0) {
                 constraints(nullable: false)
             }
-            column(name: 'date_created', type: 'DATETIME', defaultValue: 'getDate()') {
+            column(name: 'date_created', type: 'DATETIME', defaultValueComputed: 'CURRENT_TIMESTAMP') {
                 constraints(nullable: false)
             }
-            column(name: 'last_updated', type: 'DATETIME', defaultValue: 'getDate()') {
+            column(name: 'last_updated', type: 'DATETIME', defaultValueComputed: 'CURRENT_TIMESTAMP') {
                 constraints(nullable: false)
             }
         }
+
         createTable(tableName: 'user_role'){
             column(name: 'id', type: "INT", autoIncrement: true) {
                 constraints(primaryKey: true)
@@ -70,13 +71,6 @@ databaseChangeLog = {
         addForeignKeyConstraint(baseColumnNames: 'user_id', baseTableName: 'user_role', constraintName: 'fk_user_role_user', referencedColumnNames: 'id', referencedTableName: 'user')
         addForeignKeyConstraint(baseColumnNames: 'role_id', baseTableName: 'user_role', constraintName: 'fk_user_role_role', referencedColumnNames: 'id', referencedTableName: 'role')
 
-        insert(tableName: 'role') {
-            column(name: 'authority', value: 'ROLE_ADMIN')
-        }
-
-        insert(tableName: 'role') {
-            column(name: 'authority', value: 'ROLE_AUTHOR')
-        }
     }
 
 }

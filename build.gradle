@@ -1,8 +1,11 @@
 buildscript {
     repositories {
         mavenLocal()
+        mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "https://repo.grails.org/grails/plugins" }
         maven { url "https://bintray.com/grails/plugins" }
+        maven { url "https://mvnrepository.com/artifact/" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
@@ -25,7 +28,11 @@ apply plugin:"asset-pipeline"
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
+    maven { url "https://repo.grails.org/grails/plugins" }
+    maven { url "https://bintray.com/grails/plugins" }
+    maven { url "https://mvnrepository.com/artifact/" }
 }
 
 dependencyManagement {
@@ -56,11 +63,10 @@ dependencies {
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+    runtime 'mysql:mysql-connector-java:5.1.36'
     compile 'org.grails.plugins:database-migration:3.0.0'
     compile 'org.liquibase:liquibase-core:3.5.3'
     compile 'org.grails.plugins:spring-security-core:3.1.1'
-    compile 'net.sourceforge.jtds:jtds:1.3.1'
-    runtime 'mysql:mysql-connector-java:5.1.36'
     compile "org.grails.plugins:aws-sdk:1.11.11"
 }
 
@@ -80,8 +86,4 @@ sourceSets {
             srcDir 'grails-app/migrations'
         }
     }
-}
-
-grails {
-    pathingJar = true
 }
