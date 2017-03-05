@@ -35,8 +35,19 @@ class PageController extends AbstractController{
                 postCount: blogService.countTagged(tag),
                 offset: offset,
                 max: max,
+                tag: tag,
         ]
 
         render(view: 'index', model: model)
+    }
+
+    def about() {
+        def model = defaultModel
+        return model << [:]
+    }
+
+    def contact() {
+        def model = defaultModel
+        return model << [:]
     }
 }

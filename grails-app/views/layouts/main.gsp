@@ -12,7 +12,7 @@
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="alternate" type="application/rss+xml" title="recursive.codes RSS Feed" href="${grailsApplication.config.grails.serverURL}/blog/feed" />
-
+    <ui:googleAnalytics />
     <g:layoutHead/>
 </head>
 
@@ -37,10 +37,10 @@
                         <a href="/#">Home</a>
                     </li>
                     <li>
-                        <a href="about.html">About</a>
+                        <g:link action="about" controller="page">About</g:link>
                     </li>
                     <li>
-                        <a href="contact.html">Contact</a>
+                        <g:link controller="page" action="contact">Contact</g:link>
                     </li>
                     <sec:ifLoggedIn>
                         <li>
@@ -71,7 +71,9 @@
             <div class="row">
                 <div class="col-lg-9 col-lg-offset-1 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1>recursive(codes){}</h1>
+                        <h1 class="hidden-sm hidden-xs">recursive(codes){}</h1>
+                        <h2 class="hidden-xs hidden-md hidden-lg">recursive(codes){}</h2>
+                        <h3 class="hidden-sm hidden-md hidden-lg">recursive(codes){}</h2>
                         <hr class="small">
                         <span class="subheading">The Personal Blog of Todd Sharp</span>
                     </div>

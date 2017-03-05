@@ -11,6 +11,9 @@
 <body>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <g:if test="${tag}">
+                <h1 class="text-info">Posts tagged '${tag}'</h1>
+            </g:if>
             <g:each in="${posts}" var="post">
                 <div class="post-preview">
                     <g:link controller="blog" action="post" id="${post.id}">

@@ -3,6 +3,7 @@ package codes.recursive.admin
 import codes.recursive.AbstractController
 import codes.recursive.User
 import grails.plugin.springsecurity.SpringSecurityService
+import grails.plugin.springsecurity.SpringSecurityUtils
 
 class AbstractAdminController extends AbstractController {
     SpringSecurityService springSecurityService
@@ -44,7 +45,12 @@ class AbstractAdminController extends AbstractController {
                                         action    : 'edit',
                                 ],
                         ]
-                ]
+                ],
+                [
+                        text: 'Logout',
+                        action: 'index',
+                        controller: 'logout',
+                ],
         ]
         model.currentUser = currentUser
         return model
