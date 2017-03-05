@@ -8,7 +8,7 @@ databaseChangeLog = {
             column(name: 'title', type: 'NVARCHAR(500)') {
                 constraints(nullable: false)
             }
-            column(name: 'article', type: 'NVARCHAR(MAX)') {
+            column(name: 'article', type: 'LONGTEXT') {
                 constraints(nullable: false)
             }
             column(name: 'authored_by_id', type: 'INT') {
@@ -20,11 +20,11 @@ databaseChangeLog = {
             column(name: 'version', type: 'INT', defaultValue: 0) {
                 constraints(nullable: false)
             }
-            column(name: 'published_date', type: 'DATETIME', defaultValue: 'getDate()')
-            column(name: 'date_created', type: 'DATETIME', defaultValue: 'getDate()') {
+            column(name: 'published_date', type: 'DATETIME')
+            column(name: 'date_created', type: 'DATETIME', defaultValueComputed: 'CURRENT_TIMESTAMP') {
                 constraints(nullable: false)
             }
-            column(name: 'last_updated', type: 'DATETIME', defaultValue: 'getDate()') {
+            column(name: 'last_updated', type: 'DATETIME', defaultValueComputed: 'CURRENT_TIMESTAMP') {
                 constraints(nullable: false)
             }
         }
@@ -39,13 +39,14 @@ databaseChangeLog = {
             column(name: 'version', type: 'INT', defaultValue: 0) {
                 constraints(nullable: false)
             }
-            column(name: 'date_created', type: 'DATETIME', defaultValue: 'getDate()') {
+            column(name: 'date_created', type: 'DATETIME', defaultValueComputed: 'CURRENT_TIMESTAMP') {
                 constraints(nullable: false)
             }
-            column(name: 'last_updated', type: 'DATETIME', defaultValue: 'getDate()') {
+            column(name: 'last_updated', type: 'DATETIME', defaultValueComputed: 'CURRENT_TIMESTAMP') {
                 constraints(nullable: false)
             }
         }
+
         createTable(tableName: 'post_tag'){
             column(name: 'id', type: "INT", autoIncrement: true) {
                 constraints(primaryKey: true)

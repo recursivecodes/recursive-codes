@@ -1,4 +1,4 @@
-
+package conf
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'codes.recursive.User'
