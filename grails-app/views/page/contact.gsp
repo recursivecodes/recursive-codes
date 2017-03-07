@@ -22,9 +22,9 @@
         </div>
 
         <div class="fieldcontainer form-group required">
-        	<label class="col-sm-2 control-label" for="contact_name"><span class="required-indicator">*</span>Email Address</label>
+        	<label class="col-sm-2 control-label" for="email"><span class="required-indicator">*</span>Email Address</label>
         	<div class="col-sm-6">
-                <input type="text" name="name" id="contact_name" class="form-control" required="">
+                <input type="text" name="email" id="email" class="form-control" required="">
         	</div>
         </div>
 
