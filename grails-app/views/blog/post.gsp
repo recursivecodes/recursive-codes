@@ -13,7 +13,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>${post.title}</title>
+    <title>recursive.codes: ${post.title}</title>
 </head>
 
 <body>

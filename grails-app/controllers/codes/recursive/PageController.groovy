@@ -1,12 +1,14 @@
 package codes.recursive
 
 import codes.recursive.blog.BlogService
+import grails.core.GrailsApplication
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured('permitAll')
 class PageController extends AbstractController{
 
     BlogService blogService
+    GrailsApplication grailsApplication
 
     def index() {
         def model = defaultModel
@@ -48,6 +50,6 @@ class PageController extends AbstractController{
 
     def contact() {
         def model = defaultModel
-        return model << [:]
+        return model << [returnUrl: grailsApplication.config.grails.serverURL]
     }
 }

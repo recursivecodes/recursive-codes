@@ -362,15 +362,14 @@ class UiTagLib {
         def enabled = attrs['enabled'].toString() == 'true' ? true : false
 
         String clazz = 'disabled-link ' + attrs.class
-        if ( clazz.contains(' btn ') ) {
+        if (clazz.contains(' btn ')) {
             clazz += ' btn-disabled'
         }
         if (!enabled) {
             out << '<span class="' + clazz + '">'
             out << body()
             out << '</span>'
-        }
-        else {
+        } else {
             out << g.link(attrs, body)
         }
     }
@@ -378,9 +377,10 @@ class UiTagLib {
     def truncatePost = { attrs ->
         String result
         def content = attrs?.article
+        content = content.replaceAll(/<!--.*?-->/, '').replaceAll(/<.*?>/, '')
         int contentLength = attrs?.contentLength ? (attrs?.contentLength as int) : 150
         //Is content > than the contentLength?
-        if(content.size() > contentLength) {
+        if (content.size() > contentLength) {
             BreakIterator bi = BreakIterator.getWordInstance()
             bi.setText(content);
             def first_after = bi.following(contentLength)
@@ -390,7 +390,7 @@ class UiTagLib {
         } else {
             result = content
         }
-        out << result.encodeAsRaw()
+        out << result
     }
 
     def disqus = { attrs ->
@@ -420,13 +420,15 @@ class UiTagLib {
         """
     }
 
-    def gist = {attrs ->
-        out << """<script src="https://gist.github.com/${grailsApplication.config.codes.recursive.github.user}/${attrs?.id}.js"></script>"""
+    def gist = { attrs ->
+        out << """<script src="https://gist.github.com/${grailsApplication.config.codes.recursive.github.user}/${
+            attrs?.id
+        }.js"></script>"""
     }
 
     def render = { attrs, body ->
         def post = attrs?.post
-        out << post.replaceAll( "\\[(.*?)\\]",{ full, word -> gist(id: word.tokenize('=').last()) } )
+        out << post.replaceAll("\\[(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
     }
 
     def googleAnalytics = { attrs, body ->
@@ -439,7 +441,7 @@ class UiTagLib {
           ga('create', 'UA-1124632-10', 'auto');
           ga('send', 'pageview');
         """
-        if( Environment.current == Environment.PRODUCTION ) {
+        if (Environment.current == Environment.PRODUCTION) {
             out << g.javascript(null, js)
         }
     }
