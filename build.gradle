@@ -68,6 +68,8 @@ dependencies {
     compile 'org.liquibase:liquibase-core:3.5.3'
     compile 'org.grails.plugins:spring-security-core:3.1.1'
     compile "org.grails.plugins:aws-sdk:1.11.11"
+    compile 'org.grails.plugins:mail:2.0.0.RC6'
+    runtime "org.javassist:javassist:3.17.1-GA"
 }
 
 bootRun {

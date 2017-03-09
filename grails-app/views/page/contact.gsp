@@ -7,33 +7,30 @@
 </head>
 <body>
     <h1>Contact</h1>
-    <form action="//formspree.io/toddraymondsharp@gmail.com" method="POST" id="contactform" class="form-horizontal">
-        <input type="hidden" name="_next" value="${returnUrl}">
-        <input type="hidden" name="_subject" id="_subject" value="Blog Contact Form">
-        <input type="hidden" name="_format" value="plain">
 
-        <input type="text" name="_gotcha" style="display:none">
+    <div class="pad-bottom-10">
+        <g:if test="${flash.message}">
+            <ui:successContainer>${flash.message}</ui:successContainer>
+        </g:if>
 
-        <div class="fieldcontainer form-group required">
-        	<label class="col-sm-2 control-label" for="contact_name"><span class="required-indicator">*</span>Name</label>
-        	<div class="col-sm-6">
-                <input type="text" name="name" id="contact_name" class="form-control" required="">
-        	</div>
-        </div>
+        <g:if test="${flash.error}">
+            <ui:errorContainer>${flash.error}</ui:errorContainer>
+        </g:if>
+    </div>
 
-        <div class="fieldcontainer form-group required">
-        	<label class="col-sm-2 control-label" for="email"><span class="required-indicator">*</span>Email Address</label>
-        	<div class="col-sm-6">
-                <input type="text" name="email" id="email" class="form-control" required="">
-        	</div>
-        </div>
+    <g:form useToken="true" action="${actionName}" method="POST" class="form-horizontal" params="${defaultParams}">
 
-        <div class="fieldcontainer form-group required">
-        	<label class="col-sm-2 control-label" for="contact_comments"><span class="required-indicator">*</span>Comments</label>
-        	<div class="col-sm-6">
-                <textarea name="comments" id="contact_comments" rows="15" required="" class="form-control"></textarea><br>
-        	</div>
-        </div>
+        <bootform:horizontalField field="name" required="true" labelColumnClass="col-sm-2" label="Name" bean="${command}" description="Your name">
+            <g:textField type="text" id="name" name="name" class="form-control" required="true" maxlength="100" value="${command.name}"/>
+        </bootform:horizontalField>
+
+        <bootform:horizontalField field="email" required="true" labelColumnClass="col-sm-2" label="Email" bean="${command}" description="Your email address">
+            <g:textField type="text" id="email" name="email" class="form-control" required="true" maxlength="250" value="${command.email}"/>
+        </bootform:horizontalField>
+
+        <bootform:horizontalField field="comments" required="true" labelColumnClass="col-sm-2" label="Comments" bean="${command}" description="Your comments">
+            <g:textArea id="comments" name="comments" rows="10" class="form-control" required="true" maxlength="4000" value="${command.comments}"/>
+        </bootform:horizontalField>
 
         <div class="fieldcontainer form-group required">
         	<label class="col-sm-2 control-label" for="contactSubmit">&nbsp;</label>
@@ -42,6 +39,6 @@
         	</div>
         </div>
 
-    </form>
+    </g:form>
 </body>
 </html>

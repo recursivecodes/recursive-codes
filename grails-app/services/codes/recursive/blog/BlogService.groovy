@@ -18,11 +18,11 @@ class BlogService extends AbstractService {
     }
 
     def listTagged(String tag, Long max, Long offset) {
-        return Post.executeQuery('select p from Post p join p.postTags pt where pt.tag.name = ? and p.publishedDate <= ?', [tag, new Date()], [max: max, offset: offset])
+        return Post.executeQuery('select p from Post p join p.postTags pt where pt.tag.name = ? and p.publishedDate <= ? and p.isPublished = ?', [tag, new Date(), true], [sort: 'publishedDate', order: 'desc', max: max, offset: offset])
     }
 
     def countTagged(String tag) {
-        def tagged = Post.executeQuery('select count(p) as tags from Post p join p.postTags pt where pt.tag.name = ? and p.publishedDate <= ?', [tag, new Date()])
+        def tagged = Post.executeQuery('select count(p) as tags from Post p join p.postTags pt where pt.tag.name = ? and p.publishedDate <= ? and p.isPublished = ?', [tag, new Date(), true])
         return tagged?.first()
     }
 

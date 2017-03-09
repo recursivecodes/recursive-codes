@@ -34,7 +34,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/#">Home</a>
+                        <g:link action="index" controller="page">Home</g:link>
                     </li>
                     <li>
                         <g:link action="about" controller="page">About</g:link>

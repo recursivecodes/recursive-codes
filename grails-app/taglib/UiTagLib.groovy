@@ -377,7 +377,7 @@ class UiTagLib {
     def truncatePost = { attrs ->
         String result
         def content = attrs?.article
-        content = content.replaceAll(/<!--.*?-->/, '').replaceAll(/<.*?>/, '')
+        content = content.replaceAll(/<!--.*?-->/, '').replaceAll(/<.*?>/, '').replaceAll('\\[(.*?)\\]', '')
         int contentLength = attrs?.contentLength ? (attrs?.contentLength as int) : 150
         //Is content > than the contentLength?
         if (content.size() > contentLength) {
@@ -390,12 +390,12 @@ class UiTagLib {
         } else {
             result = content
         }
-        out << result
+        out << (result.size() ? result : 'No preview available...')
     }
 
     def disqus = { attrs ->
         def id = attrs?.id
-        def url = createLink(action: actionName, controller: controllerName, params: [id: id])
+        def url = grailsApplication.config.grails.serverURL + createLink(action: actionName, controller: controllerName, params: [id: id])
         out << """
             <div id="disqus_thread"></div>
             <script>
@@ -403,15 +403,13 @@ class UiTagLib {
             /**
             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-            /*
             var disqus_config = function () {
-            this.page.url = '${url}';  // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = '${id}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                this.page.url = '${url}';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = '${id}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
-            */
             (function() { // DON'T EDIT BELOW THIS LINE
             var d = document, s = d.createElement('script');
-            s.src = '//recursive-codes.disqus.com/embed.js';
+            s.src = '//${Environment.current == Environment.DEVELOPMENT ? 'local-recursive-codes' : 'recursive-codes'}.disqus.com/embed.js';
             s.setAttribute('data-timestamp', +new Date());
             (d.head || d.body).appendChild(s);
             })();
@@ -426,9 +424,17 @@ class UiTagLib {
         }.js"></script>"""
     }
 
+    def youtube = { attrs ->
+        out << """
+            <iframe width="854" height="480" src="https://www.youtube.com/embed/${attrs?.id}" frameborder="0" allowfullscreen></iframe>
+        """
+    }
+
     def render = { attrs, body ->
         def post = attrs?.post
-        out << post.replaceAll("\\[(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
+        post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
+        post = post.replaceAll("\\[youtube(.*?)\\]", { full, word -> youtube(id: word.tokenize('=').last()) })
+        out << post
     }
 
     def googleAnalytics = { attrs, body ->

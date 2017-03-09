@@ -220,14 +220,22 @@
                             Link:
                             <input data-wysihtml-dialog-field="href" value="http://" class="form-control">
                         </label>
+                        <label>
+                            Target:
+                            <input data-wysihtml-dialog-field="target" value="_blank" class="form-control">
+                        </label>
                         <a data-wysihtml-dialog-action="save" class="btn btn-primary btn-sm">OK</a>&nbsp;<a data-wysihtml-dialog-action="cancel" class="btn btn-sm btn-default">Cancel</a>
                     </div>
                 </div>
                 <div data-wysihtml-dialog="insertImage" style="display: none;" class="pad-top-10">
                     <div class="well">
                         <label>
-                            Link:
+                            Src:
                             <input data-wysihtml-dialog-field="src" value="http://" class="form-control">
+                        </label>
+                        <label>
+                            Class:
+                            <input data-wysihtml-dialog-field="class" value="img-responsive" class="form-control">
                         </label>
                         <a data-wysihtml-dialog-action="save" class="btn btn-primary btn-sm">OK</a>&nbsp;<a data-wysihtml-dialog-action="cancel" class="btn btn-sm btn-default">Cancel</a>
                     </div>

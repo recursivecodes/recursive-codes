@@ -71,7 +71,8 @@ var wysihtmlParserRules = {
         "wysiwyg-text-align-center": 1,
         "wysiwyg-text-align-justify": 1,
         "wysiwyg-text-align-left": 1,
-        "wysiwyg-text-align-right": 1
+        "wysiwyg-text-align-right": 1,
+        "img-responsive": 1
     },
     /**
      * Tag list
@@ -182,7 +183,14 @@ var wysihtmlParserRules = {
             "rename_tag": "span"
         },
         "iframe": {
-            "remove": 1
+            "remove": 0,
+            "check_attributes" : {
+                "width" : "any",
+                "height" : "any",
+                "src" : "any",
+                "frameborder" : "any",
+                "allowfullscreen" : "any"
+            }
         },
         "figcaption": {
             "rename_tag": "div"
@@ -201,8 +209,8 @@ var wysihtmlParserRules = {
                 "width": "dimension",
                 "alt": "alt",
                 "src": "url", // if you compiled master manually then change this from 'url' to 'src'
-                "class" : "img-responsive",
-                "height": "dimension"
+                "height": "dimension",
+                "class": "any"
             },
             "add_class": {
                 "align": "align_img"
