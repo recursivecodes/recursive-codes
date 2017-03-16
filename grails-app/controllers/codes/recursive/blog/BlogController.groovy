@@ -21,6 +21,8 @@ class BlogController extends AbstractAdminController {
 
         if ( !postId || !post || !post.canBeViewedBy(currentUser) ) {
             response.status = 404
+            redirect(controller: 'page', action: 'index')
+            return
         }
         return model << [
                 post: post,
