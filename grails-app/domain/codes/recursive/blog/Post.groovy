@@ -1,5 +1,6 @@
 package codes.recursive.blog
 
+import codes.recursive.Role
 import codes.recursive.User
 
 
@@ -18,6 +19,7 @@ class Post {
     }
 
     def canBeViewedBy(User user) {
+        if( user?.authorities?.find { it.authority == Role.ROLE_ADMIN } ) return true
         if (!isPublicallyAvailable()) return false
         return true
     }
