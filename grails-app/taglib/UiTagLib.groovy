@@ -451,4 +451,19 @@ class UiTagLib {
             out << g.javascript(null, js)
         }
     }
+
+    def adsense = { attrs, body ->
+        out << """
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- recursive-codes-responsive-1 -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1584600607873672"
+                 data-ad-slot="5366767286"
+                 data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        """
+    }
 }

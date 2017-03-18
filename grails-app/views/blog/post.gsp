@@ -14,6 +14,16 @@
 <head>
     <meta name="layout" content="main"/>
     <title>${post.title} - recursive.codes</title>
+    <asset:stylesheet src="jssocials.css"/>
+    <asset:stylesheet src="jssocials-theme-flat.css"/>
+    <asset:javascript src="jssocials.js"/>
+    <g:javascript>
+        $().ready(function(){
+            $("#share").jsSocials({
+                shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp", "email"]
+            });
+        })
+    </g:javascript>
 </head>
 
 <body>
@@ -30,6 +40,10 @@
         <ui:render post="${raw(post.article)}" />
     </div>
     <hr/>
+
+    <div id="share"></div>
+
+    <ui:adsense />
 
     <ui:disqus id="${post.id}" />
 
