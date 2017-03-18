@@ -41,9 +41,13 @@
     </div>
     <hr/>
 
-    <div id="share"></div>
+    <div class=" pad-bottom-10">
+        <ui:adsense />
+    </div>
 
-    <ui:adsense />
+    <hr/>
+    <div id="share"></div>
+    <hr/>
 
     <ui:disqus id="${post.id}" />
 
