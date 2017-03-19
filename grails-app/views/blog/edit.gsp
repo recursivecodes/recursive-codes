@@ -68,6 +68,11 @@
             })
 
             listTags()
+
+            setInterval(function(){
+                // keep the session alive so that it doesn't expire in the middle of a blog post
+                $.ajax({url: '/'})
+            }, 30000)
         })
 
         listTags = function(){
@@ -93,11 +98,13 @@
             )
         }
 
+
+
     </g:javascript>
     <asset:javascript src="wysihtml5/wysihtml.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.all-commands.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.toolbar.min.js"/>
-    <asset:javascript src="wysihtml5/parser_rules/advanced.js"/>
+    <asset:javascript src="wysihtml5/parser_rules/advanced_and_extended.js"/>
     <style>
     .wysihtml-action-active, .wysihtml-command-dialog-opened,
     .wysihtml-command-active {
@@ -147,6 +154,13 @@
             <g:textField type="text" id="title" name="title" class="form-control" required="true" maxlength="250" value="${command.title}"/>
         </bootform:horizontalField>
 
+        <bootform:horizontalField field="keywords" required="false" labelColumnClass="col-sm-2" label="Keywords" bean="${command}" description="Keywords to associate with the metadata of this post.  The post's tags will also be included as keywords.">
+            <g:textField type="text" id="keywords" name="keywords" class="form-control" required="true" maxlength="250" value="${command?.keywords}"/>
+        </bootform:horizontalField>
+
+        <bootform:horizontalField field="summary" required="false" labelColumnClass="col-sm-2" label="Summary" bean="${command}" description="The meta description to be included with this post.">
+            <g:textArea id="summary" name="summary" class="form-control" required="true" maxlength="250" value="${command?.summary}"/>
+        </bootform:horizontalField>
 
         <bootform:horizontalField field="publishedDate" required="true" labelColumnClass="col-sm-2" label="Published Date" bean="${command}" description="The date/time that this blog post will be published.">
             <g:textField type="text" id="publishedDate" name="publishedDate" class="form-control datepicker" maxlength="250" value="${g.formatDate(date: command.publishedDate, formatName: 'default.datetime.format')}"/>
@@ -189,6 +203,16 @@
                     </a>
                 </div>
 
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-info'>Info</div>" title="Insert an info alert" class="command" href="javascript:;" unselectable="on"><i class="fa fa-exclamation text-info"></i>
+                    </a>
+                    <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-success'>Success</div>" title="Insert a success alert" class="command" href="javascript:;" unselectable="on"><i class="fa fa-smile-o text-success"></i>
+                    </a>
+                    <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-warning'>Warning</div>" title="Insert a warning alert" class="command" href="javascript:;" unselectable="on"><i class="fa fa-exclamation-triangle text-warning"></i>
+                    </a>
+                    <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-danger'>Danger</div>" title="Insert a danger alert" class="command" href="javascript:;" unselectable="on"><i class="fa fa-minus-circle text-danger"></i>
+                    </a>
+                </div>
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertUnorderedList" title="Insert an unordered list"><i class="fa fa-list-ul"></i>
                     </a>

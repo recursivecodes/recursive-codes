@@ -7,6 +7,8 @@ import codes.recursive.User
 class Post {
 
     String title
+    String keywords
+    String summary
     String article
     Date publishedDate
     Boolean isPublished = true
@@ -32,6 +34,8 @@ class Post {
 
     static constraints = {
         title nullable: false, maxSize: 500
+        keywords nullable: true, maxSize: 500
+        summary nullable: true, maxSize: 500
         article nullable: false
         authoredBy nullable: false
         publishedDate nullable: false

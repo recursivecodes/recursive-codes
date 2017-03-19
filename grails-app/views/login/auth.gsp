@@ -34,7 +34,7 @@
     </div>
     <script type='text/javascript'>
         (function () {
-            document.forms['loginForm'].elements['j_username'].focus();
+            document.forms['loginForm'].elements['username'].focus();
         })();
     </script>
 </body>

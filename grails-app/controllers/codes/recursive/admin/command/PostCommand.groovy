@@ -15,6 +15,8 @@ class PostCommand implements Validateable{
     // properties
     String title
     String article
+    String keywords
+    String summary
     @BindingFormat('MM/dd/yyyy hh:mm a')
     Date publishedDate = new Date()
     Boolean isPublished = true
@@ -25,6 +27,8 @@ class PostCommand implements Validateable{
     static PostCommand fromPost(Post post) {
         def command = new PostCommand(
                 title: post?.title,
+                keywords: post?.keywords,
+                summary: post?.summary,
                 article: post?.article,
                 publishedDate: post?.publishedDate ?: new Date(),
                 isPublished: post?.isPublished,
@@ -37,6 +41,8 @@ class PostCommand implements Validateable{
 
     void populatePost(Post post) {
         post.title = this?.title
+        post.keywords = this?.keywords
+        post.summary = this?.summary
         post.article = this?.article
         post.publishedDate = this?.publishedDate
         post.isPublished = this?.isPublished
@@ -53,7 +59,9 @@ class PostCommand implements Validateable{
     }
 
     static constraints = {
-        title nullable: false, maxSize: 250
+        title nullable: false, maxSize: 500
+        keywords nullable: true, maxSize: 500
+        summary nullable: true, maxSize: 500
         article nullable: false
         authoredBy nullable: false
         publishedDate nullable: false

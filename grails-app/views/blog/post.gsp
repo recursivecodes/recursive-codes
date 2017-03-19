@@ -13,6 +13,9 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <meta name="description" content="${post?.summary ? post?.summary : ui.makeDescription(article: post.article)}" />
+    <meta name="keywords" content="${post?.postTags?.collect{it.tag.name}.join(',')}${post?.keywords ? ',' + post.keywords : ''}" />
+    <meta name="author" content="${post?.authoredBy?.firstName} ${post?.authoredBy?.lastName}" />
     <title>${post.title} - recursive.codes</title>
     <asset:stylesheet src="jssocials.css"/>
     <asset:stylesheet src="jssocials-theme-flat.css"/>
@@ -20,7 +23,7 @@
     <g:javascript>
         $().ready(function(){
             $("#share").jsSocials({
-                shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp", "email"]
+                shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp", "email"]
             });
         })
     </g:javascript>
