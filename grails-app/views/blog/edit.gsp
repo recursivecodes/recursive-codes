@@ -155,11 +155,11 @@
         </bootform:horizontalField>
 
         <bootform:horizontalField field="keywords" required="false" labelColumnClass="col-sm-2" label="Keywords" bean="${command}" description="Keywords to associate with the metadata of this post.  The post's tags will also be included as keywords.">
-            <g:textField type="text" id="keywords" name="keywords" class="form-control" required="true" maxlength="250" value="${command?.keywords}"/>
+            <g:textField type="text" id="keywords" name="keywords" class="form-control" maxlength="500" value="${command?.keywords}"/>
         </bootform:horizontalField>
 
         <bootform:horizontalField field="summary" required="false" labelColumnClass="col-sm-2" label="Summary" bean="${command}" description="The meta description to be included with this post.">
-            <g:textArea id="summary" name="summary" class="form-control" required="true" maxlength="250" value="${command?.summary}"/>
+            <g:textArea id="summary" name="summary" class="form-control" maxlength="500" value="${command?.summary}"/>
         </bootform:horizontalField>
 
         <bootform:horizontalField field="publishedDate" required="true" labelColumnClass="col-sm-2" label="Published Date" bean="${command}" description="The date/time that this blog post will be published.">
