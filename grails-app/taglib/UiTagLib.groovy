@@ -377,9 +377,7 @@ class UiTagLib {
     def makeDescription = { attrs ->
         def content = attrs?.article
         def truncated = truncatePost(article: content)
-        println truncated + ' b'
         truncated = truncated.replaceAll('[\\r\\n]', ' ')
-        println truncated + ' a'
         out << truncated
     }
 
