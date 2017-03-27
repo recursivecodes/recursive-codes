@@ -38,6 +38,10 @@ class BlogService extends AbstractService {
         return Post.findAllByIsPublishedAndPublishedDateLessThanEquals(true, new Date(), [sort: 'publishedDate', order: 'desc', max: max, offset: offset])
     }
 
+    def listPublished() {
+        return Post.findAllByIsPublishedAndPublishedDateLessThanEquals(true, new Date(), [sort: 'publishedDate', order: 'desc'])
+    }
+
     def countPublished() {
         return Post.countByIsPublishedAndPublishedDateLessThanEquals(true, new Date())
     }

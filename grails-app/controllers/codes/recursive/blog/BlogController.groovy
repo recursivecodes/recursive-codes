@@ -35,7 +35,7 @@ class BlogController extends AbstractAdminController {
         DateFormat pubDateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         response.setContentType("application/xml")
         return model << [
-                posts    : blogService.listPublished(25, 0),
+                posts    : params.boolean('all') ? blogService.listPublished() : blogService.listPublished(25, 0),
                 formatter: pubDateFormatter,
         ]
     }
