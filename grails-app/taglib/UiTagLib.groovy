@@ -431,6 +431,10 @@ class UiTagLib {
         }.js"></script>"""
     }
 
+    def spoiler = { attrs ->
+        out << """<div><a href="#" class="showSpoiler">${attrs?.label ?: 'Spoiler'}</a><div class="spoiler">${attrs?.content}</div></div>"""
+    }
+
     def youtube = { attrs ->
         out << """
             <iframe width="854" height="480" src="https://www.youtube.com/embed/${attrs?.id}" frameborder="0" allowfullscreen></iframe>
@@ -439,6 +443,19 @@ class UiTagLib {
 
     def render = { attrs, body ->
         def post = attrs?.post
+        def js = """
+                \$().ready(function(){
+                    \$('.spoiler').hide()
+                    \$(document).on('click', '.showSpoiler', function(){
+                        \$(this).closest('div').find('.spoiler').show()
+                        \$(this).hide()
+                        return false
+                    })
+                })
+            """
+        out << g.javascript(null, js)
+        post = post.replaceAll("\\[spoiler(.*?)\\](.*?)\\[/spoiler\\]", { full, label, content -> spoiler(label: label.tokenize('=').last(), content: content) })
+        post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
         post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
         post = post.replaceAll("\\[youtube(.*?)\\]", { full, word -> youtube(id: word.tokenize('=').last()) })
         out << post

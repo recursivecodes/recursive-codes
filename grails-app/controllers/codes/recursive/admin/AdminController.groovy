@@ -6,9 +6,6 @@ import grails.plugin.springsecurity.annotation.Secured
 class AdminController extends AbstractAdminController{
 
     def index(){
-        def model = defaultModel
-        return model << [
-                :
-        ]
+        redirect(controller: 'blog', action: 'list')
     }
 }
