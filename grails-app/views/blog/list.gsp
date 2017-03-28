@@ -69,7 +69,7 @@
             <th>Title</th>
             <th>Published Date</th>
             <th>Published?</th>
-            <th style="width: 30%;">Action</th>
+            <th style="width: 35%;">Action</th>
         </tr>
         <g:each in="${posts}" var="post">
             <tr>

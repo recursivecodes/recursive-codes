@@ -456,7 +456,6 @@ class UiTagLib {
         out << g.javascript(null, js)
         post = post.replaceAll("\\[spoiler(.*?)\\](.*?)\\[/spoiler\\]", { full, label, content -> spoiler(label: label.tokenize('=').last(), content: content) })
         post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
-        post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
         post = post.replaceAll("\\[youtube(.*?)\\]", { full, word -> youtube(id: word.tokenize('=').last()) })
         out << post
     }
