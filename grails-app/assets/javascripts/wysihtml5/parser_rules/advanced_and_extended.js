@@ -163,7 +163,7 @@ var wysihtmlParserRules = {
             }
         },
         "strike": {
-            "unwrap": 1
+            "unwrap": 0
         },
         "form": {
             "unwrap": 1

@@ -11,96 +11,10 @@
     <meta name="layout" content="admin"/>
     <title>Edit Blog Post</title>
     <g:javascript>
-        // ${raw(command.tags)}
         currentTags = ${raw((command.tags.collect { it.class.name == 'java.lang.String' ? it : it.id.toString() } as grails.converters.JSON) as String)}
-
-        $(document).ready(function(){
-
-            $('.datepicker').datetimepicker({ format: '${g.message(code: 'js.dateTimeFormat')}'})
-            editor = new wysihtml.Editor(
-                    "wysihtml-textarea", {
-                        toolbar: "toolbar",
-                        parserRules: wysihtmlParserRules
-                    }
-            )
-            editor.on( "load", function() {
-                // Trick browser into showing HTML5 required validation popups.
-                $('#wysihtml-textarea').addClass('nicehide');
-            } );
-
-            $('#addTagBtn').on('click', function(){
-                $('#newTagModal').modal({show: true})
-                $('#newTag').val('')
-            })
-
-            $('#saveNewTagBtn').on('click', function(){
-                var tagEl = $('#newTag')
-                if( !tagEl.val().length ) {
-                    tagEl.closest('.form-group').addClass('has-error')
-                }
-                else {
-                    tagEl.closest('.form-group').removeClass('has-error')
-
-                    $.ajax({
-                        url:   '/blog/ajaxSaveTag?tag=' + tagEl.val(),
-                        success: function(result){
-                            $('#newTagModal').modal('hide')
-                            currentTags = $('#postTags').val()
-                            listTags()
-                        },
-                        error: function(){
-                            alert('An error occurred trying to save this tag.  Please try again.')
-                        }
-                    })
-                }
-            })
-
-            $('#viewSourceBtn').on('click', function(){
-                if( $('.nicehide').size() > 0 ) {
-                    $('.nicehide').addClass('nonicehide').removeClass('nicehide')
-                }
-            })
-
-            $('#btnSubmit').on('click', function(){
-                if( $('.nonicehide').size() > 0 ) {
-                    $('.nonicehide').addClass('nicehide').removeClass('nonicehide')
-                }
-            })
-
-            listTags()
-
-            setInterval(function(){
-                // keep the session alive so that it doesn't expire in the middle of a blog post
-                $.ajax({url: '/'})
-            }, 30000)
-        })
-
-        listTags = function(){
-            $.ajax(
-                    {
-                        url: '/blog/ajaxListTags',
-                        success: function(result){
-                            var sel = $('#postTags')
-                            sel.html('')
-
-                            $(result).each(function(i,e){
-                                var opt = $('<option value="' + e.id + '">' + e.name + '</option>')
-                                if( $.inArray(e.id.toString(), currentTags) != -1 ) {
-                                    opt.attr('selected', 'selected')
-                                }
-                                sel.append(opt)
-                            })
-                        },
-                        error: function(){
-                            alert('An error occurred trying to list tags.  Please try again.')
-                        }
-                    }
-            )
-        }
-
-
-
+        dateFormat = '${g.message(code: 'js.dateTimeFormat')}'
     </g:javascript>
+    <asset:javascript src="edit-post.js"/>
     <asset:javascript src="wysihtml5/wysihtml.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.all-commands.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.toolbar.min.js"/>
@@ -110,6 +24,9 @@
     .wysihtml-command-active {
         box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.2);
         background: #eee !important;
+    }
+    .wysihtml-sandbox{
+        height: 600px !important;
     }
     .nicehide {
         resize: none !important;
@@ -150,26 +67,26 @@
         <g:hiddenField name="authoredBy.id" value="${command.authoredBy?.id ?: currentUser.id}"/>
         <g:hiddenField name="lastUpdatedBy.id" value="${currentUser.id}"/>
 
-        <bootform:horizontalField field="title" required="true" labelColumnClass="col-sm-2" label="Title" bean="${command}" description="The title of this blog post.  Used as the 'headline' for the article.">
+        <bootform:horizontalField field="title" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Title" bean="${command}" description="The title of this blog post.  Used as the 'headline' for the article.">
             <g:textField type="text" id="title" name="title" class="form-control" required="true" maxlength="250" value="${command.title}"/>
         </bootform:horizontalField>
 
-        <bootform:horizontalField field="keywords" required="false" labelColumnClass="col-sm-2" label="Keywords" bean="${command}" description="Keywords to associate with the metadata of this post.  The post's tags will also be included as keywords.">
+        <bootform:horizontalField field="keywords" required="false" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Keywords" bean="${command}" description="Keywords to associate with the metadata of this post.  The post's tags will also be included as keywords.">
             <g:textField type="text" id="keywords" name="keywords" class="form-control" maxlength="500" value="${command?.keywords}"/>
         </bootform:horizontalField>
 
-        <bootform:horizontalField field="summary" required="false" labelColumnClass="col-sm-2" label="Summary" bean="${command}" description="The meta description to be included with this post.">
+        <bootform:horizontalField field="summary" required="false" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Summary" bean="${command}" description="The meta description to be included with this post.">
             <g:textArea id="summary" name="summary" class="form-control" maxlength="500" value="${command?.summary}"/>
         </bootform:horizontalField>
 
-        <bootform:horizontalField field="publishedDate" required="true" labelColumnClass="col-sm-2" label="Published Date" bean="${command}" description="The date/time that this blog post will be published.">
+        <bootform:horizontalField field="publishedDate" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Published Date" bean="${command}" description="The date/time that this blog post will be published.">
             <g:textField type="text" id="publishedDate" name="publishedDate" class="form-control datepicker" maxlength="250" value="${g.formatDate(date: command.publishedDate, formatName: 'default.datetime.format')}"/>
         </bootform:horizontalField>
 
         <g:set var="tagDesc">
             The categories that this blog post will be filed under.  <a href="#" id="addTagBtn">Add a tag.</a>
         </g:set>
-        <bootform:horizontalField field="tags" required="true" labelColumnClass="col-sm-2" label="Tags" bean="${command}" description="${tagDesc}">
+        <bootform:horizontalField field="tags" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Tags" bean="${command}" description="${tagDesc}">
             <g:select type="text" id="postTags" name="tags" required="true" from="[]" class="form-control" multiple="multiple"></g:select>
         </bootform:horizontalField>
 
@@ -180,7 +97,7 @@
             </bootform:checkboxContainer>
         </bootform:fieldContainer>
 
-        <bootform:horizontalField field="article" required="true" labelColumnClass="col-sm-2" label="Article" bean="${command}" description="">
+        <bootform:horizontalField field="article" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Article" bean="${command}" description="">
 
             <div id="toolbar" style="display: none;" class="pad-bottom-10">
                 <div class="btn-group">
@@ -206,6 +123,12 @@
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[spoiler label=Spoiler]Spoiler Text Here[/spoiler]" title="Insert a spoiler tag" class="command" href="javascript:;" unselectable="on"><i class="fa fa-exclamation-circle"></i>
                     </a>
+                    <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[gist id=]" title="Insert a gist" class="command" href="javascript:;" unselectable="on"><i class="fa fa-github"></i>
+                    </a>
+                    <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[youtube id=]" title="Embed a YouTube video" class="command" href="javascript:;" unselectable="on"><i class="fa fa-youtube"></i>
+                    </a>
+                </div>
+                <div class="btn-group">
                     <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-info'>Info</div>" title="Insert an info alert" class="command" href="javascript:;" unselectable="on"><i class="fa fa-exclamation text-info"></i>
                     </a>
                     <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-success'>Success</div>" title="Insert a success alert" class="command" href="javascript:;" unselectable="on"><i class="fa fa-smile-o text-success"></i>
@@ -229,7 +152,6 @@
                     <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertBlockQuote" class="wysihtml-command-active" title="Insert blockquote"><i class="fa fa-quote-right"></i>
                     </a>
                 </div>
-
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h1" title="Insert headline 1" style=""><span style="font-size: 12px;">&nbsp;</span><i class="fa fa-header">1</i><span style="font-size: 12px;">&nbsp;</span>
                     </a>
@@ -241,6 +163,8 @@
 
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default action" id="viewSourceBtn" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" data-wysihtml-action="change_view" title="Show HTML"><i class="fa fa-code"></i>
+                    </a>
+                    <a class="btn btn-sm btn-default help-modal-trigger pointer" data-toggle="tooltip" data-container="body" title="Blog Editor Help" unselectable="on"><i class="fa fa-question"></i>
                     </a>
                 </div>
 
@@ -287,27 +211,28 @@
 
     </g:form>
 
-    <div id="newTagModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">Create A New Tag</h4>
-                </div>
+    <g:set var="footer">
+        <button id="saveNewTagBtn" type="button" class="btn btn-primary">Save Tag</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </g:set>
 
-                <div class="modal-body">
-                    <div class="form-group">
-                        <input type="text" id="newTag" name="newTag" class="form-control" maxlength="50"/>
-                    </div>
-                </div>
+    <ui:modal closable="true" id="newTagModal" title="Create A New Tag" footer="${footer}">
+        <div class="form-group">
+            <input type="text" id="newTag" name="newTag" class="form-control" maxlength="50"/>
+        </div>
+    </ui:modal>
 
-                <div class="modal-footer">
-                    <button id="saveNewTagBtn" type="button" class="btn btn-primary">Save Tag</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    <ui:modal closable="true" id="helpModal" title="Editor Help">
+        <h4>You can use the following tags in a blog post:</h4>
+        <p>
+            <b>[gist id=]</b>:  Insert a gist from github.  Pass the ID from the URL.  Shortcut:  click the GitHub button in the toolbar.
+        </p>
+        <p>
+            <b>[youtube id=]</b>:  Embed a YouTube video.  Pass the ID from the URL.  Shortcut:  click the YouTube button in the toolbar.
+        </p>
+        <p>
+            <b>[spoiler label="Spoiler"]content[/spoiler]</b>:  Hide content until the reader clicks on the link rendered in the blog post.  Pass a 'label' or what will be used as the trigger text for the spoiler content.  Shortcut:  click the 'spoiler' button in the toolbar.
+        </p>
+    </ui:modal>
 </body>
 </html>

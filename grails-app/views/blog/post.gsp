@@ -31,7 +31,7 @@
 
 <body>
     <h1>${post.title}</h1>
-    <h5>Posted By: ${post.authoredBy.firstName} ${post.authoredBy.lastName} on <g:formatDate date="${post.publishedDate}" formatName="default.datetime.format"/></h5>
+    <h5>Posted By: ${post.authoredBy.firstName} ${post.authoredBy.lastName} on <g:formatDate date="${post.publishedDate}"/></h5>
     <g:if test="${tags.size()}">
         <h6 class="upper">Tagged:
         <g:each in="${tags}" var="pt" status="i">
