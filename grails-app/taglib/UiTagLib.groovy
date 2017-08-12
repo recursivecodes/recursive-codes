@@ -27,13 +27,6 @@ class UiTagLib {
 					<div class="pull-left">
 					    <h3 class="panel-title">${attrs.title}</h3>
 					</div>
-					${
-            showRefreshBtn ? """
-                    <div class="pull-right">
-					    <i class="fa fa-refresh pointer"></i>
-					</div>
-                    """ : ""
-        }
 					<div class="clearfix"></div>
 				</div>
 

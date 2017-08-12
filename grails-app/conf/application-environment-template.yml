@@ -1,0 +1,48 @@
+environments:
+    production:
+        grails:
+            serverURL: http://yourdomain.com
+        dataSource:
+            dbCreate: none
+            url:
+            username:
+            password:
+            driverClassName:
+            dialect:
+            properties:
+                jmxEnabled: true
+                initialSize: 5
+                maxActive: 50
+                minIdle: 5
+                maxIdle: 25
+                maxWait: 10000
+                maxAge: 600000
+                timeBetweenEvictionRunsMillis: 5000
+                minEvictableIdleTimeMillis: 60000
+                validationQuery: SELECT 1
+                validationQueryTimeout: 3
+                validationInterval: 15000
+                testOnBorrow: true
+                testWhileIdle: true
+                testOnReturn: false
+                jdbcInterceptors: ConnectionState
+                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+grails:
+    awssdk:
+        s3:
+            accessKey:
+            secretKey:
+    mail:
+        host:
+        port:
+        username:
+        password:
+        props:
+            mail.smtp.port:
+            mail.smtp.starttls.enable:
+---
+codes:
+    recursive:
+        github:
+            user:
+        email:
