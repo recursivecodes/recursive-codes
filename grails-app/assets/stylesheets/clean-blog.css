@@ -352,7 +352,7 @@ form .row:first-child .floating-label-form-group {
   font-weight: 800;
   letter-spacing: 1px;
   border-radius: 0;
-  padding: 15px 25px;
+  /*padding: 15px 25px;*/
 }
 .btn-sm {
   padding: 5px 10px;
@@ -418,4 +418,20 @@ body {
 }
 .btn{
   border-radius: 4px;
+}
+@media only screen and (min-width: 1000px) {
+  .outlined-text-lg {
+    text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+  }
+}
+.outlined-text {
+  text-shadow:
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
 }

@@ -424,6 +424,12 @@ class UiTagLib {
         }.js"></script>"""
     }
 
+    def gist2 = { attrs ->
+        out << """<script src="https://gist.github.com/${grailsApplication.config.codes.recursive.github.user2}/${
+            attrs?.id
+        }.js"></script>"""
+    }
+
     def spoiler = { attrs ->
         out << """<div><a href="#" class="showSpoiler">${attrs?.label ?: 'Spoiler'}</a><div class="spoiler">${attrs?.content}</div></div>"""
     }
@@ -449,6 +455,7 @@ class UiTagLib {
         out << g.javascript(null, js)
         post = post.replaceAll("\\[spoiler(.*?)\\](.*?)\\[/spoiler\\]", { full, label, content -> spoiler(label: label.tokenize('=').last(), content: content) })
         post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
+        post = post.replaceAll("\\[gist2(.*?)\\]", { full, word -> gist2(id: word.tokenize('=').last()) })
         post = post.replaceAll("\\[youtube(.*?)\\]", { full, word -> youtube(id: word.tokenize('=').last()) })
         out << post
     }

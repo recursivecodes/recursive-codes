@@ -13,6 +13,9 @@ class UrlMappings {
             action = 'feed'
             all = 'true'
         }
+        "/videos"(controller: 'page', action: 'videos')
+        "/presentations"(controller: 'page', action: 'videos')
+        "/search"(controller: 'page', action: 'search')
         "/"(controller: 'page', action: 'index')
         "500"(view:'/error')
         "404"(view:'/notFound')

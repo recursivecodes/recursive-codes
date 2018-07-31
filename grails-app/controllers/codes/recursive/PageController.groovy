@@ -98,4 +98,41 @@ class PageController extends AbstractController{
                 returnUrl: grailsApplication.config.grails.serverURL,
         ]
     }
+
+    def videos() {
+        def model = defaultModel
+        def feedUrl = grailsApplication.config.codes.recursive.youtubeFeed
+        def feed = feedUrl.toURL().text
+        def entries = new XmlSlurper().parseText(feed).declareNamespace(media: 'http://search.yahoo.com/mrss/', yt: 'http://www.youtube.com/xml/schemas/2015')
+        entries.entry.each { it ->
+            println it.title
+        }
+        return model << [
+                entries: entries,
+                channelUrl: grailsApplication.config.codes.recursive.youtubeChannel,
+                dateFormat: "yyyy-MM-dd'T'HH:mm:ssXXX",
+        ]
+    }
+
+    def presentations() {
+        def model = defaultModel
+        return model
+    }
+
+    def search() {
+        def model = defaultModel
+        def results = []
+        def searchString = params.get('searchString')
+        def max = params.int('max') ?: 25
+        def offset = params.int('offset') ?: 0
+
+        if( searchString ) {
+            results = blogService.searchPosts(searchString, max, offset)
+        }
+        return model << [
+                results: results,
+                searchString: searchString,
+                baseUrl: grailsApplication.config.grails.serverURL,
+        ]
+    }
 }

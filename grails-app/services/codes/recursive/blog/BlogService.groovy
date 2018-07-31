@@ -54,4 +54,29 @@ class BlogService extends AbstractService {
         return tag.save(flush: true)
     }
 
+    def searchPosts(String q, int max, int offset) {
+        def posts = Post.createCriteria().list {
+            eq('isPublished', true)
+            lte('publishedDate', new Date())
+            or{
+                ilike('title', "%${q}%")
+                ilike('article', "%${q}%")
+            }
+            maxResults(max)
+            firstResult(offset)
+        }
+        def count = Post.createCriteria().count {
+            eq('isPublished', true)
+            lte('publishedDate', new Date())
+            or{
+                ilike('title', "%${q}%")
+                ilike('article', "%${q}%")
+            }
+        }
+        return [
+                posts: posts,
+                count: count,
+        ]
+    }
+
 }

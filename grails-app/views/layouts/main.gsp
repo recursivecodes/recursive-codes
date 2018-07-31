@@ -30,12 +30,12 @@
                     <span class="sr-only">Toggle navigation</span>
                     Menu <i class="fa fa-bars"></i>
                 </button>
-            <a href="/#" class="navbar-brand">recursive.codes</a>
+            <a href="/#" class="navbar-brand outlined-text-lg">recursive.codes</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right outlined-text-lg">
                     <li>
                         <g:link action="index" controller="page">Home</g:link>
                     </li>
@@ -43,7 +43,16 @@
                         <g:link action="about" controller="page">About</g:link>
                     </li>
                     <li>
+                        <g:link action="videos" controller="page">Videos</g:link>
+                    </li>
+                    <li>
+                        <g:link action="presentations" controller="page">Presentations</g:link>
+                    </li>
+                    <li>
                         <g:link controller="page" action="contact">Contact</g:link>
+                    </li>
+                    <li>
+                        <g:link controller="page" action="search">Search</g:link>
                     </li>
                     <sec:ifLoggedIn>
                         <li>
@@ -69,16 +78,16 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-image: url('${assetPath(src: 'home-bg.jpg')}')">
+    <header class="intro-header" style="background-image: url('${assetPath(src: 'banner.jpg')}')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-9 col-lg-offset-1 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1 class="hidden-sm hidden-xs">recursive(codes){}</h1>
-                        <h2 class="hidden-xs hidden-md hidden-lg">recursive(codes){}</h2>
-                        <h3 class="hidden-sm hidden-md hidden-lg">recursive(codes){}</h2>
-                        <hr class="small">
-                        <span class="subheading">The Personal Blog of Todd Sharp</span>
+                        <h1 class="hidden-sm hidden-xs outlined-text">recursive codes</h1>
+                        <h2 class="hidden-xs hidden-md hidden-lg outlined-text">recursive(codes){}</h2>
+                        <h3 class="hidden-sm hidden-md hidden-lg outlined-text">recursive(codes){}</h2>
+                        <hr class="small outlined-text">
+                        <span class="subheading outlined-text">The Personal Blog of Todd Sharp</span>
                     </div>
                 </div>
             </div>
@@ -124,6 +133,14 @@
                         </li>
                         <li>
                             <a href="https://github.com/cfsilence" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/recursivecodes" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>
