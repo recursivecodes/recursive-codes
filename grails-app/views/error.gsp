@@ -23,9 +23,9 @@
             </g:else>
         </g:if>
         <g:else>
-            <ul class="errors">
-                <li>An error has occurred</li>
-            </ul>
+            <h1>Oops</h1>
+            <img src="https://fontmeme.com/permalink/180801/1d4a5bffcd599005b3e8951dc708e1ad.png" alt="error" class="mt-3 mb-3" />
+            <h2>Please try again later.</h2>
         </g:else>
     </body>
 </html>

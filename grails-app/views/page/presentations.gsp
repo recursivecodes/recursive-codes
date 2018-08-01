@@ -10,7 +10,6 @@
     <div>
         <p>Here are some of my recent presentations.</p>
     </div>
-
     <div class="row">
         <g:each in="${presentations}" var="presentation">
             <div class="col-xs-12">

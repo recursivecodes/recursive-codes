@@ -6,9 +6,8 @@
         <g:if env="development"><asset:stylesheet src="errors.css"/></g:if>
     </head>
     <body>
-        <ul class="errors">
-            <li>Error: Page Not Found (404)</li>
-            <li>Path: ${request.forwardURI}</li>
-        </ul>
+        <h1>Oops</h1>
+        <img src="https://fontmeme.com/permalink/180801/0c97a5477cc55271af8c8214e73f78e5.png" alt="404">
+        <h2>Nothing found at ${request.forwardURI}</h2>
     </body>
 </html>
