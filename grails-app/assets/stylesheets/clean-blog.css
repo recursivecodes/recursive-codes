@@ -2703,3 +2703,7 @@ body {
     margin-left: auto !important;
   }
 }
+.abstract {
+  max-height: 250px;
+  overflow-y: auto;
+}

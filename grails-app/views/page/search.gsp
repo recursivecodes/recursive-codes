@@ -40,7 +40,7 @@
     </g:if>
 
     <g:if test="${results.count}">
-        <h1>Found ${results.count} post${results.count > 1 ? 's' : ''} matching <i><b>${searchString}</b></i>.</h1>
+        <h1 class="mb-5">Found ${results.count} post${results.count > 1 ? 's' : ''} matching <i><b>${searchString}</b></i>.</h1>
 
         <g:each in="${results.posts}" var="post">
             <div class="post-preview">
@@ -53,7 +53,7 @@
                     <small><i>${baseUrl}${createLink( action:'post',params: [id: post.id] )}</i></small>
                 </div>
                 <div>
-                    <small class="text-muted result"><ui:truncatePost article="${post.article}"/></small>
+                    <small class="text-muted result"><ui:truncatePost context="${searchString}" contentLength="250" article="${post.article}"/></small>
                 </div>
                 <p class="post-meta">Posted by ${post?.authoredBy?.fullName} on <g:formatDate date="${post.publishedDate}"/></p>
             </div>

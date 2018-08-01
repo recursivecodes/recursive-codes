@@ -7,6 +7,7 @@ import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.mail.MailService
 import groovy.json.JsonSlurper
+import org.springframework.cache.CacheManager
 
 @Secured('permitAll')
 class PageController extends AbstractController{
@@ -15,6 +16,7 @@ class PageController extends AbstractController{
     GrailsApplication grailsApplication
     MailService mailService
     AmazonS3Service amazonS3Service
+    CacheManager grailsCacheManager
 
     def index() {
         def model = defaultModel
@@ -51,9 +53,6 @@ class PageController extends AbstractController{
 
     def about() {
         def model = defaultModel
-        // cheap way to do it, but, why not...
-        redirect( action: 'post', controller: 'blog', id: 2)
-        return
         return model << [:]
     }
 
@@ -104,9 +103,18 @@ class PageController extends AbstractController{
 
     def videos() {
         def model = defaultModel
-        def feedUrl = grailsApplication.config.codes.recursive.youtubeFeed
-        def feed = feedUrl.toURL().text
-        def entries = new XmlSlurper().parseText(feed).declareNamespace(media: 'http://search.yahoo.com/mrss/', yt: 'http://www.youtube.com/xml/schemas/2015')
+
+        def entries = grailsCacheManager.getCache('object').get('youtubeEntries')?.get()
+        def cachedAt = grailsCacheManager.getCache('object').get('youtubeEntriesCachedAt')?.get()
+        def cacheExpired = cachedAt ? ( groovy.time.TimeCategory.minus( new Date(), cachedAt )?.hours > 4 ) : false
+        if( !entries || cacheExpired ) {
+            def feedUrl = grailsApplication.config.codes.recursive.youtubeFeed
+            def feed = feedUrl.toURL().text
+            entries = new XmlSlurper().parseText(feed).declareNamespace(media: 'http://search.yahoo.com/mrss/', yt: 'http://www.youtube.com/xml/schemas/2015')
+            grailsCacheManager.getCache('object').put('youtubeEntries', entries)
+            grailsCacheManager.getCache('object').put('youtubeEntriesCachedAt', new Date())
+        }
+
         return model << [
                 entries: entries,
                 channelUrl: grailsApplication.config.codes.recursive.youtubeChannel,

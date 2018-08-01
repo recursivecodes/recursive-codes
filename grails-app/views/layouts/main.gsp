@@ -37,9 +37,6 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right outlined-text-lg">
                     <li>
-                        <g:link action="index" controller="page">Home</g:link>
-                    </li>
-                    <li>
                         <g:link action="about" controller="page">About</g:link>
                     </li>
                     <li>
@@ -59,16 +56,6 @@
                             <g:link controller="admin" action="index">Admin</g:link>
                         </li>
                     </sec:ifLoggedIn>
-                    <sec:ifLoggedIn>
-                        <li>
-                            <g:link controller="logout" action="index">Logout</g:link>
-                        </li>
-                    </sec:ifLoggedIn>
-                    <sec:ifNotLoggedIn>
-                        <li>
-                            <g:link controller="login" action="index">Login</g:link>
-                        </li>
-                    </sec:ifNotLoggedIn>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -148,8 +135,19 @@
                             </a>
                         </li>
                     </ul>
-
-                    <p class="copyright text-muted">Copyright &copy; Todd Sharp ${Calendar.getInstance().get(Calendar.YEAR)}</p>
+                    <div class="mt-3 copyright text-muted">Copyright &copy; Todd Sharp ${Calendar.getInstance().get(Calendar.YEAR)}</div>
+                    <div class="text-center" style="font-size: 14px;">
+                        <sec:ifNotLoggedIn>
+                            <div>
+                                <small><g:link controller="login" action="index">Login</g:link></small>
+                            </div>
+                        </sec:ifNotLoggedIn>
+                        <sec:ifLoggedIn>
+                            <div>
+                                <small><g:link controller="logout" action="index">Logout</g:link></small>
+                            </div>
+                        </sec:ifLoggedIn>
+                    </div>
                 </div>
             </div>
         </div>

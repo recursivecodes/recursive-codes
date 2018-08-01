@@ -19,9 +19,9 @@
                         <iframe src="//slides.com/recursivecodes/${presentation.alias}/embed" width="100%" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                     </div>
                     <div class="col-xs-12 col-lg-5 ">
-                        <h2 class="mt-0">${presentation.title}</h2>
+                        <h2 class="mt-3 mt-lg-0">${presentation.title}</h2>
                         <div>
-                            <div>
+                            <div class="abstract">
                                 ${presentation.abstract}
                             </div>
                             <h4>Presented at:</h4>

@@ -378,7 +378,18 @@ class UiTagLib {
         String result
         def content = attrs?.article
         content = content.replaceAll(/<!--.*?-->/, '').replaceAll(/<.*?>/, '').replaceAll('\\[(.*?)\\]', '')
+        def context = attrs?.context
         int contentLength = attrs?.contentLength ? (attrs?.contentLength as int) : 150
+        int contextPad = (contentLength / 2) + 1
+        def contextIdx = context ? content.indexOf(context) : 0
+        int contextStart = context ? contextIdx - contextPad : 0
+        int contextEnd = context ? contextIdx + contextPad : content.size()
+        if(contextStart < 0) contextStart = 0
+        if(contextEnd > content.size()) contextEnd = content.size()
+
+        if( context && contextIdx > -1 ) {
+            content = content.substring( contextStart, contextIdx ) + content.substring( contextIdx, contextEnd )
+        }
         //Is content > than the contentLength?
         if (content.size() > contentLength) {
             BreakIterator bi = BreakIterator.getWordInstance()
