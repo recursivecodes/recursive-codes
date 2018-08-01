@@ -83,9 +83,9 @@
             <div class="row">
                 <div class="col-lg-9 col-lg-offset-1 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1 class="hidden-sm hidden-xs outlined-text">recursive codes</h1>
-                        <h2 class="hidden-xs hidden-md hidden-lg outlined-text">recursive(codes){}</h2>
-                        <h3 class="hidden-sm hidden-md hidden-lg outlined-text">recursive(codes){}</h2>
+                        <h1 class="hidden-sm hidden-xs outlined-text">recursive.codes</h1>
+                        <h2 class="hidden-xs hidden-md hidden-lg outlined-text">recursive.codes</h2>
+                        <h3 class="hidden-sm hidden-md hidden-lg outlined-text">recursive.codes</h2>
                         <hr class="small outlined-text">
                         <span class="subheading outlined-text">The Personal Blog of Todd Sharp</span>
                     </div>

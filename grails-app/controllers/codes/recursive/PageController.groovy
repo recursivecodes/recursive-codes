@@ -3,8 +3,10 @@ package codes.recursive
 import codes.recursive.blog.BlogService
 import codes.recursive.blog.command.ContactFormCommand
 import grails.core.GrailsApplication
+import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.mail.MailService
+import groovy.json.JsonSlurper
 
 @Secured('permitAll')
 class PageController extends AbstractController{
@@ -12,6 +14,7 @@ class PageController extends AbstractController{
     BlogService blogService
     GrailsApplication grailsApplication
     MailService mailService
+    AmazonS3Service amazonS3Service
 
     def index() {
         def model = defaultModel
@@ -104,9 +107,6 @@ class PageController extends AbstractController{
         def feedUrl = grailsApplication.config.codes.recursive.youtubeFeed
         def feed = feedUrl.toURL().text
         def entries = new XmlSlurper().parseText(feed).declareNamespace(media: 'http://search.yahoo.com/mrss/', yt: 'http://www.youtube.com/xml/schemas/2015')
-        entries.entry.each { it ->
-            println it.title
-        }
         return model << [
                 entries: entries,
                 channelUrl: grailsApplication.config.codes.recursive.youtubeChannel,
@@ -116,7 +116,13 @@ class PageController extends AbstractController{
 
     def presentations() {
         def model = defaultModel
-        return model
+        def configBucket = grailsApplication.config.codes.recursive.aws.configBucket
+        def tempFilePath = '/tmp/presentations.json'
+        def tempFile = amazonS3Service.getFile('presentations.json', tempFilePath)
+        def presentations = new JsonSlurper().parse(tempFile)
+        return model << [
+                presentations: presentations,
+        ]
     }
 
     def search() {
