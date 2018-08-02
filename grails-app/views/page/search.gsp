@@ -50,7 +50,7 @@
                     </div>
                 </g:link>
                 <div class="text-success">
-                    <small><i>${baseUrl}${createLink( action:'post',params: [id: post.id] )}</i></small>
+                    <small><i>${baseUrl}${createLink( controller: 'blog', action:'post',params: [id: post.id] )}</i></small>
                 </div>
                 <div>
                     <small class="text-muted result"><ui:truncatePost context="${searchString}" contentLength="250" article="${post.article}"/></small>

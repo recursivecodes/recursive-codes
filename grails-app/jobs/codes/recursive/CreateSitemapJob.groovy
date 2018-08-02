@@ -50,7 +50,7 @@ class CreateSitemapJob {
         wsg.addUrl(new WebSitemapUrl.Options("${baseUrl}/contact").lastMod(new Date()).priority(1.0).changeFreq(ChangeFreq.YEARLY).build())
 
         blogService.listPublished().each { Post post ->
-            wsg.addUrl(new WebSitemapUrl.Options("${baseUrl}/page/post/${post.id}").lastMod(post.lastUpdated).priority(0.8).changeFreq(ChangeFreq.WEEKLY).build())
+            wsg.addUrl(new WebSitemapUrl.Options("${baseUrl}/blog/post/${post.id}").lastMod(post.lastUpdated).priority(0.8).changeFreq(ChangeFreq.WEEKLY).build())
         }
 
         def files = wsg.write()
