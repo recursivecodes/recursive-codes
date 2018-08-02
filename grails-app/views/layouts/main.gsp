@@ -68,11 +68,11 @@
     <header class="intro-header" style="background-image: url('${assetPath(src: 'banner.jpg')}')">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9 col-lg-offset-1 col-md-10 col-md-offset-1">
+                <div class="col-lg-12 col-xs-12">
                     <div class="site-heading">
                         <h1 class="hidden-sm hidden-xs outlined-text">recursive.codes</h1>
                         <h2 class="hidden-xs hidden-md hidden-lg outlined-text">recursive.codes</h2>
-                        <h3 class="hidden-sm hidden-md hidden-lg outlined-text">recursive.codes</h2>
+                        <h3 class="hidden-sm hidden-md hidden-lg outlined-text">recursive.codes</h3>
                         <hr class="small outlined-text">
                         <span class="subheading outlined-text">The Personal Blog of Todd Sharp</span>
                     </div>

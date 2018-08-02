@@ -2,12 +2,15 @@ package codes.recursive
 
 import codes.recursive.blog.BlogService
 import codes.recursive.blog.command.ContactFormCommand
+import grails.converters.JSON
 import grails.core.GrailsApplication
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.mail.MailService
 import groovy.json.JsonSlurper
 import org.springframework.cache.CacheManager
+
+import java.nio.file.Files
 
 @Secured('permitAll')
 class PageController extends AbstractController{
@@ -148,5 +151,24 @@ class PageController extends AbstractController{
                 searchString: searchString,
                 baseUrl: grailsApplication.config.grails.serverURL,
         ]
+    }
+
+    def sitemap() {
+        def sitemapName = request.forwardURI.tokenize('/').last()
+        def tempFile = File.createTempFile(sitemapName.tokenize('.').first(), ".xml")
+        def obj = amazonS3Service.getFile("sitemaps/${sitemapName}", tempFile.absolutePath)
+        if( !obj ) {
+            throw new Exception("Could not find a sitemap matching ${sitemapName}!")
+        }
+        def xml = tempFile.text
+        tempFile.delete()
+        render(text: xml, contentType: "text/xml", encoding: "UTF-8")
+        /*
+        response.setHeader "Content-disposition", "attachment; filename=${sitemap}"
+        response.contentType = 'text/xml'
+        response.outputStream << obj.getBytes()
+        response.outputStream.flush()
+        tempFile.delete()
+        */
     }
 }

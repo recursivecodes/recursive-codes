@@ -16,6 +16,7 @@ class UrlMappings {
         "/videos"(controller: 'page', action: 'videos')
         "/presentations"(controller: 'page', action: 'videos')
         "/search"(controller: 'page', action: 'search')
+        "/sitemap**"(controller: 'page', action: 'sitemap')
         "/"(controller: 'page', action: 'index')
         "500"(view:'/error')
         "404"(view:'/notFound')

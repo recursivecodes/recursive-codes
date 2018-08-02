@@ -1,8 +1,12 @@
 package codes.recursive
 
+import codes.recursive.blog.BlogService
 import grails.util.Environment
 
 class BootStrap {
+
+    def grailsApplication
+    BlogService blogService
 
     def init = { servletContext ->
         if( Environment.current == Environment.DEVELOPMENT ) {
@@ -12,6 +16,7 @@ class BootStrap {
                 user.save(flush: true, failOnError: true)
             }
         }
+        CreateSitemapJob.triggerNow()
     }
     def destroy = {
     }

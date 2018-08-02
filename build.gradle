@@ -71,10 +71,13 @@ dependencies {
     compile "org.grails.plugins:aws-sdk-s3:2.1.5"
     compile 'org.grails.plugins:mail:2.0.0.RC6'
     runtime "org.javassist:javassist:3.17.1-GA"
+    compile group: 'com.github.dfabulich', name: 'sitemapgen4j', version: '1.0.2'
+    compile 'org.grails.plugins:quartz:2.0.13'
 }
 
 bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
+    addResources = true
 }
 
 
