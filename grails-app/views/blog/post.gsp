@@ -25,7 +25,7 @@
             jsSocials.shares.reddit = {
                 label: "Reddit",
                 logo: "fa fa-reddit-alien",
-                shareUrl: "https://reddit.com/submit?url={url}&title={text}",
+                shareUrl: "https://reddit.com/submit?url={url}&title=" + $.trim(document.querySelector('#postTitle').textContent),
                 countUrl: ""
             };
             $("#share").jsSocials({
@@ -36,7 +36,7 @@
 </head>
 
 <body>
-    <h1>${post.title}</h1>
+    <h1 id="postTitle">${post.title}</h1>
     <h5>Posted By: ${post.authoredBy.firstName} ${post.authoredBy.lastName} on <g:formatDate date="${post.publishedDate}"/></h5>
     <g:if test="${tags.size()}">
         <h6 class="upper">Tagged:
