@@ -2707,3 +2707,7 @@ body {
   max-height: 250px;
   overflow-y: auto;
 }
+.jssocials-share-reddit .jssocials-share-link {
+  background: #ff4500; }
+.jssocials-share-reddit .jssocials-share-link:hover {
+  background: #C03300; }

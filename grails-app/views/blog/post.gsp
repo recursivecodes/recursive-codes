@@ -22,8 +22,14 @@
     <asset:javascript src="jssocials.js"/>
     <g:javascript>
         $().ready(function(){
+            jsSocials.shares.reddit = {
+                label: "Reddit",
+                logo: "fa fa-reddit-alien",
+                shareUrl: "https://reddit.com/submit?url={url}&title={text}",
+                countUrl: ""
+            };
             $("#share").jsSocials({
-                shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp", "email"]
+                shares: ["reddit","twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp", "email"]
             });
         })
     </g:javascript>
