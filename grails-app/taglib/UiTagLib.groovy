@@ -242,12 +242,13 @@ class UiTagLib {
 
     def modal = { attrs, body ->
         if (!attrs?.title) throw new Exception('Title is required.')
+        def lg = attrs?.large.toString() == "true" ? 'modal-lg' : ''
         def canClose = attrs.closable.toString() == 'true' ? true : false
 
 
         out << """
             <div class="modal" id="${attrs.id}" tabindex="-1" role="dialog">
-              <div class="modal-dialog">
+              <div class="modal-dialog ${lg}">
                 <div class="modal-content">
                   <div class="modal-header">
                     ${
@@ -465,8 +466,8 @@ class UiTagLib {
             """
         out << g.javascript(null, js)
         post = post.replaceAll("\\[spoiler(.*?)\\](.*?)\\[/spoiler\\]", { full, label, content -> spoiler(label: label.tokenize('=').last(), content: content) })
-        post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
         post = post.replaceAll("\\[gist2(.*?)\\]", { full, word -> gist2(id: word.tokenize('=').last()) })
+        post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })
         post = post.replaceAll("\\[youtube(.*?)\\]", { full, word -> youtube(id: word.tokenize('=').last()) })
         out << post
     }

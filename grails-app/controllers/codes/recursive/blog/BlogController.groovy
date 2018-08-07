@@ -118,6 +118,12 @@ class BlogController extends AbstractAdminController {
     }
 
     @Secured('ROLE_ADMIN')
+    def previewPost() {
+        def post = params?.get('post')
+        render(text: ui.render(post: post), contentType: 'text/html', encoding: 'UTF-8')
+    }
+
+    @Secured('ROLE_ADMIN')
     def ajaxListTags() {
         render(blogService.listTags() as JSON)
     }

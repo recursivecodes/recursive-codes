@@ -4,6 +4,7 @@ import codes.recursive.blog.BlogService
 import codes.recursive.blog.Post
 import codes.recursive.blog.Sitemap
 import codes.recursive.blog.SitemapService
+import codes.recursive.blog.Tag
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.redfin.sitemapgenerator.ChangeFreq
 import com.redfin.sitemapgenerator.WebSitemapGenerator
@@ -51,6 +52,10 @@ class CreateSitemapJob {
 
         blogService.listPublished().each { Post post ->
             wsg.addUrl(new WebSitemapUrl.Options("${baseUrl}/blog/post/${post.id}").lastMod(post.lastUpdated).priority(0.8).changeFreq(ChangeFreq.WEEKLY).build())
+        }
+
+        blogService.listTags().each { Tag tag ->
+            wsg.addUrl(new WebSitemapUrl.Options("${baseUrl}/page/tagged/?tag=${tag.name}").lastMod(new Date()).priority(0.8).changeFreq(ChangeFreq.WEEKLY).build())
         }
 
         def files = wsg.write()

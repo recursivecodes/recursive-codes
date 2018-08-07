@@ -19,6 +19,7 @@
     <asset:javascript src="wysihtml5/wysihtml.all-commands.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.toolbar.min.js"/>
     <asset:javascript src="wysihtml5/parser_rules/advanced_and_extended.js"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/postscribe/2.0.8/postscribe.min.js"></script>
     <style>
     .wysihtml-action-active, .wysihtml-command-dialog-opened,
     .wysihtml-command-active {
@@ -210,6 +211,11 @@
         </ui:messageContainer>
 
     </g:form>
+
+    <a class="btn btn-sm btn-primary preview-post-trigger pointer" data-toggle="tooltip" data-container="body" title="Preview Post" unselectable="on"><i class="fa fa-binoculars"></i> Preview Post</a>
+    <ui:modal large="true" closable="true" id="previewModal" title="Preview Post">
+        <div id="previewBody"></div>
+    </ui:modal>
 
     <g:set var="footer">
         <button id="saveNewTagBtn" type="button" class="btn btn-primary">Save Tag</button>

@@ -2711,3 +2711,8 @@ body {
   background: #ff4500; }
 .jssocials-share-reddit .jssocials-share-link:hover {
   background: #C03300; }
+.preview-post-trigger {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
