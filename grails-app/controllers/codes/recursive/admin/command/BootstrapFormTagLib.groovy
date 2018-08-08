@@ -52,7 +52,7 @@ class BootstrapFormTagLib extends ValidationTagLib {
         if (label) {
             out << '<label class="control-label' + ( required ? '' : ' optional-label' ) + (labelSrOnly ? ' sr-only' : '') + '" for="' + (attrs.id ? attrs.id : field) + '">'
         }
-        if ( required ) {
+        if ( label && required ) {
             out << '<span class="required-indicator">*</span>\n\t'
         }
         if (label) {
@@ -226,7 +226,7 @@ class BootstrapFormTagLib extends ValidationTagLib {
             return
         }
 
-        out << '\n\t\t<span class="help-block">'
+        out << '\n\t\t<small class="help-block">'
 
         if ( bean?.errors?.hasFieldErrors( field ) ) {
             renderErrorsWithClass( [ bean: bean, field: field ], body, out )
@@ -234,7 +234,7 @@ class BootstrapFormTagLib extends ValidationTagLib {
             out << description
         }
 
-        out << '\n\t\t</span>'
+        out << '\n\t\t</small>'
     }
 
     def inputAddon = { attrs, body ->

@@ -12,6 +12,7 @@ class Post {
     String article
     Date publishedDate
     Boolean isPublished = true
+    Long version
     User authoredBy
     Date dateCreated
     Date lastUpdated

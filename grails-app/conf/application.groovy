@@ -31,4 +31,4 @@ grails.cache.config = {
 		name 'object'
 	}
 }
-
+grails.converters.json.domain.include.version = true

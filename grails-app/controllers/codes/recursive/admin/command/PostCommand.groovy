@@ -40,6 +40,7 @@ class PostCommand implements Validateable{
     }
 
     void populatePost(Post post) {
+        post.version = this?.version
         post.title = this?.title
         post.keywords = this?.keywords
         post.summary = this?.summary

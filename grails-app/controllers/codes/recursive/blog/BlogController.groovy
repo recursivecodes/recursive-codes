@@ -3,8 +3,13 @@ package codes.recursive.blog
 import codes.recursive.PageController
 import codes.recursive.admin.AbstractAdminController
 import codes.recursive.admin.command.PostCommand
+import com.amazonaws.services.s3.model.CannedAccessControlList
 import grails.converters.JSON
+import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
+import org.apache.commons.io.FilenameUtils
+import org.grails.web.servlet.mvc.SynchronizerTokensHolder
+import org.springframework.web.multipart.MultipartFile
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -12,6 +17,7 @@ import java.text.SimpleDateFormat
 class BlogController extends AbstractAdminController {
 
     BlogService blogService
+    AmazonS3Service amazonS3Service
 
     @Secured('permitAll')
     def post() {
@@ -73,14 +79,13 @@ class BlogController extends AbstractAdminController {
                 // If we're valid, populate our model and save
                 if (!command.hasErrors()) {
                     command.populatePost(post)
-
                     blogService.save(post)
-
-                    // Tell the end user about it and redirect back to the form
-                    flash.message = g.message(code: 'admin.blog.post.saved')
-
-                    // Redirect to prevent the old "reload saves it again" issue,
-                    redirect(action: 'list')
+                    def token = SynchronizerTokensHolder.store(session).generateToken(params.SYNCHRONIZER_URI)
+                    SynchronizerTokensHolder.store(session).resetToken(token)
+                    render([
+                            post: post,
+                            token: token,
+                    ] as JSON)
                     return
 
                 } else {
@@ -96,6 +101,7 @@ class BlogController extends AbstractAdminController {
         return model << [
                 command      : command,
                 defaultParams: defaultParams,
+                imgBucket: grailsApplication.config.codes.recursive.aws.s3.imgBucket,
         ]
     }
 
@@ -139,5 +145,19 @@ class BlogController extends AbstractAdminController {
             // just swallow the error - it's likely a 'unique' violation -- let them assume they created the new one after the list gets rebuilt (to avoid user confusion)
         }
         render([saved: true] as JSON)
+    }
+
+    @Secured('ROLE_ADMIN')
+    def uploadFile() {
+        def files = request.multipartFiles
+        def urls = []
+        files.eachWithIndex { file, idx ->
+            def folder = params.get('folder_' + idx)
+            MultipartFile upload = file.value[0]
+            def key = params.get('key_' + idx).size() ? params.get('key_' + idx) + '.' + FilenameUtils.getExtension(upload.getOriginalFilename()) : upload.originalFilename
+            def s3Object = amazonS3Service.storeMultipartFile(grailsApplication.config.codes.recursive.aws.s3.imgBucket, "${folder ? folder + '/' : ''}${key}".toString(), upload, CannedAccessControlList.PublicRead )
+            urls << s3Object
+        }
+        render([upload: true, urls: urls] as JSON)
     }
 }

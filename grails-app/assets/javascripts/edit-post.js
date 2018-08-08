@@ -95,6 +95,120 @@ $(document).ready(function(){
         $('#helpModal').modal('show')
     })
 
+    $('.browse-s3-trigger').on('click', function(){
+        $('#s3Modal').modal('show')
+    })
+
+    $('#addUploadBtn').on('click', function(){
+        var row = $('.upload-row').last().clone()
+        var idx = $('.upload-row').length
+        $(row).find('.folder-label').attr('for', `uploadFolder_${idx}`)
+        $(row).find('.key-label').attr('for', `uploadKey_${idx}`)
+        $(row).find('.file-label').attr('for', `uploadFile_${idx}`)
+        $(row).find('.upload-folder').val('').attr('id', `uploadFolder_${idx}`).attr('name', `uploadFolder_${idx}`)
+        $(row).find('.upload-key').val('').attr('id', `uploadKey_${idx}`).attr('name', `uploadKey_${idx}`)
+        $(row).find('.upload-file').val('').attr('id', `uploadFile_${idx}`).attr('name', `uploadFile_${idx}`)
+        $(row).insertAfter($('.upload-row').last())
+        return false;
+    })
+
+    $(document).on('click', '.remove-upload', function(){
+        if( $('.upload-row').length > 1 ) {
+            $(this).closest('.upload-row').remove()
+        }
+        return false;
+    })
+
+    function objectifyForm(formArray) {//serialize data function
+        var returnArray = {};
+        for (var i = 0; i < formArray.length; i++){
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+        return returnArray;
+    }
+
+    function savePost() {
+        $('#btnSubmit').html('<i class="fa fa-refresh fa-spin"></i> Saving...').attr('disabled', 'disabled')
+        var form = objectifyForm( $('form[name="postForm"]').serializeArray() );
+        $.ajax({
+            url: '/blog/edit',
+            dataType: 'json',
+            data: form,
+            method: 'POST',
+            success: function(result) {
+                $('#SYNCHRONIZER_TOKEN').val(result.token);
+                $('#id').val(result.post.id);
+                $('#version').val(result.post.version);
+                window.history.pushState("", "", `/blog/edit/${result.post.id}`);
+            },
+            error: function(e) {
+                console.error(e);
+                alert('Error saving post.  See console.')
+            },
+            complete: function(){
+                $('#btnSubmit').html('Save').removeAttr('disabled')
+            }
+        })
+    }
+
+    $('#btnSubmit').on('click', function(){
+        savePost();
+        return false;
+    })
+
+    $(document).on('keydown', '.fullscreen', function(e){
+        console.log(e)
+        if( e.which === 27 ) {
+            $(this).removeClass('fullscreen')
+        }
+        return false;
+    })
+
+    $('.full-screen-trigger').on('click', function(){
+        var editor = $('#editor')
+        editor.toggleClass('fullscreen')
+        return false;
+    })
+
+    $('#uploadFileBtn').on('click', function(){
+        var formData = new FormData();
+        $('.upload-folder').each(function(i,e){
+            formData.append(`folder_${i}`, $(e).val());
+        })
+        $('.upload-key').each(function(i,e){
+            formData.append(`key_${i}`, $(e).val());
+        })
+        $('.upload-file').each(function(i,e){
+            formData.append(`upload_${i}`, $(e).get(0).files[0]);
+        })
+        $('#uploadFileBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Uploading...')
+        $.ajax({
+            url: '/blog/uploadFile',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(result) {
+                console.log(result);
+                $('#uploadFileBtn').removeAttr('disabled').html('Upload')
+                $('#s3UploadModal').modal('hide')
+            },
+            error: function(e) {
+                console.error(e);
+                $('#uploadFileBtn').removeAttr('disabled').html('Upload')
+                alert('Error uploading file.  See console.');
+            }
+        })
+    })
+
+    $('.upload-s3-trigger').on('click', function(){
+        $('#s3UploadModal').on('shown.bs.modal', function(){
+            $('.upload-row').not(':last').remove()
+            $('.upload-folder, .upload-key, .upload-file').val('')
+        })
+        $('#s3UploadModal').modal('show')
+    })
+
     var f = document.querySelector('.wysihtml-sandbox');
     var iframeDoc = f.contentDocument || f.contentWindow.document;
 
