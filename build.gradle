@@ -73,6 +73,7 @@ dependencies {
     runtime "org.javassist:javassist:3.17.1-GA"
     compile group: 'com.github.dfabulich', name: 'sitemapgen4j', version: '1.0.2'
     compile 'org.grails.plugins:quartz:2.0.13'
+    compile group: 'org.eclipse.mylyn.github', name: 'org.eclipse.egit.github.core', version: '2.1.5'
 }
 
 bootRun {

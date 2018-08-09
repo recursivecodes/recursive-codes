@@ -15,6 +15,7 @@
         dateFormat = '${g.message(code: 'js.dateTimeFormat')}'
     </g:javascript>
     <asset:javascript src="edit-post.js"/>
+    <asset:javascript src="ace/src-min/ace.js"/>
     <asset:javascript src="wysihtml5/wysihtml.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.all-commands.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.toolbar.min.js"/>
@@ -29,6 +30,12 @@
     .wysihtml-sandbox{
         height: 550px !important;
         width: 100% !important;
+    }
+    .fullscreen .wysihtml-sandbox {
+        height: calc(100vh - 130px) !important;
+    }
+    .ace_editor {
+        height: 350px;
     }
     .nicehide {
         resize: none !important;
@@ -139,6 +146,8 @@
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[spoiler label=Spoiler]Spoiler Text Here[/spoiler]" title="Insert a spoiler tag" class="command" href="javascript:;" unselectable="on"><i class="fa fa-exclamation-circle"></i>
                                 </a>
+                                <a class="btn btn-sm btn-default create-gist-trigger" data-toggle="tooltip" data-container="body" title="Create a gist" class="command" href="javascript:;" unselectable="on"><i class="fa fa-github-alt"></i>
+                                </a>
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[gist2 id=]" title="Insert a gist" class="command" href="javascript:;" unselectable="on"><i class="fa fa-github"></i>
                                 </a>
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[youtube id=]" title="Embed a YouTube video" class="command" href="javascript:;" unselectable="on"><i class="fa fa-youtube"></i>
@@ -234,11 +243,27 @@
         </div>
     </g:form>
 
-
     <ui:modal large="true" closable="true" id="previewModal" title="Preview Post">
         <div id="previewBody"></div>
     </ui:modal>
 
+    <g:set var="createGistFooter">
+        <button id="createGistBtn" type="button" class="btn btn-primary">Create</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </g:set>
+    <ui:modal large="true" closable="true" id="createGistModal" title="Create A Gist" footer="${createGistFooter}">
+        <div>
+            <div class="form-group">
+                <input type="text" id="createGistName" name="createGistName" placeholder="Name" maxlength="100" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="text" id="createGistDescription" name="createGistDescription" placeholder="Description" maxlength="100" class="form-control" />
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Code" name="createGistCode" id="createGistCode" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+    </ui:modal>
 
     <g:set var="uploadFooter">
         <button id="uploadFileBtn" type="button" class="btn btn-primary">Upload</button>
@@ -280,7 +305,7 @@
     </ui:modal>
 
     <ui:modal large="true" closable="true" id="s3Modal" title="Browse S3">
-        <iframe src="https://s3.amazonaws.com/${imgBucket}/index.html" width="100%" height="400px" frameborder="0"></iframe>
+        <iframe id="s3BrowserIframe" src="https://s3.amazonaws.com/${imgBucket}/index.html" width="100%" height="400px" frameborder="0"></iframe>
     </ui:modal>
 
     <g:set var="footer">

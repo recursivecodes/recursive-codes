@@ -21,7 +21,7 @@ class PostCommand implements Validateable{
     Date publishedDate = new Date()
     Boolean isPublished = true
     User authoredBy
-    Integer version
+    Long version
     List tags = []
 
     static PostCommand fromPost(Post post) {

@@ -8,6 +8,9 @@ import grails.converters.JSON
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
 import org.apache.commons.io.FilenameUtils
+import org.eclipse.egit.github.core.Gist
+import org.eclipse.egit.github.core.GistFile
+import org.eclipse.egit.github.core.service.GistService
 import org.grails.web.servlet.mvc.SynchronizerTokensHolder
 import org.springframework.web.multipart.MultipartFile
 
@@ -159,5 +162,25 @@ class BlogController extends AbstractAdminController {
             urls << s3Object
         }
         render([upload: true, urls: urls] as JSON)
+    }
+
+    @Secured('ROLE_ADMIN')
+    def createGist() {
+        def name = params.get('name')
+        def description = params.get('description')
+        def code = params.get('code')
+        if( !name || !code ) throw new Exception('Name and code are required!')
+
+        GistFile file = new GistFile()
+        file.setContent(code)
+        Gist gist = new Gist()
+        gist.setPublic(true)
+        gist.setDescription(description)
+        gist.setFiles(Collections.singletonMap(name, file))
+        GistService service = new GistService()
+        service.getClient().setCredentials(grailsApplication.config.codes.recursive.github.user2, grailsApplication.config.codes.recursive.github.password2)
+        gist = service.createGist(gist)
+
+        render([gist: gist] as JSON)
     }
 }

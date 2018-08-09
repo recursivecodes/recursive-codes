@@ -96,18 +96,83 @@ $(document).ready(function(){
     })
 
     $('.browse-s3-trigger').on('click', function(){
+        $('#s3Modal').on('shown.bs.modal', function(){
+            $('#s3BrowserIframe').get(0).src += ' ';
+        });
         $('#s3Modal').modal('show')
     })
+
+    $('#createGistBtn').on('click', function(){
+        $('#createGistBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Creating...')
+
+        $.ajax({
+            url: '/blog/createGist',
+            method: 'POST',
+            data: {
+                name: $('#createGistName').val(),
+                description: $('#createGistDescription').val(),
+                code: aceEditor.getValue()
+            },
+            success: function(result) {
+                console.log(result);
+                editor.focus();
+                editor.composer.commands.exec("insertHTML","[gist2 id=" + result.gist.id + "]");
+                $('#createGistModal').modal('hide')
+            },
+            error: function(e) {
+                console.error(e);
+                alert('Error posting Gist.  Check console.');
+            },
+            complete: function(){
+                $('#createGistBtn').html('Create').removeAttr('disabled')
+            }
+        })
+    })
+
+    $('.create-gist-trigger').on('click', function(){
+        $('#createGistModal').on('shown.bs.modal', function(){
+            $('#createGistCode').val('')
+            $('#createGistDescription').val('')
+            $('#createGistName').val('')
+
+            // create code editor
+            if( typeof aceEditor === 'undefined' ) {
+                aceEditor = ace.edit("createGistCode");
+                aceEditor.setTheme("ace/theme/dracula");
+                aceEditor.session.setMode("ace/mode/javascript");
+            }
+            aceEditor.setValue('')
+        })
+        $('#createGistModal').modal('show')
+    })
+
+    var aceExtMapping = {
+        'js': 'ace/mode/javascript',
+        'ts': 'ace/mode/javascript',
+        'groovy': 'ace/mode/groovy',
+        'gsp': 'ace/mode/groovy',
+        'gson': 'ace/mode/groovy',
+        'java': 'ace/mode/java',
+    }
+
+    $(document).on('keydown', '#createGistName', function() {
+        var nameArr = $(this).val().split('.');
+        var ext = nameArr[nameArr.length-1];
+        var aceMode = aceExtMapping[ext];
+        if( aceMode ) {
+            aceEditor.session.setMode( aceMode )
+        }
+    });
 
     $('#addUploadBtn').on('click', function(){
         var row = $('.upload-row').last().clone()
         var idx = $('.upload-row').length
-        $(row).find('.folder-label').attr('for', `uploadFolder_${idx}`)
-        $(row).find('.key-label').attr('for', `uploadKey_${idx}`)
-        $(row).find('.file-label').attr('for', `uploadFile_${idx}`)
-        $(row).find('.upload-folder').val('').attr('id', `uploadFolder_${idx}`).attr('name', `uploadFolder_${idx}`)
-        $(row).find('.upload-key').val('').attr('id', `uploadKey_${idx}`).attr('name', `uploadKey_${idx}`)
-        $(row).find('.upload-file').val('').attr('id', `uploadFile_${idx}`).attr('name', `uploadFile_${idx}`)
+        $(row).find('.folder-label').attr('for', 'uploadFolder_' + idx)
+        $(row).find('.key-label').attr('for', 'uploadKey_' + idx)
+        $(row).find('.file-label').attr('for', 'uploadFile_' + idx)
+        $(row).find('.upload-folder').val('').attr('id', 'uploadFolder_' + idx).attr('name', 'uploadFolder_' + idx)
+        $(row).find('.upload-key').val('').attr('id', 'uploadKey_' + idx).attr('name', 'uploadKey_' + idx)
+        $(row).find('.upload-file').val('').attr('id', 'uploadFile_' + idx).attr('name', 'uploadFile_' + idx)
         $(row).insertAfter($('.upload-row').last())
         return false;
     })
@@ -119,7 +184,7 @@ $(document).ready(function(){
         return false;
     })
 
-    function objectifyForm(formArray) {//serialize data function
+    objectifyForm = function(formArray) {
         var returnArray = {};
         for (var i = 0; i < formArray.length; i++){
             returnArray[formArray[i]['name']] = formArray[i]['value'];
@@ -127,7 +192,7 @@ $(document).ready(function(){
         return returnArray;
     }
 
-    function savePost() {
+    savePost = function() {
         $('#btnSubmit').html('<i class="fa fa-refresh fa-spin"></i> Saving...').attr('disabled', 'disabled')
         var form = objectifyForm( $('form[name="postForm"]').serializeArray() );
         $.ajax({
@@ -139,7 +204,7 @@ $(document).ready(function(){
                 $('#SYNCHRONIZER_TOKEN').val(result.token);
                 $('#id').val(result.post.id);
                 $('#version').val(result.post.version);
-                window.history.pushState("", "", `/blog/edit/${result.post.id}`);
+                window.history.pushState("", "", '/blog/edit/' + result.post.id);
             },
             error: function(e) {
                 console.error(e);
@@ -173,13 +238,13 @@ $(document).ready(function(){
     $('#uploadFileBtn').on('click', function(){
         var formData = new FormData();
         $('.upload-folder').each(function(i,e){
-            formData.append(`folder_${i}`, $(e).val());
+            formData.append('folder_' + i, $(e).val());
         })
         $('.upload-key').each(function(i,e){
-            formData.append(`key_${i}`, $(e).val());
+            formData.append('key_' + i, $(e).val());
         })
         $('.upload-file').each(function(i,e){
-            formData.append(`upload_${i}`, $(e).get(0).files[0]);
+            formData.append('upload_' + i, $(e).get(0).files[0]);
         })
         $('#uploadFileBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Uploading...')
         $.ajax({
@@ -213,42 +278,7 @@ $(document).ready(function(){
     var iframeDoc = f.contentDocument || f.contentWindow.document;
 
     $('iframe').load(function(){
-        const styles = `
-            p {border: 1px dotted;}
-            code {
-                padding: 2px 4px;
-                font-size: 90%;
-                color: #c7254e;
-                background-color: #f9f2f4;
-                border-radius: 4px;
-            }
-            .alert {
-                padding: 15px;
-                margin-bottom: 20px;
-                border: 1px solid transparent;
-                border-radius: 4px;
-            }
-            .alert-success { 
-                color: #3c763d;
-                background-color: #dff0d8;
-                border-color: #d6e9c6;
-            }
-            .alert-warning { 
-                color: #8a6d3b;
-                background-color: #fcf8e3;
-                border-color: #faebcc;
-            }
-            .alert-danger { 
-                color: #a94442;
-                background-color: #f2dede;
-                border-color: #ebccd1;
-            }
-            .alert-info { 
-                color: #31708f;
-                background-color: #d9edf7;
-                border-color: #bce8f1;
-            }
-        `;
+        var styles = 'br{content: ".";display: inline-block;width: 100%;border-bottom: 2px dashed red;}p{border:1px dotted}code{padding:2px 4px;font-size:90%;color:#c7254e;background-color:#f9f2f4;border-radius:4px}.alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}.alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}.alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}.alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}';
         $(iframeDoc).contents().find("head")
             .append($("<style type='text/css'>"+styles+"</style>"));
     })
