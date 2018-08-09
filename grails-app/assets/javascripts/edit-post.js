@@ -1,6 +1,7 @@
 $(document).ready(function(){
+
     $('.datepicker').datetimepicker({ format: dateFormat})
-    //wysihtml.insertsLineBreaksOnReturn = true;
+
     editor = new wysihtml.Editor(
             "wysihtml-textarea", {
                 insertsLineBreaksOnReturn: false,
