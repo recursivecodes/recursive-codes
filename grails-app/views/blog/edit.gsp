@@ -15,7 +15,7 @@
         dateFormat = '${g.message(code: 'js.dateTimeFormat')}'
     </g:javascript>
     <asset:javascript src="edit-post.js"/>
-    <script src="/assets/ace/src-min/ace.js"></script>
+    <asset:javascript src="ace/src-min/ace.js"/>
     <asset:javascript src="wysihtml5/wysihtml.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.all-commands.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.toolbar.min.js"/>
