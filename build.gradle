@@ -85,6 +85,7 @@ bootRun {
 assets {
     minifyJs = true
     minifyCss = true
+    excludes = ["ace/**"]
 }
 
 sourceSets {
