@@ -105,6 +105,8 @@ class BlogController extends AbstractAdminController {
                 command      : command,
                 defaultParams: defaultParams,
                 imgBucket: grailsApplication.config.codes.recursive.aws.s3.imgBucket,
+                youTubeApiKey: grailsApplication.config.codes.recursive.google.youtube.apiKey,
+                youTubeChannelId: grailsApplication.config.codes.recursive.youtubeChannelId,
         ]
     }
 

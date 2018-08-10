@@ -1,66 +1,93 @@
-$(document).ready(function(){
+"use strict";
+import { Upload } from "./model/upload.js";
 
-    $('.datepicker').datetimepicker({ format: dateFormat})
+rivets.formatters.showRemoveBtn = (value) => value.length > 1;
+rivets.formatters.gt = function(value, args) {
+    return value > args;
+};
+rivets.formatters.length = function(value) {
+    return value ? (value.length || 0) : 0;
+};
+rivets.formatters.prepend = function(value, prepend) {
+    return prepend + value
+};
 
-    editor = new wysihtml.Editor(
-            "wysihtml-textarea", {
-                insertsLineBreaksOnReturn: false,
-                toolbar: "toolbar",
-                parserRules: wysihtmlParserRules
-            }
-    )
-    editor.on( "load", function() {
-        // Trick browser into showing HTML5 required validation popups.
-        $('#wysihtml-textarea').addClass('nicehide');
-    } );
+rivets.formatters.append = function(value, append) {
+    return value + append
+};
 
-    $('#addTagBtn').on('click', function(){
-        $('#newTagModal').modal({show: true})
-        $('#newTag').val('')
-    })
-
-    $('#saveNewTagBtn').on('click', function(){
-        var tagEl = $('#newTag')
-        if( !tagEl.val().length ) {
-            tagEl.closest('.form-group').addClass('has-error')
+const model = {
+    myChannelId: youTubeChannelId,
+    youTubeResults: [],
+    editor: null,
+    aceEditor: null,
+    s3Uploads: [],
+    selectYouTube: function(event, context) {
+        const item = context.item;
+        const id = item.id.videoId;
+        model.editor.focus();
+        model.editor.composer.commands.exec("insertHTML","[youtube id=" + id + "]");
+        $('#youTubeSearchModal').modal('hide')
+    },
+    doYouTubeSearch: function() {
+        model.youTubeResults = [];
+        const results = model.searchYouTube( $('#youTubeSearchString').val(), $('#youTubeChannel').val() );
+        results.then(function(result){
+            model.youTubeResults = result.result.items;
+        })
+    },
+    searchYouTube: function(q, channelId) {
+        const params = {
+            q: q,
+            part: 'snippet',
+            type: 'video',
+            maxResults: 48
+        };
+        if( channelId ) {
+            params['channelId'] = channelId;
         }
-        else {
-            tagEl.closest('.form-group').removeClass('has-error')
-
-            $.ajax({
-                url:   '/blog/ajaxSaveTag?tag=' + tagEl.val(),
-                success: function(result){
-                    $('#newTagModal').modal('hide')
-                    currentTags = $('#postTags').val()
-                    listTags()
-                },
-                error: function(){
-                    alert('An error occurred trying to save this tag.  Please try again.')
-                }
-            })
-        }
-    })
-
-    $('#viewSourceBtn').on('click', function(){
+        const request = gapi.client.youtube.search.list(params);
+        return request;
+    },
+    showYouTubeModal: function() {
+        $('#youTubeSearchModal').on('shown.bs.modal', function(){}).modal('show')
+    },
+    viewSource: function() {
         if( $('.nicehide').size() > 0 ) {
             $('.nicehide').addClass('nonicehide').removeClass('nicehide')
         }
-    })
-
-    $('#btnSubmit').on('click', function(){
+    },
+    submitClicked: function() {
         if( $('.nonicehide').size() > 0 ) {
             $('.nonicehide').addClass('nicehide').removeClass('nonicehide')
         }
-    })
-
-    listTags()
-
-    setInterval(function(){
-        // keep the session alive so that it doesn't expire in the middle of a blog post
-        $.ajax({url: '/'})
-    }, 30000)
-
-    $('.preview-post-trigger').on('click', function(){
+        model.savePost();
+        return false;
+    },
+    savePost: function() {
+        $('#btnSubmit').html('<i class="fa fa-refresh fa-spin"></i> Saving...').attr('disabled', 'disabled')
+        var form = model.objectifyForm( $('form[name="postForm"]').serializeArray() );
+        $.ajax({
+            url: '/blog/edit',
+            dataType: 'json',
+            data: form,
+            method: 'POST',
+            success: function(result) {
+                $('#SYNCHRONIZER_TOKEN').val(result.token);
+                $('#id').val(result.post.id);
+                $('#version').val(result.post.version);
+                window.history.pushState("", "", '/blog/edit/' + result.post.id);
+            },
+            error: function(e) {
+                console.error(e);
+                alert('Error saving post.  See console.')
+            },
+            complete: function(){
+                $('#btnSubmit').html('Save').removeAttr('disabled')
+            }
+        })
+    },
+    previewPost: function(){
         $.ajax(
             {
                 method: 'POST',
@@ -90,34 +117,39 @@ $(document).ready(function(){
                 }
             }
         )
-    })
-
-    $('.help-modal-trigger').on('click', function(){
+    },
+    showHelpModal: function(){
         $('#helpModal').modal('show')
-    })
+    },
+    showGistModal: function(){
+        $('#createGistModal').on('shown.bs.modal', function(){
+            $('#createGistCode').val('')
+            $('#createGistDescription').val('')
+            $('#createGistName').val('')
 
-    $('.browse-s3-trigger').on('click', function(){
-        $('#s3Modal').on('shown.bs.modal', function(){
-            $('#s3BrowserIframe').get(0).src += ' ';
-        });
-        $('#s3Modal').modal('show')
-    })
-
-    $('#createGistBtn').on('click', function(){
+            // create code editor
+            if( !model.aceEditor ) {
+                model.aceEditor = ace.edit("createGistCode");
+                model.aceEditor.setTheme("ace/theme/dracula");
+                model.aceEditor.session.setMode("ace/mode/javascript");
+            }
+            model.aceEditor.setValue('')
+        })
+        $('#createGistModal').modal('show')
+    },
+    createGist: function(){
         $('#createGistBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Creating...')
-
         $.ajax({
             url: '/blog/createGist',
             method: 'POST',
             data: {
                 name: $('#createGistName').val(),
                 description: $('#createGistDescription').val(),
-                code: aceEditor.getValue()
+                code: model.aceEditor.getValue()
             },
             success: function(result) {
-                console.log(result);
-                editor.focus();
-                editor.composer.commands.exec("insertHTML","[gist2 id=" + result.gist.id + "]");
+                model.editor.focus();
+                model.editor.composer.commands.exec("insertHTML","[gist2 id=" + result.gist.id + "]");
                 $('#createGistModal').modal('hide')
             },
             error: function(e) {
@@ -128,125 +160,117 @@ $(document).ready(function(){
                 $('#createGistBtn').html('Create').removeAttr('disabled')
             }
         })
-    })
+    },
+    showS3Browser: function(){
+        $('#s3Modal').on('shown.bs.modal', function(){
+            $('#s3BrowserIframe').get(0).src += ' ';
+        });
+        $('#s3Modal').modal('show')
+    },
+    goFullscreen: function() {
+        $('#editor').toggleClass('fullscreen')
+        return false;
+    },
+    initIframe: function() {
+        var f = document.querySelector('.wysihtml-sandbox');
+        var iframeDoc = f.contentDocument || f.contentWindow.document;
 
-    $('.create-gist-trigger').on('click', function(){
-        $('#createGistModal').on('shown.bs.modal', function(){
-            $('#createGistCode').val('')
-            $('#createGistDescription').val('')
-            $('#createGistName').val('')
-
-            // create code editor
-            if( typeof aceEditor === 'undefined' ) {
-                aceEditor = ace.edit("createGistCode");
-                aceEditor.setTheme("ace/theme/dracula");
-                aceEditor.session.setMode("ace/mode/javascript");
+        $('iframe').load(function(){
+            var styles = 'br{content: ".";display: inline-block;width: 100%;border-bottom: 2px dashed red;}p{border:1px dotted}code{padding:2px 4px;font-size:90%;color:#c7254e;background-color:#f9f2f4;border-radius:4px}.alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}.alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}.alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}.alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}';
+            $(iframeDoc).contents().find("head")
+                .append($("<style type='text/css'>"+styles+"</style>"));
+        });
+    },
+    initEditor: function() {
+        model.editor = new wysihtml.Editor(
+            "wysihtml-textarea", {
+                insertsLineBreaksOnReturn: false,
+                toolbar: "toolbar",
+                parserRules: wysihtmlParserRules
             }
-            aceEditor.setValue('')
-        })
-        $('#createGistModal').modal('show')
-    })
+        )
+        model.editor.on( "load", function() {
+            // Trick browser into showing HTML5 required validation popups.
+            $('#wysihtml-textarea').addClass('nicehide');
+        } );
+    },
+    addTag: function() {
+        $('#newTagModal').modal({show: true})
+        $('#newTag').val('')
+    },
+    saveNewTag: function() {
+        var tagEl = $('#newTag')
+        if( !tagEl.val().length ) {
+            tagEl.closest('.form-group').addClass('has-error')
+        }
+        else {
+            tagEl.closest('.form-group').removeClass('has-error')
 
-    var aceExtMapping = {
+            $.ajax({
+                url:   '/blog/ajaxSaveTag?tag=' + tagEl.val(),
+                success: function(result){
+                    $('#newTagModal').modal('hide')
+                    currentTags = $('#postTags').val()
+                    listTags()
+                },
+                error: function(){
+                    alert('An error occurred trying to save this tag.  Please try again.')
+                }
+            })
+        }
+    },
+    keepSessionAlive: function() {
+        setInterval(function(){
+            // keep the session alive so that it doesn't expire in the middle of a blog post
+            $.ajax({url: '/'})
+        }, 30000)
+    },
+    initDatePickers: function() {
+        $('.datepicker').datetimepicker({ format: dateFormat})
+    },
+    aceExtMapping: {
         'js': 'ace/mode/javascript',
         'ts': 'ace/mode/javascript',
         'groovy': 'ace/mode/groovy',
         'gsp': 'ace/mode/groovy',
         'gson': 'ace/mode/groovy',
         'java': 'ace/mode/java',
-    }
-
-    $(document).on('keydown', '#createGistName', function() {
+    },
+    setAceMode: function() {
         var nameArr = $(this).val().split('.');
         var ext = nameArr[nameArr.length-1];
-        var aceMode = aceExtMapping[ext];
+        var aceMode = model.aceExtMapping[ext];
         if( aceMode ) {
-            aceEditor.session.setMode( aceMode )
+            model.aceEditor.session.setMode( aceMode )
         }
-    });
-
-    $('#addUploadBtn').on('click', function(){
-        var row = $('.upload-row').last().clone()
-        var idx = $('.upload-row').length
-        $(row).find('.folder-label').attr('for', 'uploadFolder_' + idx)
-        $(row).find('.key-label').attr('for', 'uploadKey_' + idx)
-        $(row).find('.file-label').attr('for', 'uploadFile_' + idx)
-        $(row).find('.upload-folder').val('').attr('id', 'uploadFolder_' + idx).attr('name', 'uploadFolder_' + idx)
-        $(row).find('.upload-key').val('').attr('id', 'uploadKey_' + idx).attr('name', 'uploadKey_' + idx)
-        $(row).find('.upload-file').val('').attr('id', 'uploadFile_' + idx).attr('name', 'uploadFile_' + idx)
-        $(row).insertAfter($('.upload-row').last())
-        return false;
-    })
-
-    $(document).on('click', '.remove-upload', function(){
-        if( $('.upload-row').length > 1 ) {
-            $(this).closest('.upload-row').remove()
+    },
+    showS3UploadModal: function(){
+        $('#s3UploadModal').on('shown.bs.modal', function(){
+            $('.upload-row').not(':last').remove()
+            $('.upload-folder, .upload-key, .upload-file').val('')
+            model.s3Uploads = [
+                new Upload(),
+            ]
+        })
+        $('#s3UploadModal').modal('show')
+    },
+    canRemoveUpload: false,
+    removeS3Upload: function(event, context) {
+        const upload = context.upload;
+        const idx = model.s3Uploads.indexOf(upload);
+        if( idx != -1 ) {
+            model.s3Uploads.splice( idx, 1 );
         }
+        model.canRemoveUpload = model.s3Uploads.length != 1;
         return false;
-    })
-
-    objectifyForm = function(formArray) {
-        var returnArray = {};
-        for (var i = 0; i < formArray.length; i++){
-            returnArray[formArray[i]['name']] = formArray[i]['value'];
-        }
-        return returnArray;
-    }
-
-    savePost = function() {
-        $('#btnSubmit').html('<i class="fa fa-refresh fa-spin"></i> Saving...').attr('disabled', 'disabled')
-        var form = objectifyForm( $('form[name="postForm"]').serializeArray() );
-        $.ajax({
-            url: '/blog/edit',
-            dataType: 'json',
-            data: form,
-            method: 'POST',
-            success: function(result) {
-                $('#SYNCHRONIZER_TOKEN').val(result.token);
-                $('#id').val(result.post.id);
-                $('#version').val(result.post.version);
-                window.history.pushState("", "", '/blog/edit/' + result.post.id);
-            },
-            error: function(e) {
-                console.error(e);
-                alert('Error saving post.  See console.')
-            },
-            complete: function(){
-                $('#btnSubmit').html('Save').removeAttr('disabled')
-            }
-        })
-    }
-
-    $('#btnSubmit').on('click', function(){
-        savePost();
-        return false;
-    })
-
-    $(document).on('keydown', '.fullscreen', function(e){
-        console.log(e)
-        if( e.which === 27 ) {
-            $(this).removeClass('fullscreen')
-        }
-        return false;
-    })
-
-    $('.full-screen-trigger').on('click', function(){
-        var editor = $('#editor')
-        editor.toggleClass('fullscreen')
-        return false;
-    })
-
-    $('#uploadFileBtn').on('click', function(){
-        var formData = new FormData();
-        $('.upload-folder').each(function(i,e){
-            formData.append('folder_' + i, $(e).val());
-        })
-        $('.upload-key').each(function(i,e){
-            formData.append('key_' + i, $(e).val());
-        })
-        $('.upload-file').each(function(i,e){
-            formData.append('upload_' + i, $(e).get(0).files[0]);
-        })
+    },
+    s3Upload: function() {
+        const formData = new FormData();
+        model.s3Uploads.forEach( (upload, index)=> {
+           formData.append(`folder_${index}`, upload.folder);
+           formData.append(`key_${index}`, upload.key);
+           formData.append(`upload_${index}`, $(`#uploadFile_${index}`).get(0).files[0]);
+        });
         $('#uploadFileBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Uploading...')
         $.ajax({
             url: '/blog/uploadFile',
@@ -255,8 +279,11 @@ $(document).ready(function(){
             processData: false,
             contentType: false,
             success: function(result) {
-                console.log(result);
                 $('#uploadFileBtn').removeAttr('disabled').html('Upload')
+                result.urls.forEach( url => {
+                    model.editor.focus();
+                    model.editor.composer.commands.exec("insertHTML",`<img src="${url}" class="img-thumbnail img-responsive"/>`);
+                })
                 $('#s3UploadModal').modal('hide')
             },
             error: function(e) {
@@ -265,30 +292,27 @@ $(document).ready(function(){
                 alert('Error uploading file.  See console.');
             }
         })
-    })
-
-    $('.upload-s3-trigger').on('click', function(){
-        $('#s3UploadModal').on('shown.bs.modal', function(){
-            $('.upload-row').not(':last').remove()
-            $('.upload-folder, .upload-key, .upload-file').val('')
-        })
-        $('#s3UploadModal').modal('show')
-    })
-
-    var f = document.querySelector('.wysihtml-sandbox');
-    var iframeDoc = f.contentDocument || f.contentWindow.document;
-
-    $('iframe').load(function(){
-        var styles = 'br{content: ".";display: inline-block;width: 100%;border-bottom: 2px dashed red;}p{border:1px dotted}code{padding:2px 4px;font-size:90%;color:#c7254e;background-color:#f9f2f4;border-radius:4px}.alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}.alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}.alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}.alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}';
-        $(iframeDoc).contents().find("head")
-            .append($("<style type='text/css'>"+styles+"</style>"));
-    })
-
-
-})
-
-listTags = function(){
-    $.ajax(
+    },
+    addUpload: function() {
+        model.s3Uploads.push( new Upload() );
+        model.canRemoveUpload = model.s3Uploads.length != 1;
+        return false;
+    },
+    objectifyForm: function(formArray) {
+        var returnArray = {};
+        for (var i = 0; i < formArray.length; i++){
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+        return returnArray;
+    },
+    exitFullScreen: function(e) {
+        if( e.which === 27 ) {
+            $(this).removeClass('fullscreen')
+        }
+        //return false;
+    },
+    listTags: function(){
+        $.ajax(
             {
                 url: '/blog/ajaxListTags',
                 success: function(result){
@@ -307,5 +331,15 @@ listTags = function(){
                     alert('An error occurred trying to list tags.  Please try again.')
                 }
             }
-    )
-}
+        )
+    },
+};
+
+$(document).ready(function(){
+    model.initDatePickers();
+    model.listTags();
+    model.initEditor();
+    model.keepSessionAlive();
+    model.initIframe();
+    rivets.bind($('body'), {model: model})
+})

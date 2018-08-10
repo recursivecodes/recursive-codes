@@ -11,16 +11,25 @@
     <meta name="layout" content="admin"/>
     <title>Edit Blog Post</title>
     <g:javascript>
-        currentTags = ${raw((command.tags.collect { it.class.name == 'java.lang.String' ? it : it.id.toString() } as grails.converters.JSON) as String)}
-        dateFormat = '${g.message(code: 'js.dateTimeFormat')}'
+        currentTags = ${raw((command.tags.collect { it.class.name == 'java.lang.String' ? it : it.id.toString() } as grails.converters.JSON) as String)};
+        dateFormat = '${g.message(code: 'js.dateTimeFormat')}';
+        youTubeApiKey = '${youTubeApiKey}';
+        youTubeChannelId = '${youTubeChannelId}';
+        function googleApiClientReady() {
+            gapi.client.setApiKey(youTubeApiKey);
+            gapi.client.load('youtube', 'v3', function() {});
+        }
     </g:javascript>
-    <asset:javascript src="edit-post.js"/>
+    <asset:javascript src="rivets/rivets.js"/>
+    <script src="${assetPath(src: 'edit-post.js')}" type="module"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
     <asset:javascript src="ace/src-min/ace.js"/>
     <asset:javascript src="wysihtml5/wysihtml.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.all-commands.min.js"/>
     <asset:javascript src="wysihtml5/wysihtml.toolbar.min.js"/>
     <asset:javascript src="wysihtml5/parser_rules/advanced_and_extended.js"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/postscribe/2.0.8/postscribe.min.js"></script>
+
     <style>
     .wysihtml-action-active, .wysihtml-command-dialog-opened,
     .wysihtml-command-active {
@@ -54,7 +63,6 @@
 </head>
 
 <body>
-
     <div class="d-flex">
         <div class="align-self-center">
             <h1 class="mt-0">${params.id ? 'Edit' : 'Create'} Blog Post</h1>
@@ -100,7 +108,7 @@
                     </bootform:field>
 
                     <g:set var="tagDesc">
-                        The categories that this blog post will be filed under.  <a href="#" id="addTagBtn">Add a tag.</a>
+                        The categories that this blog post will be filed under.  <a href="#" id="addTagBtn" rv-on-click="model.addTag">Add a tag.</a>
                     </g:set>
                     <bootform:field field="tags" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Tags" bean="${command}" description="${tagDesc}">
                         <g:select type="text" id="postTags" name="tags" required="true" from="[]" class="form-control" multiple="multiple"></g:select>
@@ -116,7 +124,7 @@
             </div>
 
             <div class="w-100" style="min-height: calc(100vh - 160px)">
-                <div tabindex="0" id="editor">
+                <div tabindex="0" id="editor" rv-on-keydown="model.exitFullScreen">
                     <bootform:field field="article" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" bean="${command}" description="">
                         <div id="toolbar" style="display: none;" class="pad-bottom-10">
                             <div class="btn-group">
@@ -137,22 +145,23 @@
                                 </a>
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertImage" title="Insert an image" class="command" href="javascript:;" unselectable="on"><i class="fa fa-picture-o"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default browse-s3-trigger" data-toggle="tooltip" data-container="body" title="Browse S3" href="javascript:;" unselectable="on"><i class="fa fa-amazon"></i>
+                                <a class="btn btn-sm btn-default browse-s3-trigger" rv-on-click="model.showS3Browser" data-toggle="tooltip" data-container="body" title="Browse S3" href="javascript:;" unselectable="on"><i class="fa fa-amazon"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default upload-s3-trigger" data-toggle="tooltip" data-container="body" title="Upload To S3" href="javascript:;" unselectable="on"><i class="fa fa-upload"></i>
+                                <a class="btn btn-sm btn-default upload-s3-trigger" data-toggle="tooltip" rv-on-click="model.showS3UploadModal" data-container="body" title="Upload To S3" href="javascript:;" unselectable="on"><i class="fa fa-upload"></i>
                                 </a>
                             </div>
 
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[spoiler label=Spoiler]Spoiler Text Here[/spoiler]" title="Insert a spoiler tag" class="command" href="javascript:;" unselectable="on"><i class="fa fa-exclamation-circle"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default create-gist-trigger" data-toggle="tooltip" data-container="body" title="Create a gist" class="command" href="javascript:;" unselectable="on"><i class="fa fa-github-alt"></i>
+                                <a class="btn btn-sm btn-default create-gist-trigger" rv-on-click="model.showGistModal" data-toggle="tooltip" data-container="body" title="Create a gist" class="command" href="javascript:;" unselectable="on"><i class="fa fa-github-alt"></i>
                                 </a>
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[gist2 id=]" title="Insert a gist" class="command" href="javascript:;" unselectable="on"><i class="fa fa-github"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[youtube id=]" title="Embed a YouTube video" class="command" href="javascript:;" unselectable="on"><i class="fa fa-youtube"></i>
+                                <a class="btn btn-sm btn-default youtube-search-trigger" rv-on-click="model.showYouTubeModal" data-toggle="tooltip" data-container="body" title="Embed a YouTube video" href="javascript:;" unselectable="on"><i class="fa fa-youtube"></i>
                                 </a>
                             </div>
+
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-info'>Info</div>" title="Insert an info alert" class="command" href="javascript:;" unselectable="on"><i class="fa fa-exclamation text-info"></i>
                                 </a>
@@ -163,6 +172,7 @@
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-danger'>Danger</div>" title="Insert a danger alert" class="command" href="javascript:;" unselectable="on"><i class="fa fa-minus-circle text-danger"></i>
                                 </a>
                             </div>
+
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertUnorderedList" title="Insert an unordered list"><i class="fa fa-list-ul"></i>
                                 </a>
@@ -177,6 +187,7 @@
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertBlockQuote" class="wysihtml-command-active" title="Insert blockquote"><i class="fa fa-quote-right"></i>
                                 </a>
                             </div>
+
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h1" title="Insert headline 1" style=""><span style="font-size: 12px;">&nbsp;</span><i class="fa fa-header">1</i><span style="font-size: 12px;">&nbsp;</span>
                                 </a>
@@ -187,11 +198,11 @@
                             </div>
 
                             <div class="btn-group">
-                                <a class="btn btn-sm btn-default action full-screen-trigger" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" title="Full Screen" unselectable="on"><i class="fa fa-arrows-alt"></i>
+                                <a class="btn btn-sm btn-default action full-screen-trigger" rv-on-click="model.goFullscreen" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" title="Full Screen" unselectable="on"><i class="fa fa-arrows-alt"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default action" id="viewSourceBtn" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" data-wysihtml-action="change_view" title="Show HTML"><i class="fa fa-code"></i>
+                                <a class="btn btn-sm btn-default action" id="viewSourceBtn" rv-on-click="model.viewSource" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" data-wysihtml-action="change_view" title="Show HTML"><i class="fa fa-code"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default help-modal-trigger pointer" data-toggle="tooltip" data-container="body" title="Blog Editor Help" unselectable="on"><i class="fa fa-question"></i>
+                                <a class="btn btn-sm btn-default help-modal-trigger pointer" rv-on-click="model.showHelpModal" data-toggle="tooltip" data-container="body" title="Blog Editor Help" unselectable="on"><i class="fa fa-question"></i>
                                 </a>
                             </div>
 
@@ -231,8 +242,8 @@
                     <div id="editPostFooter">
                         <div class="">
                             <div class="text-center">
-                                <button id="btnSubmit" name="btnSubmit" class="btn btn-primary">Save</button>
-                                <a class="btn btn-sm btn-info preview-post-trigger pointer" data-toggle="tooltip" data-container="body" title="Preview Post" unselectable="on"><i class="fa fa-binoculars"></i> Preview Post</a>
+                                <button id="btnSubmit" rv-on-click="model.submitClicked" name="btnSubmit" class="btn btn-primary">Save</button>
+                                <a class="btn btn-sm btn-info preview-post-trigger pointer" rv-on-click="model.previewPost" data-toggle="tooltip" data-container="body" title="Preview Post" unselectable="on"><i class="fa fa-binoculars"></i> Preview Post</a>
                                 <g:link action="list" class="btn btn-default">Cancel</g:link>
                             </div>
                         </div>
@@ -247,14 +258,53 @@
         <div id="previewBody"></div>
     </ui:modal>
 
+    <ui:modal large="true" closable="true" id="youTubeSearchModal" title="Search YouTube">
+        <div class="row">
+            <div class="col-xs-12 col-lg-4">
+                <div class="form-group">
+                    <select name="youTubeChannel" id="youTubeChannel" class="form-control">
+                        <option rv-value="model.myChannelId">My Channel</option>
+                        <option value="">All Channels</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-8">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" id="youTubeSearchString" name="youTubeSearchString" placeholder="Search" maxlength="100" class="form-control" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" id="youTubeSearchBtn" name="youTubeSearchBtn" rv-on-click="model.doYouTubeSearch"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div rv-each-item="model.youTubeResults">
+                <div class="col-xs-3 pb-3">
+                    <div class="thumbnail">
+                        <a href="#" rv-on-click="model.selectYouTube">
+                            <img rv-src="item.snippet.thumbnails.medium.url" rv-title="item.snippet.title" class="img-responsive" />
+                        </a>
+                        <!--
+                        <div class="caption">
+                            <div>{item.snippet.title}</div>
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:modal>
+
     <g:set var="createGistFooter">
-        <button id="createGistBtn" type="button" class="btn btn-primary">Create</button>
+        <button id="createGistBtn" rv-on-click="model.createGist" type="button" class="btn btn-primary">Create</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
     </g:set>
     <ui:modal large="true" closable="true" id="createGistModal" title="Create A Gist" footer="${createGistFooter}">
         <div>
             <div class="form-group">
-                <input type="text" id="createGistName" name="createGistName" placeholder="Name" maxlength="100" class="form-control" />
+                <input type="text" id="createGistName" rv-on-keydown="model.setAceMode" name="createGistName" placeholder="Name" maxlength="100" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="text" id="createGistDescription" name="createGistDescription" placeholder="Description" maxlength="100" class="form-control" />
@@ -266,40 +316,42 @@
     </ui:modal>
 
     <g:set var="uploadFooter">
-        <button id="uploadFileBtn" type="button" class="btn btn-primary">Upload</button>
+        <button id="uploadFileBtn" rv-on-click="model.s3Upload" type="button" class="btn btn-primary">Upload</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
     </g:set>
     <ui:modal large="true" closable="true" id="s3UploadModal" title="Upload To S3" footer="${uploadFooter}">
         <form>
-            <div class="row upload-row">
+
+            <div class="row" rv-each-upload="model.s3Uploads" rv-value="index">
                 <div class="col-xs-4">
                     <div class="form-group">
-                        <label for="uploadFolder_0" class="control-label folder-label">Folder</label>
+                        <label rv-for="index | prepend 'uploadFolder_'" class="control-label folder-label">Folder</label>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button class="btn btn-danger remove-upload"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-danger remove-upload" rv-enabled="model.canRemoveUpload" rv-on-click="model.removeS3Upload"><i class="fa fa-times"></i></button>
                             </span>
-                            <input type="text" id="uploadFolder_0" class="form-control upload-folder" name="uploadFolder_0" />
+                            <input type="text" rv-value="upload.folder" rv-id="index | prepend 'uploadFolder_'" class="form-control upload-folder" rv-name="index | prepend 'uploadFolder_'" />
                         </div>
                         <p class="help-block"><small>Leave blank for 'root'</small></p>
                     </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="form-group">
-                        <label for="uploadKey_0" class="control-label key-label">Key</label>
-                        <input type="text" id="uploadKey_0" class="form-control upload-key" name="uploadKey_0" />
+                        <label rv-for="index | prepend 'uploadKey_'" class="control-label key-label">Key</label>
+                        <input type="text" rv-value="upload.key" rv-id="index | prepend 'uploadKey_'" class="form-control upload-key" rv-name="index | prepend 'uploadKey_'" />
                         <p class="help-block"><small>Defaults to file name</small></p>
                     </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="form-group">
-                        <label for="uploadFile_0" class="control-label file-label">File</label>
-                        <input type="file" class="form-control upload-file" id="uploadFile_0" name="uploadFile_0" />
+                        <label rv-for="index | prepend 'uploadFile_'" class="control-label file-label">File</label>
+                        <input type="file" rv-value="upload.file" class="form-control upload-file" rv-id="index | prepend 'uploadFile_'" rv-name="index | prepend 'uploadFile_'" />
                     </div>
                 </div>
             </div>
+
             <div>
-                <button class="btn btn-success" id="addUploadBtn"><i class="fa fa-plus"></i> Add File</button>
+                <button class="btn btn-success" id="addUploadBtn" rv-on-click="model.addUpload"><i class="fa fa-plus"></i> Add File</button>
             </div>
         </form>
     </ui:modal>
@@ -309,7 +361,7 @@
     </ui:modal>
 
     <g:set var="footer">
-        <button id="saveNewTagBtn" type="button" class="btn btn-primary">Save Tag</button>
+        <button id="saveNewTagBtn" rv-on-click="model.saveNewTag" type="button" class="btn btn-primary">Save Tag</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
     </g:set>
 
