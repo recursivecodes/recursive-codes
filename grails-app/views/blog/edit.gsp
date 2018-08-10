@@ -279,6 +279,9 @@
                 </div>
             </div>
         </div>
+        <div class="alert alert-info" rv-hide="model.youTubeHasResults">
+            <i class="fa fa-info-circle"></i> There are no results to show.
+        </div>
         <div class="row">
             <div rv-each-item="model.youTubeResults">
                 <div class="col-xs-3 pb-3">

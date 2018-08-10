@@ -1,5 +1,12 @@
 "use strict";
-import { Upload } from "./model/upload.js";
+
+class Upload {
+    constructor(folder='', key='', file) {
+        this.folder = folder;
+        this.key = key;
+        this.file = file;
+    }
+}
 
 rivets.formatters.showRemoveBtn = (value) => value.length > 1;
 rivets.formatters.gt = function(value, args) {
@@ -19,6 +26,7 @@ rivets.formatters.append = function(value, append) {
 const model = {
     myChannelId: youTubeChannelId,
     youTubeResults: [],
+    youTubeHasResults: false,
     editor: null,
     aceEditor: null,
     s3Uploads: [],
@@ -31,9 +39,11 @@ const model = {
     },
     doYouTubeSearch: function() {
         model.youTubeResults = [];
+        model.youTubeHasResults = false;
         const results = model.searchYouTube( $('#youTubeSearchString').val(), $('#youTubeChannel').val() );
         results.then(function(result){
             model.youTubeResults = result.result.items;
+            model.youTubeHasResults = model.youTubeResults.length > 0;
         })
     },
     searchYouTube: function(q, channelId) {
