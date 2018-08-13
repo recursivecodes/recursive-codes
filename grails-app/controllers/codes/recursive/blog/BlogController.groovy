@@ -4,6 +4,7 @@ import codes.recursive.PageController
 import codes.recursive.admin.AbstractAdminController
 import codes.recursive.admin.command.PostCommand
 import com.amazonaws.services.s3.model.CannedAccessControlList
+import com.amazonaws.services.s3.model.ObjectMetadata
 import grails.converters.JSON
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
@@ -150,6 +151,28 @@ class BlogController extends AbstractAdminController {
             // just swallow the error - it's likely a 'unique' violation -- let them assume they created the new one after the list gets rebuilt (to avoid user confusion)
         }
         render([saved: true] as JSON)
+    }
+
+    @Secured('ROLE_ADMIN')
+    def uploadBase64Image() {
+        def img = params.get('image')
+        def title = params.get('title')
+        title = title.replaceAll("/[^A-Za-z0-9]/", "")
+        title = title.replaceAll("\\s", "-").toLowerCase()
+        def key = params.get('key') ?: "${UUID.randomUUID().toString()}.png"
+        if( key.indexOf('.png') == -1 ) {
+            key = key + '.png'
+        }
+        img = img.replace("data:image/png;base64,", "")
+        img = img.replaceAll("\r", "")
+        img = img.replaceAll("\n", "")
+        byte[] decoded = img.decodeBase64()
+        InputStream iStream = new ByteArrayInputStream(decoded)
+
+        def md = new ObjectMetadata()
+        md.setHeader('x-amz-acl', CannedAccessControlList.PublicRead.toString())
+        def s3Object = amazonS3Service.storeInputStream( grailsApplication.config.codes.recursive.aws.s3.imgBucket, "${title ? title + '/' : ''}${key}".toString(), iStream, md)
+        render([upload: true, url: s3Object] as JSON)
     }
 
     @Secured('ROLE_ADMIN')

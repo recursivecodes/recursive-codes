@@ -203,6 +203,71 @@ const model = {
             // Trick browser into showing HTML5 required validation popups.
             $('#wysihtml-textarea').addClass('nicehide');
         } );
+        model.editor.on( "paste:composer", function(event) {
+            const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            //console.log(JSON.stringify(items)); // will give you the mime types
+            for (let index in items) {
+                const item = items[index];
+                if (item.kind === 'file') {
+                    const blob = item.getAsFile();
+                    const reader = new FileReader();
+                    reader.onload = function(event){
+                        const pastedImg = $('<img>').attr('src', event.target.result).attr('id', 'tempImg');
+                        $('body').append(pastedImg);
+                        pastedImg.on('load', () => {
+                            let w = pastedImg.width() > 800 ? 800 : pastedImg.width();
+                            let h = pastedImg.height();
+                            if( pastedImg.width() > 800 ) {
+                                h = h / (pastedImg.width() / 800)
+                            }
+                            $('#tempImg').remove();
+                            const mainCanvas = document.createElement("canvas");
+                            mainCanvas.width = w;
+                            mainCanvas.height = h;
+                            const ctx = mainCanvas.getContext("2d");
+                            ctx.drawImage(pastedImg.get(0), 0, 0, mainCanvas.width, mainCanvas.height);
+                            const resizedImg = $('<img>').attr('src', mainCanvas.toDataURL("image/png")).addClass('img-responsive img-thumbnail').attr('id', 'pastedImg');
+
+                            $('#imageEditor').html('').append(resizedImg);
+                            $('#editImageModal').one('shown.bs.modal', function(){
+                                /* a little failsafe to prevent overwriting images - if the current name has a number, increment it */
+                                const name = $('#editedImageName').val()
+                                if( name ) {
+                                    const num = name ? parseInt(name.match(/\d+/)[0]) : ''
+                                    $('#editedImageName').val(name.replace(num, num+1))
+                                }
+                            }).modal('show')
+                        })
+                    }; // data url!
+                    reader.readAsDataURL(blob);
+                }
+            }
+        } );
+    },
+    uploadPastedImage: function(){
+        $('#saveEditedImgBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Uploading...');
+        $.ajax({
+            url: '/blog/uploadBase64Image',
+            method: 'POST',
+            data: {
+                image: $('#pastedImg').attr('src'),
+                title: $('#title').val(),
+                key: $('#editedImageName').val(),
+            },
+            success: function(result) {
+                //console.log(result);
+                model.editor.focus();
+                model.editor.composer.commands.exec("insertHTML",`<img src="${result.url}" class="img-thumbnail img-responsive"/>`);
+                $('#editImageModal').modal('hide')
+            },
+            error: function(e) {
+                console.error(e);
+                alert('Upload failed.  See console.')
+            },
+            complete: function() {
+                $('#saveEditedImgBtn').removeAttr('disabled').html('Upload');
+            }
+        })
     },
     addTag: function() {
         $('#newTagModal').modal({show: true})
@@ -343,6 +408,36 @@ const model = {
             }
         )
     },
+    doDragOver: function(e) {
+        console.log('dragging-->', e);
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    doDragEnd: function(e) {
+        console.log('drag end-->', e);
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    doDragEnter: function(e) {
+        console.log(e)
+        $(e.currentTarget).addClass('dropzone');
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    doDragLeave: function(e) {
+        console.log(e)
+        $(e.currentTarget).removeClass('dropzone');
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    doDrop: function(e) {
+        $(e.currentTarget).removeClass('dropzone');
+        console.log('drop');
+        console.log(e.originalEvent.dataTransfer.files);
+        console.log('dropped-->', e);
+        e.preventDefault();
+        e.stopPropagation();
+    }
 };
 
 $(document).ready(function(){

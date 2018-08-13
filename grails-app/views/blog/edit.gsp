@@ -46,6 +46,10 @@
     .ace_editor {
         height: 350px;
     }
+    .dropzone {
+        border: 1px dashed red !important;
+        pointer-events: none;
+    }
     .nicehide {
         resize: none !important;
         overflow: hidden !important;
@@ -124,7 +128,7 @@
             </div>
 
             <div class="w-100" style="min-height: calc(100vh - 160px)">
-                <div tabindex="0" id="editor" rv-on-keydown="model.exitFullScreen">
+                <div tabindex="0" id="editor" rv-on-keydown="model.exitFullScreen" >
                     <bootform:field field="article" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" bean="${command}" description="">
                         <div id="toolbar" style="display: none;" class="pad-bottom-10">
                             <div class="btn-group">
@@ -254,6 +258,17 @@
         </div>
     </g:form>
 
+    <g:set var="imageEditorFooter">
+        <button id="saveEditedImgBtn" rv-on-click="model.uploadPastedImage" type="button" class="btn btn-primary">Upload</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </g:set>
+    <ui:modal large="true" closable="true" id="editImageModal" title="Image Uploader" footer="${imageEditorFooter}">
+        <div class="form-group">
+            <input type="text" id="editedImageName" name="editedImageName" placeholder="Name" maxlength="100" class="form-control" />
+        </div>
+        <div id="imageEditor"></div>
+    </ui:modal>
+
     <ui:modal large="true" closable="true" id="previewModal" title="Preview Post">
         <div id="previewBody"></div>
     </ui:modal>
@@ -324,7 +339,16 @@
     </g:set>
     <ui:modal large="true" closable="true" id="s3UploadModal" title="Upload To S3" footer="${uploadFooter}">
         <form>
-
+            <!--
+            <div style="height: 100px;" class=" d-flex mb-3 w-100 well"
+                 rv-on-drop="model.doDrop"
+                 rv-on-dragenter="model.doDragEnter" rv-on-dragleave="model.doDragLeave"
+                 rv-on-dragover="model.doDragOver" rv-on-dragend="model.doDragEnd" draggable="true">
+                <div class="align-self-center text-center w-100">
+                    <small class="text-muted">Drag Files Here</small>
+                </div>
+            </div>
+            -->
             <div class="row" rv-each-upload="model.s3Uploads" rv-value="index">
                 <div class="col-xs-4">
                     <div class="form-group">
