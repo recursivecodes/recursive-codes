@@ -67,6 +67,7 @@
 </head>
 
 <body>
+    <!--
     <div class="d-flex">
         <div class="align-self-center">
             <h1 class="mt-0">${params.id ? 'Edit' : 'Create'} Blog Post</h1>
@@ -75,7 +76,7 @@
             <g:link controller="blog" action="list" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> List Blog Posts</g:link>
         </div>
     </div>
-
+    -->
     <div class="pad-bottom-10">
         <g:if test="${flash.message}">
             <ui:successContainer>${flash.message}</ui:successContainer>

@@ -78,6 +78,11 @@ dependencies {
 
 bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
+    systemProperty 'server.port', '9443'
+    systemProperty 'server.ssl.enabled', 'true'
+    systemProperty 'server.ssl.key-store', '/home/toddsharp/keys/localhost.p12'
+    systemProperty 'server.ssl.key-store-password', 'localhost'
+    systemProperty 'server.ssl.key-password', 'localhost'
     addResources = true
 }
 
