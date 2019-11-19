@@ -30,7 +30,7 @@ class Post {
     static hasMany = [postTags: PostTag]
 
     static mapping = {
-        id generator: "native"
+        id generator: 'sequence', params: [ sequence: 'ISEQ$$_33763' ]
     }
 
     static constraints = {

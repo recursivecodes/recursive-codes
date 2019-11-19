@@ -15,6 +15,7 @@ import org.eclipse.egit.github.core.service.GistService
 import org.grails.web.servlet.mvc.SynchronizerTokensHolder
 import org.springframework.web.multipart.MultipartFile
 
+import javax.annotation.PostConstruct
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -22,6 +23,18 @@ class BlogController extends AbstractAdminController {
 
     BlogService blogService
     AmazonS3Service amazonS3Service
+
+    BlogController(BlogService blogService, AmazonS3Service amazonS3Service) {
+        this.blogService = blogService
+        this.amazonS3Service = amazonS3Service
+        this.amazonS3Service.client.clientOptions.pathStyleAccess = true
+        this.amazonS3Service.client.clientOptions.chunkedEncodingDisabled = true
+        this.amazonS3Service.client.endpoint = "${grailsApplication.config.codes.recursive.aws.s3.namespace}.compat.objectstorage.${grailsApplication.config.codes.recursive.aws.s3.region}.oraclecloud.com"
+    }
+
+    @PostConstruct
+    void init() {
+    }
 
     @Secured('permitAll')
     def post() {
@@ -172,7 +185,8 @@ class BlogController extends AbstractAdminController {
         def md = new ObjectMetadata()
         md.setHeader('x-amz-acl', CannedAccessControlList.PublicRead.toString())
         def s3Object = amazonS3Service.storeInputStream( grailsApplication.config.codes.recursive.aws.s3.imgBucket, "${title ? title + '/' : ''}${key}".toString(), iStream, md)
-        render([upload: true, url: s3Object] as JSON)
+        def url = convertS3Url(grailsApplication.config.codes.recursive.aws.s3, s3Object)
+        render([upload: true, url: url] as JSON)
     }
 
     @Secured('ROLE_ADMIN')
@@ -184,7 +198,8 @@ class BlogController extends AbstractAdminController {
             MultipartFile upload = file.value[0]
             def key = params.get('key_' + idx).size() ? params.get('key_' + idx) + '.' + FilenameUtils.getExtension(upload.getOriginalFilename()) : upload.originalFilename
             def s3Object = amazonS3Service.storeMultipartFile(grailsApplication.config.codes.recursive.aws.s3.imgBucket, "${folder ? folder + '/' : ''}${key}".toString(), upload, CannedAccessControlList.PublicRead )
-            urls << s3Object
+            def url = convertS3Url(grailsApplication.config.codes.recursive.aws.s3, s3Object)
+            urls << url
         }
         render([upload: true, urls: urls] as JSON)
     }
@@ -207,5 +222,10 @@ class BlogController extends AbstractAdminController {
         gist = service.createGist(gist)
 
         render([gist: gist] as JSON)
+    }
+
+    private String convertS3Url(s3Config, s3Object) {
+        def objectName = s3Object.replace("https://s3.amazonaws.com/img.recursive.codes/", "")
+        return "${s3Config.endpoint}/n/${s3Config.namespace}/b/${s3Config.imgBucket}/o/${objectName}"
     }
 }

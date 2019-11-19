@@ -12,7 +12,6 @@ buildscript {
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.6"
         classpath "org.grails.plugins:hibernate5:6.0.4"
         classpath 'org.grails.plugins:database-migration:3.0.0'
-
     }
 }
 
@@ -57,7 +56,7 @@ dependencies {
     compile "org.hibernate:hibernate-ehcache:5.1.2.Final"
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
-    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
+    runtime "com.bertramlabs.plugins:asset-pipeline-grails:3.0.11"
     runtime "com.h2database:h2"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
@@ -66,7 +65,7 @@ dependencies {
     runtime 'mysql:mysql-connector-java:5.1.36'
     compile 'org.grails.plugins:database-migration:3.0.0'
     compile 'org.liquibase:liquibase-core:3.5.3'
-    compile 'org.grails.plugins:spring-security-core:3.1.1'
+    compile 'org.grails.plugins:spring-security-core:3.2.1'
     compile "org.grails.plugins:aws-sdk-s3:2.2.4"
     compile "org.grails.plugins:aws-sdk-s3:2.1.5"
     compile 'org.grails.plugins:mail:2.0.0.RC6'
@@ -74,18 +73,42 @@ dependencies {
     compile group: 'com.github.dfabulich', name: 'sitemapgen4j', version: '1.0.2'
     compile 'org.grails.plugins:quartz:2.0.13'
     compile group: 'org.eclipse.mylyn.github', name: 'org.eclipse.egit.github.core', version: '2.1.5'
+
+    compile 'commons-io:commons-io:2.6' //last released version
+    compile group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
+}
+
+springBoot {
+    executable = true
 }
 
 bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
+
+    systemProperty 'datasource.password', 'Renegaderobottrashcan1!'
+    systemProperty 'datasource.url', 'jdbc:oracle:thin:@recursivecodes_low?TNS_ADMIN=/wallet-recursive-codes'
+    systemProperty 'javax.net.ssl.trustStore', '/wallet-recursive-codes/cwallet.sso'
+    systemProperty 'oracle.net.ssl_version', '"1.2"'
+    systemProperty 'javax.net.ssl.trustStoreType', 'SSO'
+    systemProperty 'datasource.username', 'toddsharp'
+    systemProperty 'javax.net.ssl.keyStoreType', 'SSO'
+    systemProperty 'oracle.net.wallet_location', '/wallet-recursive-codes'
+    systemProperty 'oracle.net.tns_admin', '/wallet-recursive-codes'
+    systemProperty 'oracle.net.authentication_services', '"(TCPS)"'
+    systemProperty 'oracle.net.ssl_server_dn_match', 'true'
+    systemProperty 'javax.net.ssl.keyStore', '/wallet-recursive-codes/cwallet.sso'
+    systemProperty 'grails.env', 'development'
+
+    /*
     systemProperty 'server.port', '9443'
     systemProperty 'server.ssl.enabled', 'true'
-    systemProperty 'server.ssl.key-store', '/home/toddsharp/keys/localhost.p12'
+    systemProperty 'server.ssl.key-store', '/home/todd/Documents/keys/localhost.p12'
     systemProperty 'server.ssl.key-store-password', 'localhost'
     systemProperty 'server.ssl.key-password', 'localhost'
+    */
+    systemProperties = System.properties
     addResources = true
 }
-
 
 assets {
     minifyJs = true

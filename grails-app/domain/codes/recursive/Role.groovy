@@ -18,6 +18,7 @@ class Role implements Serializable {
 	}
 
 	static mapping = {
+		id generator:'sequence', params: [ sequence: 'ISEQ$$_33771' ]
 		cache true
 	}
 }

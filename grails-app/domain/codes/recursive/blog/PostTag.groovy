@@ -5,7 +5,7 @@ class PostTag {
 	static belongsTo = [post: Post, tag: Tag]
 
 	static mapping = {
-		id generator: "native"
+		id generator:'sequence', params: [ sequence: 'ISEQ$$_33768' ]
 		version false
 	}
 }

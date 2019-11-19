@@ -65,7 +65,7 @@ class UserRole implements Serializable {
 
 	static constraints = {
 		role validator: { Role r, UserRole ur ->
-			if (ur.user?.id) {
+			if (!ur?.id && ur.user?.id) {
 				UserRole.withNewSession {
 					if (UserRole.exists(ur.user.id, r.id)) {
 						return ['userRole.exists']
@@ -76,7 +76,7 @@ class UserRole implements Serializable {
 	}
 
 	static mapping = {
-		id composite: ['user', 'role']
+		id generator:'sequence', params: [ sequence: 'ISEQ$$_33783' ]
 		version false
 	}
 }

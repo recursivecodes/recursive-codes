@@ -10,6 +10,7 @@ import grails.plugins.mail.MailService
 import groovy.json.JsonSlurper
 import org.springframework.cache.CacheManager
 
+import javax.annotation.PostConstruct
 import java.nio.file.Files
 
 @Secured('permitAll')
@@ -20,6 +21,13 @@ class PageController extends AbstractController{
     MailService mailService
     AmazonS3Service amazonS3Service
     CacheManager grailsCacheManager
+
+    @PostConstruct
+    void init() {
+        this.amazonS3Service.client.clientOptions.pathStyleAccess = true
+        this.amazonS3Service.client.clientOptions.chunkedEncodingDisabled = true
+        this.amazonS3Service.client.endpoint = "${grailsApplication.config.codes.recursive.aws.s3.namespace}.compat.objectstorage.${grailsApplication.config.codes.recursive.aws.s3.region}.oraclecloud.com"
+    }
 
     def index() {
         def model = defaultModel

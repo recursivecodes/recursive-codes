@@ -24,7 +24,7 @@ class EditUserCommand implements Validateable{
     boolean accountExpired=false
     boolean accountLocked=false
     boolean passwordExpired=false
-    Long version
+    Long version=1
 
     static EditUserCommand fromUser(User user) {
         def command = new EditUserCommand(
@@ -37,7 +37,7 @@ class EditUserCommand implements Validateable{
                 accountExpired: user?.accountExpired,
                 accountLocked: user?.accountLocked,
                 passwordExpired: user?.passwordExpired,
-                version: user?.version,
+                version: user?.version ?: 1,
         )
         return command
     }
@@ -51,6 +51,7 @@ class EditUserCommand implements Validateable{
         user.accountExpired = this?.accountExpired
         user.accountLocked = this?.accountLocked
         user.passwordExpired = this?.passwordExpired
+        user.version = this?.version
 
         if( !user?.userRoles?.size() ){
             user.addToUserRoles(new UserRole(role: Role.findByAuthority(Role.ROLE_ADMIN)))
@@ -58,6 +59,7 @@ class EditUserCommand implements Validateable{
     }
 
     static constraints = {
+        id nullable: true
         username validator: { val, obj ->
             def existingUser = User.findByUsername(val)
             if( existingUser && existingUser.id != obj.id ) {

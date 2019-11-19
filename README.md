@@ -17,3 +17,20 @@ There are a few "special" tags available via the admin that you can use when aut
 **Editing A Blog Post**
 
 ![Blog Post Editor](https://s3.amazonaws.com/img.recursive.codes/Screenshot_20170812_235723.png)
+
+**Running Locally**
+
+```bash
+-Doracle.net.wallet_location=/wallet-recursive-codes
+-Doracle.net.authentication_services="(TCPS)"
+-Doracle.net.tns_admin=/wallet-demodb
+-Djavax.net.ssl.trustStore=/wallet-recursive-codes/cwallet.sso
+-Djavax.net.ssl.trustStoreType=SSO
+-Djavax.net.ssl.keyStore=/wallet-recursive-codes/cwallet.sso
+-Djavax.net.ssl.keyStoreType=SSO
+-Doracle.net.ssl_server_dn_match=true
+-Doracle.net.ssl_version="1.2"
+-Ddatasource.username=[Username]
+-Ddatasource.password=[Strong Password]
+-Ddatasource.url=jdbc:oracle:thin:@recursivecodes_low?TNS_ADMIN=/wallet-recursive-codes
+```

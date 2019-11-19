@@ -232,8 +232,13 @@ const model = {
                                 /* a little failsafe to prevent overwriting images - if the current name has a number, increment it */
                                 const name = $('#editedImageName').val()
                                 if( name ) {
-                                    const num = name ? parseInt(name.match(/\d+/)[0]) : ''
-                                    $('#editedImageName').val(name.replace(num, num+1))
+                                    let nameNums = name.match(/\d+/)
+                                    if( nameNums.length ) {
+                                        let num = parseInt(nameNums[0]);
+                                        if( !isNaN(num) ) {
+                                            $('#editedImageName').val(name.replace(num, num+1))
+                                        }
+                                    }
                                 }
                             }).modal('show')
                         })

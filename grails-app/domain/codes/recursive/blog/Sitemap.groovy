@@ -8,6 +8,7 @@ class Sitemap {
     Date lastUpdated
 
     static constraints = {
+        id generator:'sequence', params: [ sequence: 'ISEQ$$_33774' ]
         fileName unique: true
     }
 }

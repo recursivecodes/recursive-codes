@@ -9,3 +9,11 @@ build/
 .project
 .settings
 .classpath
+Dockerfile
+doc/Wallet_recursivecodes
+libs
+.oci
+doc
+application-development.yml
+application-production.yml
+manifest.json

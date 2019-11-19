@@ -13,6 +13,8 @@ import grails.core.GrailsApplication
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.util.Environment
 
+import javax.annotation.PostConstruct
+
 class CreateSitemapJob {
 
     GrailsApplication grailsApplication
@@ -25,10 +27,16 @@ class CreateSitemapJob {
     }
 
     def execute() {
+
         if( Environment.current == Environment.DEVELOPMENT ) {
             println 'Exiting sitemap job because Environment == DEVELOP'
             return false
         }
+
+        amazonS3Service.client.clientOptions.pathStyleAccess = true
+        amazonS3Service.client.clientOptions.chunkedEncodingDisabled = true
+        amazonS3Service.client.endpoint = "${grailsApplication.config.codes.recursive.aws.s3.namespace}.compat.objectstorage.${grailsApplication.config.codes.recursive.aws.s3.region}.oraclecloud.com"
+
         sitemapService.list().each { it ->
             try {
                 amazonS3Service.deleteFile("sitemaps/${it.fileName}")

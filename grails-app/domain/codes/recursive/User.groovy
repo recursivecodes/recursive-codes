@@ -52,8 +52,9 @@ class User implements Serializable {
 	}
 
 	static mapping = {
-		table name: '[user]'
-		password column: '`password`'
+		id generator:'sequence', params: [ sequence: 'ISEQ$$_33780' ]
+		table name: 'USER_'
+		autowire true
 	}
 
 	static hasMany = [userRoles: UserRole]

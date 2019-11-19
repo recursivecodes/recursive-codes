@@ -14,7 +14,7 @@ class BlogService extends AbstractService {
     }
 
     def save(Post post) {
-        return post.save(flush: true)
+        return post.save(flush: true, failOnError: true)
     }
 
     def listTagged(String tag, Long max, Long offset) {

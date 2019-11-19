@@ -7,7 +7,7 @@ class Tag {
     Date lastUpdated
 
     static mapping = {
-        id generator: "native"
+        id generator:'sequence', params: [ sequence: 'ISEQ$$_33777' ]
     }
 
     static constraints = {
