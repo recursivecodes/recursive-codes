@@ -179,4 +179,10 @@ class PageController extends AbstractController{
         tempFile.delete()
         */
     }
+
+    def importPosts() {
+        ImportBlogPostJob.triggerNow();
+        render([complete: true] as JSON)
+        return
+    }
 }

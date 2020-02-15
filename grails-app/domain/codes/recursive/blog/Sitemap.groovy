@@ -1,5 +1,7 @@
 package codes.recursive.blog
 
+import grails.util.Holders
+
 class Sitemap {
 
     String fileName
@@ -8,7 +10,7 @@ class Sitemap {
     Date lastUpdated
 
     static constraints = {
-        id generator:'sequence', params: [ sequence: 'ISEQ$$_33774' ]
+        id generator:'sequence', params: [ sequence: Holders.config.codes.recursive.oracle.sequence.sitemap ]
         fileName unique: true
     }
 }

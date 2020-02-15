@@ -41,7 +41,7 @@
     <g:if test="${tags.size()}">
         <h6 class="upper">Tagged:
         <g:each in="${tags}" var="pt" status="i">
-            <g:link action="tagged" controller="page" params="${params << [tag: pt.tag.name]}">${pt.tag.name}</g:link><g:if test="${i != post.postTags.size()-1}">, </g:if>
+            <g:link action="tagged" controller="page" params="${[tag: pt.tag.name]}">${pt.tag.name}</g:link><g:if test="${i != post.postTags.size()-1}">, </g:if>
         </g:each>
         </h6>
     </g:if>

@@ -1,5 +1,7 @@
 package codes.recursive.blog
 
+import grails.util.Holders
+
 class Tag {
 
     String name
@@ -7,7 +9,7 @@ class Tag {
     Date lastUpdated
 
     static mapping = {
-        id generator:'sequence', params: [ sequence: 'ISEQ$$_33777' ]
+        id generator:'sequence', params: [ sequence: Holders.config.codes.recursive.oracle.sequence.tag ]
     }
 
     static constraints = {

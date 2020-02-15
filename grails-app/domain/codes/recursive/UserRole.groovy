@@ -1,6 +1,7 @@
 package codes.recursive
 
 import grails.gorm.DetachedCriteria
+import grails.util.Holders
 import groovy.transform.ToString
 
 import org.apache.commons.lang.builder.HashCodeBuilder
@@ -76,7 +77,7 @@ class UserRole implements Serializable {
 	}
 
 	static mapping = {
-		id generator:'sequence', params: [ sequence: 'ISEQ$$_33783' ]
+		id generator:'sequence', params: [ sequence: Holders.config.codes.recursive.oracle.sequence.userRole ]
 		version false
 	}
 }

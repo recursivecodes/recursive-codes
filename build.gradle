@@ -76,6 +76,8 @@ dependencies {
 
     compile 'commons-io:commons-io:2.6' //last released version
     compile group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
+
 }
 
 springBoot {
@@ -98,6 +100,7 @@ bootRun {
     systemProperty 'oracle.net.ssl_server_dn_match', 'true'
     systemProperty 'javax.net.ssl.keyStore', '/wallet-recursive-codes/cwallet.sso'
     systemProperty 'grails.env', 'development'
+    systemProperty 'oracle.jdbc.fanEnabled', 'false'
 
     /*
     systemProperty 'server.port', '9443'

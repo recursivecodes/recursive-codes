@@ -1,5 +1,6 @@
 package codes.recursive
 
+import grails.util.Holders
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
@@ -52,7 +53,7 @@ class User implements Serializable {
 	}
 
 	static mapping = {
-		id generator:'sequence', params: [ sequence: 'ISEQ$$_33780' ]
+		id generator:'sequence', params: [ sequence: Holders.config.codes.recursive.oracle.sequence.user ]
 		table name: 'USER_'
 		autowire true
 	}

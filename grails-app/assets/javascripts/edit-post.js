@@ -77,6 +77,8 @@ const model = {
     savePost: function() {
         $('#btnSubmit').html('<i class="fa fa-refresh fa-spin"></i> Saving...').attr('disabled', 'disabled')
         var form = model.objectifyForm( $('form[name="postForm"]').serializeArray() );
+        form.tags = JSON.stringify( $("#postTags option:selected").toArray().map(item => item.value) );
+
         $.ajax({
             url: '/blog/edit',
             dataType: 'json',
@@ -290,7 +292,8 @@ const model = {
                 success: function(result){
                     $('#newTagModal').modal('hide')
                     currentTags = $('#postTags').val()
-                    listTags()
+                    currentTags.push( result.tag.id.toString() )
+                    model.listTags()
                 },
                 error: function(){
                     alert('An error occurred trying to save this tag.  Please try again.')

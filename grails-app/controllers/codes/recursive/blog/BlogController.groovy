@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata
 import grails.converters.JSON
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
+import groovy.json.JsonSlurper
 import org.apache.commons.io.FilenameUtils
 import org.eclipse.egit.github.core.Gist
 import org.eclipse.egit.github.core.GistFile
@@ -53,6 +54,20 @@ class BlogController extends AbstractAdminController {
     }
 
     @Secured('permitAll')
+    def bySlug() {
+        def model = new PageController().defaultModel
+        def slug = params.get('slug')
+        def post = blogService.findBySlug(slug)
+
+        if ( !slug || !post || !post.canBeViewedBy(currentUser) ) {
+            response.status = 404
+            redirect(controller: 'page', action: 'index')
+            return
+        }
+        render(view:"/blog/post", model:  model << [ post: post ])
+    }
+
+    @Secured('permitAll')
     def feed() {
         def model = defaultModel
         DateFormat pubDateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -82,7 +97,7 @@ class BlogController extends AbstractAdminController {
 
             withForm {
                 // shame on you grails...when you have a multiple select and only choose one value grails binds it as a string, not a list.
-                command.tags = params.list('tags')
+                command.tags = new JsonSlurper().parseText( params.list('tags') )
 
                 // Validate input
                 command.validate()
@@ -108,8 +123,11 @@ class BlogController extends AbstractAdminController {
                 } else {
                     // Command has errors, send the user a message
                     flash.error = g.message(code: 'default.error.message')
+                    render(command.errors.allErrors as JSON)
+                    return
                 }
             }
+
         }
         // On an initial GET, we need to populate our command
         if (request.method == 'GET') {
@@ -163,7 +181,7 @@ class BlogController extends AbstractAdminController {
         catch (e) {
             // just swallow the error - it's likely a 'unique' violation -- let them assume they created the new one after the list gets rebuilt (to avoid user confusion)
         }
-        render([saved: true] as JSON)
+        render([saved: true, tag: tag] as JSON)
     }
 
     @Secured('ROLE_ADMIN')

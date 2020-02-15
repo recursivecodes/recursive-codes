@@ -9,6 +9,10 @@ class UserService extends AbstractService {
         return User.findById(id)
     }
 
+    def findByUsername(String username) {
+        return User.findByUsername(username)
+    }
+
     def list(Long max, Long offset) {
         return User.list([max: max, offset: offset])
     }

@@ -13,6 +13,14 @@ class BlogService extends AbstractService {
         return Post.findById(id)
     }
 
+    def findBySlug(String slug) {
+        return Post.findBySlug(slug)
+    }
+
+    def findByImportId(String importId) {
+        return Post.findByImportedId(importId)
+    }
+
     def save(Post post) {
         return post.save(flush: true, failOnError: true)
     }
@@ -44,6 +52,10 @@ class BlogService extends AbstractService {
 
     def countPublished() {
         return Post.countByIsPublishedAndPublishedDateLessThanEquals(true, new Date())
+    }
+
+    def findTagByTagName(String tagName) {
+        return Tag.findByName(tagName)
     }
 
     def listTags() {

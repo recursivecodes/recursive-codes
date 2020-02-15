@@ -307,11 +307,9 @@
                         <a href="#" rv-on-click="model.selectYouTube">
                             <img rv-src="item.snippet.thumbnails.medium.url" rv-title="item.snippet.title" class="img-responsive" />
                         </a>
-                        <!--
                         <div class="caption">
                             <div>{item.snippet.title}</div>
                         </div>
-                        -->
                     </div>
                 </div>
             </div>
