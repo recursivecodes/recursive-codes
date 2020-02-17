@@ -4,6 +4,7 @@ import codes.recursive.blog.BlogService
 import codes.recursive.blog.Post
 import codes.recursive.blog.PostTag
 import codes.recursive.blog.Tag
+import codes.recursive.subscriber.SubscriberService
 import codes.recursive.user.UserService
 import com.amazonaws.services.s3.model.ObjectMetadata
 import grails.core.GrailsApplication
@@ -19,6 +20,7 @@ class ImportBlogPostJob {
 
     GrailsApplication grailsApplication
     BlogService blogService
+    SubscriberService subscriberService
     UserService userService
     AmazonS3Service amazonS3Service
 
@@ -214,6 +216,7 @@ class ImportBlogPostJob {
                 // save post
                 newPost.article = parsedBody.select("body").html()
                 blogService.save(newPost)
+                subscriberService.notifySubscribers(newPost)
                 println "Imported post with ID: ${importId} as ${newPost.title}!"
                 importedPosts++
             }

@@ -16,6 +16,8 @@ class UrlMappings {
         "/videos"(controller: 'page', action: 'videos')
         "/p/$slug"(controller: 'blog', action: 'bySlug')
         "/presentations"(controller: 'page', action: 'videos')
+        "/subscribe"(controller: 'page', action: 'subscribe')
+        "/unsubscribe"(controller: 'page', action: 'unsubscribe')
         "/search"(controller: 'page', action: 'search')
         "/sitemap**"(controller: 'page', action: 'sitemap')
         "/import"(controller: 'page', action: 'importPosts')

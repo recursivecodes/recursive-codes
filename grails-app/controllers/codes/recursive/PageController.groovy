@@ -1,7 +1,9 @@
 package codes.recursive
 
 import codes.recursive.blog.BlogService
+import codes.recursive.blog.Subscriber
 import codes.recursive.blog.command.ContactFormCommand
+import codes.recursive.subscriber.SubscriberService
 import grails.converters.JSON
 import grails.core.GrailsApplication
 import grails.plugin.awssdk.s3.AmazonS3Service
@@ -17,6 +19,7 @@ import java.nio.file.Files
 class PageController extends AbstractController{
 
     BlogService blogService
+    SubscriberService subscriberService
     GrailsApplication grailsApplication
     MailService mailService
     AmazonS3Service amazonS3Service
@@ -65,6 +68,39 @@ class PageController extends AbstractController{
     def about() {
         def model = defaultModel
         return model << [:]
+    }
+
+    def unsubscribe() {
+        def id = params.get("id")
+        subscriberService.deactivate(id)
+        flash.message = g.message(code: 'subscription.deactivated')
+        redirect(action: 'home')
+        return
+    }
+
+    def subscribe() {
+        def model = defaultModel
+        def sub = new Subscriber()
+
+        if( request.method == "POST" ) {
+            def email = params.get('email')
+            sub = new Subscriber(email: email)
+            if( sub.validate() ) {
+                subscriberService.save(sub)
+                flash.message = g.message(code: 'subscription.email.sent')
+                redirect(action: 'subscribe')
+                return
+            }
+            else {
+                flash.error = g.message(code: 'default.error.message')
+            }
+
+        }
+
+        return model << [
+                subscriber: sub,
+                defaultParams: [:],
+        ]
     }
 
     def contact(ContactFormCommand command) {

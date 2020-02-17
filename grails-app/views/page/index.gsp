@@ -5,6 +5,11 @@
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
 </head>
 <body>
+    <g:if test='${flash.message}'>
+        <ui:messageContainer>
+            <div class="message">${flash.message}</div>
+        </ui:messageContainer>
+    </g:if>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <g:if test="${tag}">

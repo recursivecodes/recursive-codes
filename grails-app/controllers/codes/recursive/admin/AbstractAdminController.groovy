@@ -47,6 +47,21 @@ class AbstractAdminController extends AbstractController {
                         ]
                 ],
                 [
+                        text   : 'Subscribers',
+                        submenu: [
+                                [
+                                        text      : 'List Subscribers',
+                                        controller: 'subscriber',
+                                        action    : 'list',
+                                ],
+                                [
+                                        text      : 'New Subscriber',
+                                        controller: 'subscriber',
+                                        action    : 'edit',
+                                ],
+                        ]
+                ],
+                [
                         text: 'Logout',
                         action: 'index',
                         controller: 'logout',

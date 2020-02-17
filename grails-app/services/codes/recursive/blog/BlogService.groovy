@@ -1,6 +1,7 @@
 package codes.recursive.blog
 
 import codes.recursive.AbstractService
+import codes.recursive.subscriber.SubscriberService
 import groovy.sql.Sql
 
 /**
@@ -8,6 +9,7 @@ import groovy.sql.Sql
  */
 class BlogService extends AbstractService {
     Sql sql
+    SubscriberService subscriberService
 
     def findById(Long id) {
         return Post.findById(id)
@@ -22,7 +24,12 @@ class BlogService extends AbstractService {
     }
 
     def save(Post post) {
-        return post.save(flush: true, failOnError: true)
+        def notifySubs = !post.id
+        post.save(flush: true, failOnError: true)
+        if( notifySubs ) {
+            subscriberService.notifySubscribers(post)
+        }
+        return post
     }
 
     def listTagged(String tag, Long max, Long offset) {

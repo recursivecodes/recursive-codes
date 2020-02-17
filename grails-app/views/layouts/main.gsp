@@ -49,6 +49,9 @@
                         <g:link controller="page" action="contact">Contact</g:link>
                     </li>
                     <li>
+                        <g:link controller="page" action="subscribe">Subscribe</g:link>
+                    </li>
+                    <li>
                         <g:link controller="page" action="search">Search</g:link>
                     </li>
                     <sec:ifLoggedIn>
