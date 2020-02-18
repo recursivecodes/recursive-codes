@@ -6,7 +6,7 @@ import grails.util.Holders
 
 
 class Subscriber {
-
+    String id
     String email
     String verificationToken = UUID.randomUUID().toString()
     Boolean isActive = false
@@ -16,7 +16,7 @@ class Subscriber {
     Date lastUpdated
 
     static mapping = {
-        id generator: 'sequence', params: [ sequence: Holders.config.codes.recursive.oracle.sequence.subscriber ]
+        id generator: 'uuid'
     }
 
     static constraints = {

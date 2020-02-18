@@ -97,7 +97,11 @@
                     <g:hiddenField name="lastUpdatedBy.id" value="${currentUser.id}"/>
 
                     <bootform:field field="title" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Title" bean="${command}" description="The title of this blog post.  Used as the 'headline' for the article.">
-                        <g:textField type="text" id="title" name="title" class="form-control" required="true" maxlength="250" value="${command.title}"/>
+                        <g:textField type="text" id="title" name="title" class="form-control" required="true" maxlength="500" value="${command.title}"/>
+                    </bootform:field>
+
+                    <bootform:field field="slug" required="false" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Slug" bean="${command}" description="Slug used for friendly URLs. Auto-generated if not provided.">
+                        <g:textField type="text" id="slug" name="slug" class="form-control" required="false" maxlength="500" value="${command.slug}"/>
                     </bootform:field>
 
                     <bootform:field field="keywords" required="false" labelColumnClass="col-sm-2" controlColumnClass="col-sm-8" label="Keywords" bean="${command}" description="Keywords to associate with the metadata of this post.  The post's tags will also be included as keywords.">

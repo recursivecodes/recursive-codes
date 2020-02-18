@@ -26,17 +26,19 @@ class SubscriberService {
     }
 
     def notifySubscribers(Post post) {
-        def body = """<p>A new post is available on https://recursive.codes!</p>
+        list().each { Subscriber sub ->
+            def body = """<p>A new post is available on https://recursive.codes!</p>
 <p>${post.title}</p> 
 <p><a href="${grailsApplication.config.grails.serverURL}/p/${post.slug}">${grailsApplication.config.grails.serverURL}/p/${post.slug}</a></p>
-<p><small><a href="${grailsApplication.config.grails.serverURL}/unsubscribe">Unsubscribe</a> at any time.</small></p>
+<p><small><a href="${grailsApplication.config.grails.serverURL}/unsubscribe?id=${sub.id}">Unsubscribe</a> at any time.</small></p>
 """
-        mailService.sendMail {
-            subject "[recursive.codes] - New Post: ${post.title}"
-            html body
-            to grailsApplication.config.codes.recursive.email
-            bcc list().collect { it.email }
-            from grailsApplication.config.codes.recursive.email
+
+            mailService.sendMail {
+                subject "[recursive.codes] - New Post: ${post.title}"
+                html body
+                to sub.email
+                from grailsApplication.config.codes.recursive.email
+            }
         }
     }
 
@@ -66,11 +68,7 @@ class SubscriberService {
         return subscriber.save(flush: true)
     }
 
-    def deactivate(String email) {
-        return deactivate(findByEmail(email))
-    }
-
-    def deactivate(Long id) {
+    def deactivate(String id) {
         return deactivate(findById(id))
     }
 
@@ -78,11 +76,11 @@ class SubscriberService {
         return subscriber.delete(flush: true)
     }
 
-    def delete(Long id) {
+    def delete(String id) {
         return findById(id).delete(flush: true)
     }
 
-    def delete(String email) {
+    def deleteByEmail(String email) {
         return findByEmail(email).delete(flush: true)
     }
 
@@ -94,7 +92,7 @@ class SubscriberService {
         return save(sub)
     }
 
-    def findById(Long id) {
+    def findById(String id) {
         return Subscriber.findById(id)
     }
 

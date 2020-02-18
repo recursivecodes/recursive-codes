@@ -7,4 +7,5 @@ databaseChangeLog = {
     include(file: '2020021400-add-import-columns.groovy')
     include(file: '2020021600-add-subscribers-table.groovy')
     include(file: '2020021601-add-subscriber-columns.groovy')
+    include(file: '2020021800-drop-re-add-subscribers-table.groovy')
 }

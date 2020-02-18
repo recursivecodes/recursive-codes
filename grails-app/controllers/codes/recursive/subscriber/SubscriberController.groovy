@@ -47,7 +47,7 @@ class SubscriberController extends AbstractAdminController {
         def model = defaultModel
         def defaultParams = [id: params.long('id')]
         if( !subscriber ) {
-            subscriber = params.long('id') ? subscriberService.findById(params.long('id')) : new Subscriber()
+            subscriber = params.get('id') ? subscriberService.findById(params.get('id')) : new Subscriber()
         }
 
         if (request.method == 'POST') {

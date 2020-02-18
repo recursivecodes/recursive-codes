@@ -71,7 +71,7 @@ class PageController extends AbstractController{
     }
 
     def unsubscribe() {
-        Long id = params.long('id')
+        String id = params.get('id')
         subscriberService.deactivate(id)
         flash.message = g.message(code: 'subscription.deactivated')
         redirect(action: 'index')

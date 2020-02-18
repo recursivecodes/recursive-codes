@@ -14,6 +14,7 @@ class PostCommand implements Validateable{
 
     // properties
     String title
+    String slug
     String article
     String keywords
     String summary
@@ -27,6 +28,7 @@ class PostCommand implements Validateable{
     static PostCommand fromPost(Post post) {
         def command = new PostCommand(
                 title: post?.title,
+                slug: post?.slug,
                 keywords: post?.keywords,
                 summary: post?.summary,
                 article: post?.article,
@@ -42,6 +44,7 @@ class PostCommand implements Validateable{
     void populatePost(Post post) {
         post.version = this?.version
         post.title = this?.title
+        post.slug = this?.slug
         post.keywords = this?.keywords
         post.summary = this?.summary
         post.article = this?.article
@@ -61,6 +64,7 @@ class PostCommand implements Validateable{
 
     static constraints = {
         title nullable: false, maxSize: 500
+        slug nullable: true, maxSize: 500
         keywords nullable: true, maxSize: 500
         summary nullable: true, maxSize: 500
         article nullable: false
