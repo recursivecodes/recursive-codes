@@ -16,7 +16,7 @@ class Subscriber {
     Date lastUpdated
 
     static mapping = {
-        id generator: 'sequence', params: [ sequence: Holders.config.codes.recursive.oracle.sequence.post ]
+        id generator: 'sequence', params: [ sequence: Holders.config.codes.recursive.oracle.sequence.subscriber ]
     }
 
     static constraints = {

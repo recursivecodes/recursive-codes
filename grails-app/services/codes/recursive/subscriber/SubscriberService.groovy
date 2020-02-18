@@ -2,6 +2,7 @@ package codes.recursive.subscriber
 
 import codes.recursive.blog.Post
 import codes.recursive.blog.Subscriber
+import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 import grails.plugins.mail.MailService
 
@@ -9,11 +10,12 @@ import grails.plugins.mail.MailService
 class SubscriberService {
 
     MailService mailService
+    GrailsApplication grailsApplication
 
     def sendVerification(Subscriber subscriber) {
-        def body = """Thanks for subscribing to my blog!
-Please click on the following link to verify your subscription:
-<a>${grailsApplication.config.grails.serverURL}/subscriber/verify?token=${subscriber.verificationToken}</a>
+        def body = """<p>Thanks for subscribing to my blog!</p>
+<p>Please click on the following link to verify your subscription:</p>
+<p><a href="${grailsApplication.config.grails.serverURL}/subscriber/verify?token=${subscriber.verificationToken}">${grailsApplication.config.grails.serverURL}/subscriber/verify?token=${subscriber.verificationToken}</a></p>
 """
         mailService.sendMail {
             subject "[recursive.codes] - Verify Your Subscription"

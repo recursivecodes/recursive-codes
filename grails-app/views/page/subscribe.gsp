@@ -23,22 +23,21 @@
         <div class="col-sm-12">
             <div class="alert alert-info">
                 <div>If you'd like to receive an email each time a new post goes live, enter your email below and then follow the link to verify your email address. You can unsubscribe at any time via the link in each email that you receive. <b><i>You can expect on average 3-4 emails per month.</i></b></div>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-8">
-            <g:form useToken="true" action="${actionName}" method="POST" class="form-horizontal" params="${defaultParams}">
-                <bootform:horizontalField field="email" required="true" labelColumnClass="col-sm-6" controlColumnClass="col-sm-6" label="Email" bean="${subscriber}" description="">
-                    <g:textField type="text" id="email" name="email" class="form-control" required="true" maxlength="100" value="${subscriber.email}"/>
-                </bootform:horizontalField>
-                <div class="row">
-                    <div class="col-lg-6 col-lg-offset-6">
-                        <input type="submit" id="submit" name="subscribe" class="btn btn-primary " value="Subscribe" />
-                    </div>
-                </div>
-            </g:form>
+    <g:form useToken="true" action="${actionName}" method="POST" class="form-horizontal" params="${defaultParams}">
+        <bootform:horizontalField field="email" required="true" labelColumnClass="col-sm-2" label="Email" bean="${subscriber}" description="Your email address">
+            <g:textField type="text" id="email" name="email" class="form-control" required="true" maxlength="100" value="${subscriber.email}"/>
+        </bootform:horizontalField>
+
+        <div class="fieldcontainer form-group required">
+            <label class="col-sm-2 control-label" for="submit">&nbsp;</label>
+            <div class="col-sm-4">
+                <input type="submit" id="submit" name="subscribe" class="btn btn-primary " value="Subscribe" />
+            </div>
         </div>
-    </div>
+    </g:form>
 </body>
 </html>

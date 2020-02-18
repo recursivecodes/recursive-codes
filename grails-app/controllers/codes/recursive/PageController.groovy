@@ -74,7 +74,7 @@ class PageController extends AbstractController{
         def id = params.get("id")
         subscriberService.deactivate(id)
         flash.message = g.message(code: 'subscription.deactivated')
-        redirect(action: 'home')
+        redirect(action: 'index')
         return
     }
 
@@ -87,6 +87,7 @@ class PageController extends AbstractController{
             sub = new Subscriber(email: email)
             if( sub.validate() ) {
                 subscriberService.save(sub)
+                subscriberService.sendVerification(sub)
                 flash.message = g.message(code: 'subscription.email.sent')
                 redirect(action: 'subscribe')
                 return

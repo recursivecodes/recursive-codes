@@ -21,6 +21,7 @@ class SubscriberController extends AbstractAdminController {
         subscriberService.deactivate(subscriber)
         flash.message = g.message(code: 'subscription.deactivated')
         redirect(action: 'list')
+        return
     }
 
     @Secured('permitAll')
@@ -29,6 +30,7 @@ class SubscriberController extends AbstractAdminController {
         flash.message = g.message(code: 'subscription.activated')
         def ref = request.getHeader('referer')
         redirect(action: 'list')
+        return
     }
 
     @Secured('permitAll')
@@ -36,7 +38,8 @@ class SubscriberController extends AbstractAdminController {
         def token = params.get("token")
         subscriberService.verify(token)
         flash.message = g.message(code: 'subscription.email.verified')
-        redirect(controllerName: 'page', action: 'home')
+        redirect(controller: 'page', action: 'index')
+        return
     }
 
     @Secured('ROLE_ADMIN')
@@ -58,13 +61,14 @@ class SubscriberController extends AbstractAdminController {
                 // If we're valid, populate our model and save
                 if (!subscriber.hasErrors()) {
                     subscriberService.save(subscriber)
-                    redirect(controllerName: 'subscriber', action: 'list')
+                    subscriberService.sendVerification(subscriber)
+                    redirect(controller: 'subscriber', action: 'list')
                     return
 
                 } else {
                     // Command has errors, send the user a message
                     flash.error = g.message(code: 'default.error.message')
-                    redirect(controllerName: 'subscriber', action: 'edit')
+                    redirect(controller: 'subscriber', action: 'edit')
                     return
                 }
             }

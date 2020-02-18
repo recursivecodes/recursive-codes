@@ -161,6 +161,7 @@ class ImportBlogPostJob {
                         String fileName = FilenameUtils.getName(srcUrl.path)
                         String path = importId + '/' + fileName
                         String newUrl = transferAsset(srcUrl, path)
+                        img.addClass("img-responsive")
                         img.attr("src", newUrl)
                     }
                 }
