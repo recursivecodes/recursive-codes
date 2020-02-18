@@ -5,6 +5,7 @@ import codes.recursive.admin.AbstractAdminController
 import codes.recursive.admin.command.PostCommand
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
+import com.github.slugify.Slugify
 import grails.converters.JSON
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
@@ -111,6 +112,10 @@ class BlogController extends AbstractAdminController {
                 // If we're valid, populate our model and save
                 if (!command.hasErrors()) {
                     command.populatePost(post)
+                    if( !post.id ) {
+                        Slugify slg = new Slugify().withLowerCase(false)
+                        post.slug = slg.slugify( post.title )
+                    }
                     blogService.save(post)
                     def token = SynchronizerTokensHolder.store(session).generateToken(params.SYNCHRONIZER_URI)
                     SynchronizerTokensHolder.store(session).resetToken(token)
