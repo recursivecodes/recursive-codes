@@ -70,6 +70,11 @@ class PageController extends AbstractController{
         return model << [:]
     }
 
+    def privacy() {
+        def model = defaultModel
+        return model << [:]
+    }
+
     def unsubscribe() {
         String id = params.get('id')
         subscriberService.deactivate(id)

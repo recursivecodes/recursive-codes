@@ -140,6 +140,9 @@
                     </ul>
                     <div class="mt-3 copyright text-muted">Copyright &copy; Todd Sharp ${Calendar.getInstance().get(Calendar.YEAR)}</div>
                     <div class="text-center" style="font-size: 14px;">
+                        <div>
+                            <small><g:link controller="page" action="privacy">Privacy Policy</g:link></small>
+                        </div>
                         <sec:ifNotLoggedIn>
                             <div>
                                 <small><g:link controller="login" action="index">Login</g:link></small>

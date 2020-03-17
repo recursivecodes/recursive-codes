@@ -13,6 +13,7 @@ class UrlMappings {
             action = 'feed'
             all = 'true'
         }
+        "/privacy"(controller: 'page', action: 'privacy')
         "/videos"(controller: 'page', action: 'videos')
         "/p/$slug"(controller: 'blog', action: 'bySlug')
         "/presentations"(controller: 'page', action: 'videos')

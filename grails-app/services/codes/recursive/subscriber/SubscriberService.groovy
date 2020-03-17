@@ -26,7 +26,7 @@ class SubscriberService {
     }
 
     def notifySubscribers(Post post) {
-        list().each { Subscriber sub ->
+        listActive().each { Subscriber sub ->
             def body = """<p>A new post is available on https://recursive.codes!</p>
 <p>${post.title}</p> 
 <p><a href="${grailsApplication.config.grails.serverURL}/p/${post.slug}">${grailsApplication.config.grails.serverURL}/p/${post.slug}</a></p>
@@ -40,6 +40,10 @@ class SubscriberService {
                 from grailsApplication.config.codes.recursive.email
             }
         }
+    }
+
+    def listActive() {
+        return Subscriber.findByIsActiveAndIsVerified(true, true)
     }
 
     def list() {

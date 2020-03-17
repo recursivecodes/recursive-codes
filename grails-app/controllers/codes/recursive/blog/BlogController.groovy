@@ -113,7 +113,7 @@ class BlogController extends AbstractAdminController {
                 if (!command.hasErrors()) {
                     command.populatePost(post)
                     if( !post.id ) {
-                        Slugify slg = new Slugify().withLowerCase(false)
+                        Slugify slg = new Slugify().withLowerCase(true)
                         post.slug = slg.slugify( post.title )
                     }
                     blogService.save(post)

@@ -405,6 +405,13 @@ class UiTagLib {
         out << (result.size() ? result : 'No preview available...')
     }
 
+    def commento = { attrs ->
+        out << """
+            <div id="commento"></div>
+            <script src="https://cdn.commento.io/js/commento.js"></script>
+        """
+    }
+
     def disqus = { attrs ->
         def id = attrs?.id
         def url = grailsApplication.config.grails.serverURL + createLink(action: actionName, controller: controllerName, params: [id: id])
