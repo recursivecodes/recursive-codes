@@ -1,0 +1,81 @@
+environments:
+    production:
+        grails:
+            serverURL:
+        dataSource:
+            dbCreate: none
+            url: ${DB_URL}
+            username: ${DB_USERNAME}
+            password: ${DB_PASSWORD}
+            driverClassName: oracle.jdbc.OracleDriver
+            dialect: org.hibernate.dialect.Oracle12cDialect
+            properties:
+                jmxEnabled: true
+                initialSize: 5
+                maxActive: 50
+                minIdle: 5
+                maxIdle: 25
+                maxWait: 10000
+                maxAge: 600000
+                timeBetweenEvictionRunsMillis: 5000
+                minEvictableIdleTimeMillis: 60000
+                validationQuery: SELECT 1 from dual
+                validationQueryTimeout: 3
+                validationInterval: 15000
+                testOnBorrow: true
+                testWhileIdle: true
+                testOnReturn: false
+                jdbcInterceptors: ConnectionState
+                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+---
+grails:
+    plugin:
+        awssdk:
+            s3:
+                accessKey: ${ACCESS_KEY}
+                secretKey: ${SECRET_KEY}
+                bucket: ${S3_BUCKET}
+    mail:
+        host: ${SMTP_HOST}
+        port: ${SMTP_PORT}
+        username: ${SMTP_USERNAME}
+        password: ${SMTP_PASSWORD}
+        props:
+          mail.smtp.port: ${SMTP_PORT}
+          mail.smtp.starttls.enable: true
+---
+codes:
+    recursive:
+        ociCreds: ${OCI_CONFIG_PATH}
+        github:
+            user: ${GITHUB_USER_1}
+            user2: ${GITHUB_USER_2}
+            password2: ${GITHUB_PASSWORD}
+        email: ${EMAIL_FROM}
+        youtubeFeed: ${YOUTUBE_FEED_URL}
+        youtubeChannel: ${YOUTUBE_CHANNEL_URL}
+        youtubeChannelId: ${YOUTUBE_CHANNEL_ID}
+        aws:
+            s3:
+                region: ${OBJECT_STORAGE_REGION}
+                imgBucket: ${OBJECT_STORAGE_IMG_BUCKET}
+                namespace: ${OBJECT_STORAGE_NAMESPACE}
+                endpoint: ${OBJECT_STORAGE_ENDPOINT}
+        google:
+            youtube:
+                apiKey: ${YOUTUBE_API_KEY}
+        import:
+            feed: ${IMPORT_FEED_URL}
+            api:
+                key: ${IMPORT_API_KEY}
+                username: ${IMPORT_USERNAME}
+        oracle:
+            sequence:
+                post: ${SEQUENCE_POST}
+                postTag: ${SEQUENCE_POST_TAG}
+                tag: ${SEQUENCE_TAG}
+                role: ${SEQUENCE_ROLE}
+                user: ${SEQUENCE_USER}
+                userRole: ${SEQUENCE_USER_ROLE}
+                sitemap: ${SEQUENCE_SITEMAP}
+                subscriber: ${SEQUENCE_SUBSCRIBER}

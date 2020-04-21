@@ -85,6 +85,12 @@ springBoot {
     executable = true
 }
 
+[bootRun].each { runTask ->
+    configure(runTask) {
+        systemProperties System.properties
+    }
+}
+
 bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
 

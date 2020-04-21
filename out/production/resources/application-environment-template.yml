@@ -43,6 +43,35 @@ grails:
 ---
 codes:
     recursive:
+        ociCreds:
         github:
             user:
+            user2:
+            password2:
         email:
+        youtubeFeed:
+        youtubeChannel:
+        youtubeChannelId:
+        aws:
+            s3:
+                region:
+                imgBucket:
+                namespace:
+                endpoint:
+        google:
+            youtube:
+                apiKey:
+        import:
+            feed:
+            api:
+                key:
+                username:
+        oracle:
+            sequence:
+                post:
+                postTag:
+                tag:
+                role:
+                user:
+                userRole:
+                sitemap:

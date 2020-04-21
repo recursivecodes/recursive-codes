@@ -5,15 +5,14 @@ import grails.util.Environment
 
 class BootStrap {
 
-    def grailsApplication
-    BlogService blogService
-
     def init = { servletContext ->
         if( Environment.current == Environment.DEVELOPMENT ) {
             if( !User.findByUsername('admin') ){
-                def user = new User(firstName: 'Todd', lastName: 'Sharp', username: 'admin', password: 'password')
+                def tempPassword = UUID.randomUUID().toString().replace('-', '').substring(0,10)
+                def user = new User(firstName: 'Admin', lastName: 'User', username: 'admin', password: tempPassword)
                 user.addToUserRoles(role: Role.findByAuthority(Role.ROLE_ADMIN))
                 user.save(flush: true, failOnError: true)
+                println "User 'admin' created with temporary password ${tempPassword}. Please log in and change."
             }
         }
         CreateSitemapJob.triggerNow()

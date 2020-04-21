@@ -1,0 +1,90 @@
+[
+  {
+    "title": "Easier Microservice Persistence With Micronaut Data",
+    "alias": "micronaut-data",
+    "google-embed-id": "1RvdgcyM_Zt8oUDjapy4XKBH6p6Ee93-X",
+    "conferences": [
+      {
+        "name": "DevNexus",
+        "date": "February, 2020",
+        "link": "https://devnexus.com",
+        "recording": ""
+      }
+    ],
+    "abstract": "In this session I'll introduce you to Micronaut Data, a tool that will make your persistence operations easier to code and more performant than most alternatives. Writing SQL queries is one of the first things you learn as a developer which inevitably leads most developers on a quest to find the easiest, fastest and most performant way to avoid writing SQL queries. Even the simplest application likely has some form of persistence layer which means at some point you'll be thinking about writing some boring, boilerplate CRUD operations. There are many tools available to make this job easier and each of those tools have strengths and weaknesses. Micronaut Data is a new entry into the database access toolkit landscape and delivers improvements on some existing solutions by using AoT compilation to pre-compute queries which are executed by a thin runtime layer. Since the queries are pre-computed, there's no runtime model to consume memory and of course Micronaut Data doesn't use reflection or runtime proxies. The result is a toolkit that is easy to use and highly performant."
+  },
+  {
+    "title": "Fighting Diabetes with Technology",
+    "alias": "fighting-diabetes",
+    "google-embed-id": "1N4H3divNAYLTn38GlGFB1uohpIybb08l",
+    "conferences": [
+      {
+        "name": "Oracle Code One",
+        "date": "September, 2019",
+        "link": "https://www.oracle.com/code-one/keynotes.html",
+        "recording": "https://www.youtube.com/watch?v=HjlqoCNHGqc&list=PLU4gA5I5eLPPrKn7A1DWnlTNqERnRuIaT"
+      },
+      {
+        "name": "DevNexus",
+        "date": "February, 2020",
+        "link": "https://devnexus.com",
+        "recording": ""
+      }
+    ],
+    "abstract": "My 13-year-old daughter was recently diagnosed with diabetes. She is one of 400 million people worldwide who has to live with this disease for the rest of her life—and I am determined to be with her every step of the way. Thanks to technology, I can help her to easily calculate her carbohydrate consumption to help her determine her next insulin dose. This is my attempt as a father and a developer to address a real-world problem with technology, and hopefully inspire others to do the same."
+  },
+  {
+    "title": "How I Automated My Barn...",
+    "alias": "barn-automation",
+    "google-embed-id": "1Xyt10rhgg-VFNNtPxlVzuN0xcQx37yZK",
+    "conferences": [
+      {
+        "name": "Oracle Code One",
+        "date": "September, 2019",
+        "link": "https://www.oracle.com/code-one",
+        "recording": ""
+      },
+      {
+        "name": "GR8Conf",
+        "date": "May, 2019",
+        "link": "https://gr8conf.eu/",
+        "recording": ""
+      },
+      {
+        "name": "Greach",
+        "date": "March, 2019",
+        "link": "https://greachconf.com",
+        "recording": "https://www.youtube.com/watch?v=ce8mf4lIS-U&list=PLU4gA5I5eLPPrKn7A1DWnlTNqERnRuIaT"
+      }
+    ],
+    "abstract": "A few years ago I created a small system to automate some tasks in our barn where we keep pet potbelly pig and our chickens.  Simple things, like scheduling when the lights turn on and off, temperature monitoring and a webcam.  It was nice to automate those things, but the best part for me was being able to tinker with the sensors and devices and learn new libraries, frameworks, and languages.  \n\nI’ve recently re-imagined the system as a way to learn more new technologies.  I’ve created a prototype version to demonstrate how I might build it again if I were to start over from scratch and in this session, we’ll look at that model and learn about the hardware and software used in it.  At its core, the system uses an Arduino, Raspberry Pi, and various pumps, solenoids, motors, and sensors to simulate the automation of certain tasks like filling a water bowl, opening and closing doors, monitoring environment and turning on and off lights on demand or via a schedule.  The hardware runs a client which has been implemented in several languages for demo purposes (currently Node and Groovy).  The client interfaces with Kafka via a cloud-based microservice (also implemented in Node and Groovy) for messaging to both store sensor data in an Autonomous Database instance and stream data to the Angular front-end in real time via server sent events. The Raspberry Pi client also receives commands for remotely performing certain tasks on demand.  The persisted data is formatted and displayed on a web application running in a Docker container that is deployed to a cloud-based Kubernetes cluster.  \n\nWe’ll look at both the hardware and software that power this system and how I’ve used the project as a playground for learning new technologies, languages, and frameworks."
+  },
+  {
+    "title": "Getting Groovy with Spark Java",
+    "alias": "getting-groovy-with-spark-java",
+    "google-embed-id": "16nOWc-qU2FlfSQP_C6-QovNzAd6UVEvs",
+    "conferences": [
+      {
+        "name": "DevNexus",
+        "date": "Feb, 2018",
+        "link": "https://devnexus.com",
+        "recording": "https://www.recallact.com/presentation/getting-groovy-spark-java"
+      }
+    ],
+    "abstract": "Gone are the days of verbose, cumbersome frameworks that get in your way! Spark Java is a micro framework that is easy to learn, simple to use and makes your job as a developer easier. It can be used to create anything from a REST API microservice to a full featured web application. You can write your application or microservice using pure Java, but development gets even easier when you combine it with a the JVM language that you are most comfortable with like Kotlin or Groovy (or others). In this talk we’ll take a look at using Spark Java with Groovy. You’ll learn the basics of Spark Java and get introduced to some ways it can be extended by integrating it with the larger Java ecosystem to do things like persistence with ORM and rendering views with a variety of templating engines available. Spark Java is so lightweight you can even run it on a Raspberry Pi!"
+  },
+  {
+    "title": "ECMA What? Getting Up To Speed With The JavaScript World",
+    "alias": "ecma-what",
+    "google-embed-id": "1aNKP-cyohytCM2x43Mvd4oSueWjUilfU",
+    "conferences": [
+      {
+        "name": "We RISE Tech Conference",
+        "date": "June, 2018",
+        "link": "https://werise.tech/",
+        "recording": "https://www.recallact.com/presentation/ecma-what-getting-speed-javascript-world"
+      }
+    ],
+    "abstract": "You've been a developer for a while. You're familiar with JavaScript and written plenty of apps in your day. But you've been out of the loop for a while. There's been a lot of changes in the JS world and after this talk you'll be up to speed and ready to get started with modern day JS."
+  }
+]
