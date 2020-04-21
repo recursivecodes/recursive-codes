@@ -17,5 +17,6 @@ doc
 #application-development.yml
 #application-production.yml
 manifest.json
-out
-.idea
+out/
+.idea/
+/out/
