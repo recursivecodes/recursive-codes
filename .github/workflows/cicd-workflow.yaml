@@ -124,6 +124,7 @@ jobs:
 
       - name: 'Set Commit Hash'
         run: |
+          echo "set hash"
           echo "::set-env name=COMMIT_HASH::git rev-parse --short HEAD"
 
       - name: 'Write ENV File On VM'
