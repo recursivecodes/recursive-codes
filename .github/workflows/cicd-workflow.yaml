@@ -2,7 +2,7 @@ name: recursive-codes
 on:
   push:
     branches:
-      - '*'
+      - 'master'
 jobs:
   build-job:
     name: Build Job
