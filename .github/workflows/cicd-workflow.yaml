@@ -78,7 +78,7 @@ jobs:
               -DSEQUENCE_USER_ROLE='${{secrets.SEQUENCE_USER_ROLE}}' \
               -DSEQUENCE_SITEMAP='${{secrets.SEQUENCE_SITEMAP}}' \
               -DSEQUENCE_SUBSCRIBER='${{secrets.SEQUENCE_SUBSCRIBER}}' \
-              -Doracle.jdbc.fanEnabled='false'
+              -Doracle.jdbc.fanEnabled='false' \
               dbmUpdate
 
       - name: 'Write Config & Key Files'
