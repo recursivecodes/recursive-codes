@@ -27,7 +27,11 @@ class CreateSitemapJob {
     }
 
     def execute() {
-
+        boolean genSiteMap = grailsApplication.config.codes.recursive?.generateSiteMap ?: true
+        if( !genSiteMap ) {
+            println 'Exiting sitemap job because of system property override (probably running a migration)'
+            return false
+        }
         if( Environment.current == Environment.DEVELOPMENT ) {
             println 'Exiting sitemap job because Environment == DEVELOP'
             return false
@@ -50,7 +54,7 @@ class CreateSitemapJob {
 
         def tmpPath = System.getProperty("java.io.tmpdir")
         def tempDir = new File( tmpPath )
-        def baseUrl = grailsApplication.config.grails.serverURL
+        def baseUrl = grailsApplication.config.grails.serverURL ?: 'https://recursive.codes'
         WebSitemapGenerator wsg = WebSitemapGenerator.builder(baseUrl, tempDir).build()
         wsg.addUrl(new WebSitemapUrl.Options("${baseUrl}/about").lastMod(new Date()).priority(1.0).changeFreq(ChangeFreq.MONTHLY).build())
         wsg.addUrl(new WebSitemapUrl.Options("${baseUrl}/search").lastMod(new Date()).priority(1.0).changeFreq(ChangeFreq.YEARLY).build())
