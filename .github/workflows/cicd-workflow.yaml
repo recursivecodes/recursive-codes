@@ -23,7 +23,7 @@ jobs:
 
       - name: 'Check Java Version'
         run: |
-          java --version
+          java -version
 
       - name: 'Build WAR'
         run: |
