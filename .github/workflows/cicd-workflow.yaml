@@ -65,12 +65,12 @@ jobs:
           sudo sh -c  'echo "${{secrets.WALLET_TRUSTSTORE}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/truststore.jks'
 
       - name: 'Install OCI CLI'
-          run: |
-            curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
-            chmod +x install.sh
-            ./install.sh --accept-all-defaults
-            echo "::add-path::/home/runner/bin"
-            exec -l $SHELL
+        run: |
+          curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+          chmod +x install.sh
+          ./install.sh --accept-all-defaults
+          echo "::add-path::/home/runner/bin"
+          exec -l $SHELL
 
       - name: 'Fix Config File Permissions'
         run: |
