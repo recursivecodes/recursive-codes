@@ -42,7 +42,7 @@ jobs:
       - name: 'Run Migrations'
         run: |
           ./gradlew \
-              -grails.env=prod \
+              -Dgrails.env=prod \
               -DDB_URL='${{secrets.DB_URL}}' \
               -DSERVER_URL='${{secrets.SERVER_URL}}' \
               -DDB_USERNAME='${{secrets.DB_USERNAME}}' \
