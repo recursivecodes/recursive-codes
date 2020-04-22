@@ -1,6 +1,5 @@
 package codes.recursive
 
-import codes.recursive.blog.BlogService
 import grails.util.Environment
 
 class BootStrap {

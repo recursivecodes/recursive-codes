@@ -1,0 +1,140 @@
+name: recursive-codes
+on:
+  push:
+    branches:
+      - '*'
+jobs:
+  build-job:
+    name: Build Job
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: 'Start build job'
+        run: |
+          echo "Starting the build job."
+
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: 'Setup Java 8'
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: 'Check Java Version'
+        run: |
+          java --version
+
+      - name: 'Build WAR'
+        run: |
+          ./gradlew -Dgrails.env=prod war
+
+      - name: 'Get Version Number'
+        run: |
+          echo "::set-env name=VERSION::$(./gradlew properties -q | grep "version:" | awk '{print $2}')"
+
+      - name: 'Publish WAR'
+        uses: actions/upload-artifact@v2-preview
+        with:
+          name: 'recursive-codes-${{env.VERSION}}-all.jar'
+          path: build/libs/recursive-codes-*.war
+
+      - name: 'Run Migrations'
+        run: |
+          ./gradlew -Dgrails.env=prod -DdataSource.url=${{secrets.DB_URL}} -DdataSource.username=${{secrets.DB_USERNAME}} -DdataSource.password=${{secrets.DB_PASSWORD}} dbmUpdate
+
+      - name: 'Write Config & Key Files'
+        run: |
+          mkdir ~/.oci
+          echo "[DEFAULT]" >> ~/.oci/config
+          echo "user=${{secrets.OCI_USER_OCID}}" >> ~/.oci/config
+          echo "fingerprint=${{secrets.OCI_FINGERPRINT}}" >> ~/.oci/config
+          echo "pass_phrase=${{secrets.OCI_PASSPHRASE}}" >> ~/.oci/config
+          echo "region=${{secrets.OCI_REGION}}" >> ~/.oci/config
+          echo "tenancy=${{secrets.OCI_TENANCY_OCID}}" >> ~/.oci/config
+          echo "key_file=~/.oci/key.pem" >> ~/.oci/config
+          echo "${{secrets.OCI_KEY_FILE}}" >> ~/.oci/key.pem
+          echo "${{secrets.VM_SSH_PUB_KEY}}" >> /home/runner/.oci/id_vm.pub
+          sudo mkdir /home/runner/work/recursive-codes/recursive-codes/wallet
+          sudo sh -c  'echo "${{secrets.WALLET_CWALLET}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/cwallet.sso'
+          sudo sh -c  'echo "${{secrets.WALLET_EWALLET}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/ewallet.p12'
+          sudo sh -c  'echo "${{secrets.WALLET_KEYSTORE}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/keystore.jks'
+          sudo sh -c  'echo "${{secrets.WALLET_OJDBC}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/ojdbc.properties'
+          sudo sh -c  'echo "${{secrets.WALLET_SQLNET}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/sqlnet.ora'
+          sudo sh -c  'echo "${{secrets.WALLET_TNSNAMES}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/tnsnames.ora'
+          sudo sh -c  'echo "${{secrets.WALLET_TRUSTSTORE}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/truststore.jks'
+
+      - name: 'Install OCI CLI'
+          run: |
+            curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+            chmod +x install.sh
+            ./install.sh --accept-all-defaults
+            echo "::add-path::/home/runner/bin"
+            exec -l $SHELL
+
+      - name: 'Fix Config File Permissions'
+        run: |
+          oci setup repair-file-permissions --file /home/runner/.oci/config
+          oci setup repair-file-permissions --file /home/runner/.oci/key.pem
+
+      - name: 'Set Instance IP'
+        run: |
+          echo "::set-env name=INSTANCE_IP::150.136.137.200"
+
+      - name: 'Write ENV File'
+        run: |
+          sudo mv /u01/tomcat/latest/bin/setenv.sh /u01/tomcat/latest/bin/setenv.old.sh
+          echo 'CATALINA_OPTS="${CATALINA_OPTS} -Doracle.jdbc.fanEnabled=false"' >> /u01/tomcat/latest/bin/setenv.sh
+          echo 'CATALINA_OPTS="${CATALINA_OPTS} -DDB_URL=${{secrets.DB_URL}}"' >> /u01/tomcat/latest/bin/setenv.sh
+          echo 'CATALINA_OPTS="${CATALINA_OPTS} -DDB_USERNAME=${{secrets.DB_USERNAME}}"' >> /u01/tomcat/latest/bin/setenv.sh
+          echo 'CATALINA_OPTS="${CATALINA_OPTS} -DDB_PASSWORD=${{secrets.DB_PASSWORD}}"' >> /u01/tomcat/latest/bin/setenv.sh
+
+      - name: 'Publish Presentation JSON'
+        run: |
+          oci os object put --bucket-name ${{secrets.S3_BUCKET}} --file /home/runner/work/recursive-codes/recursive-codes/grails-app/conf/presentations.json
+
+      - name: 'Push WAR'
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ env.INSTANCE_IP }}
+          username: opc
+          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+          source: "build/libs/recursive-codes-${{env.VERSION}}.war"
+          target: ""
+          strip_components: 2
+
+      - name: 'Write Wallet & OCI Config To VM'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.INSTANCE_IP }}
+          username: opc
+          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+          script: |
+            sudo mkdir /.oci
+            sudo sh -c 'echo "[DEFAULT]" >> /.oci/config'
+            sudo sh -c 'echo "user=${{secrets.OCI_USER_OCID}}" >> /.oci/config'
+            sudo sh -c 'echo "fingerprint=${{secrets.OCI_FINGERPRINT}}" >> /.oci/config'
+            sudo sh -c 'echo "pass_phrase=${{secrets.OCI_PASSPHRASE}}" >> /.oci/config'
+            sudo sh -c 'echo "region=${{secrets.OCI_REGION}}" >> /.oci/config'
+            sudo sh -c 'echo "tenancy=${{secrets.OCI_TENANCY_OCID}}" >> /.oci/config'
+            sudo sh -c 'echo "key_file=/.oci/key.pem" >> /.oci/config'
+            sudo sh -c 'echo "${{secrets.OCI_KEY_FILE}}" >> /.oci/key.pem'
+            sudo sh -c 'echo "${{secrets.VM_SSH_PUB_KEY}}" >> /home/runner/.oci/id_vm.pub'
+            sudo mkdir /wallet
+            sudo sh -c 'echo "${{secrets.WALLET_CWALLET}}" | base64 -d >> /wallet/cwallet.sso'
+            sudo sh -c 'echo "${{secrets.WALLET_EWALLET}}" | base64 -d >> /wallet/ewallet.p12'
+            sudo sh -c 'echo "${{secrets.WALLET_KEYSTORE}}" | base64 -d >> /wallet/keystore.jks'
+            sudo sh -c 'echo "${{secrets.WALLET_OJDBC}}" | base64 -d >> /wallet/ojdbc.properties'
+            sudo sh -c 'echo "${{secrets.WALLET_SQLNET}}" | base64 -d >> /wallet/sqlnet.ora'
+            sudo sh -c 'echo "${{secrets.WALLET_TNSNAMES}}" | base64 -d >> /wallet/tnsnames.ora'
+            sudo sh -c 'echo "${{secrets.WALLET_TRUSTSTORE}}" | base64 -d >> /wallet/truststore.jks'
+
+      - name: 'Restart Tomcat'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.INSTANCE_IP }}
+          username: opc
+          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+          script: |
+            sudo mv ~/recursive-codes-${{env.VERSION}}.war /u01/tomcat/latest/webapps/ROOT.war
+            sudo systemctl restart tomcat
