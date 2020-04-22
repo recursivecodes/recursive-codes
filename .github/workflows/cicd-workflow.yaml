@@ -167,7 +167,7 @@ jobs:
 
       - name: 'Publish Presentation JSON'
         run: |
-          oci os object put --bucket-name ${{secrets.S3_BUCKET}} --file /home/runner/work/recursive-codes/recursive-codes/grails-app/conf/presentations.json
+          oci os object put --force --bucket-name ${{secrets.S3_BUCKET}} --file /home/runner/work/recursive-codes/recursive-codes/grails-app/conf/presentations.json
 
       - name: 'Push WAR'
         uses: appleboy/scp-action@master
