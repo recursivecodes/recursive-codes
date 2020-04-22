@@ -129,7 +129,7 @@ jobs:
           username: opc
           key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
           script: |
-            [ ! -f /u01/tomcat/latest/bin/setenv.sh ] || sudo mv /u01/tomcat/latest/bin/setenv.sh /u01/tomcat/latest/bin/setenv.old.sh && rm -rf /u01/tomcat/latest/bin/setenv.sh
+            [ ! -f /u01/tomcat/latest/bin/setenv.sh ] || sudo mv /u01/tomcat/latest/bin/setenv.sh /u01/tomcat/latest/bin/setenv.old.sh && sudo rm -rf /u01/tomcat/latest/bin/setenv.sh
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -Doracle.jdbc.fanEnabled=fa\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_URL=${{secrets.DB_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_USERNAME=${{secrets.DB_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
