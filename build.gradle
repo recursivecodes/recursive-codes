@@ -85,7 +85,7 @@ springBoot {
     executable = true
 }
 
-[bootRun].each { runTask ->
+[bootRun, dbmUpdate].each { runTask ->
     configure(runTask) {
         systemProperties System.properties
     }
