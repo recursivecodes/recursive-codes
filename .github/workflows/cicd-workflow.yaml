@@ -38,6 +38,27 @@ jobs:
         with:
           name: 'recursive-codes-${{env.VERSION}}-all.jar'
           path: build/libs/recursive-codes-*.war
+      - name: 'Write Config & Key Files'
+        run: |
+          mkdir ~/.oci
+          echo "[DEFAULT]" >> ~/.oci/config
+          echo "user=${{secrets.OCI_USER_OCID}}" >> ~/.oci/config
+          echo "fingerprint=${{secrets.OCI_FINGERPRINT}}" >> ~/.oci/config
+          echo "pass_phrase=${{secrets.OCI_PASSPHRASE}}" >> ~/.oci/config
+          echo "region=${{secrets.OCI_REGION}}" >> ~/.oci/config
+          echo "tenancy=${{secrets.OCI_TENANCY_OCID}}" >> ~/.oci/config
+          echo "key_file=~/.oci/key.pem" >> ~/.oci/config
+          echo "${{secrets.OCI_KEY_FILE}}" >> ~/.oci/key.pem
+          echo "${{secrets.VM_SSH_PUB_KEY}}" >> /home/runner/.oci/id_vm.pub
+          sudo mkdir /wallet
+          sudo sh -c  'echo "${{secrets.WALLET_CWALLET}}" | base64 -d >> /wallet/cwallet.sso'
+          sudo sh -c  'echo "${{secrets.WALLET_EWALLET}}" | base64 -d >> /wallet/ewallet.p12'
+          sudo sh -c  'echo "${{secrets.WALLET_KEYSTORE}}" | base64 -d >> /wallet/keystore.jks'
+          sudo sh -c  'echo "${{secrets.WALLET_OJDBC}}" | base64 -d >> /wallet/ojdbc.properties'
+          sudo sh -c  'echo "${{secrets.WALLET_SQLNET}}" | base64 -d >> /wallet/sqlnet.ora'
+          sudo sh -c  'echo "${{secrets.WALLET_TNSNAMES}}" | base64 -d >> /wallet/tnsnames.ora'
+          sudo sh -c  'echo "${{secrets.WALLET_TRUSTSTORE}}" | base64 -d >> /wallet/truststore.jks'
+
 
       - name: 'Run Migrations'
         run: |
@@ -81,27 +102,6 @@ jobs:
               -Doracle.jdbc.fanEnabled='false' \
               --stacktrace \
               dbmUpdate
-
-      - name: 'Write Config & Key Files'
-        run: |
-          mkdir ~/.oci
-          echo "[DEFAULT]" >> ~/.oci/config
-          echo "user=${{secrets.OCI_USER_OCID}}" >> ~/.oci/config
-          echo "fingerprint=${{secrets.OCI_FINGERPRINT}}" >> ~/.oci/config
-          echo "pass_phrase=${{secrets.OCI_PASSPHRASE}}" >> ~/.oci/config
-          echo "region=${{secrets.OCI_REGION}}" >> ~/.oci/config
-          echo "tenancy=${{secrets.OCI_TENANCY_OCID}}" >> ~/.oci/config
-          echo "key_file=~/.oci/key.pem" >> ~/.oci/config
-          echo "${{secrets.OCI_KEY_FILE}}" >> ~/.oci/key.pem
-          echo "${{secrets.VM_SSH_PUB_KEY}}" >> /home/runner/.oci/id_vm.pub
-          sudo mkdir /home/runner/work/recursive-codes/recursive-codes/wallet
-          sudo sh -c  'echo "${{secrets.WALLET_CWALLET}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/cwallet.sso'
-          sudo sh -c  'echo "${{secrets.WALLET_EWALLET}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/ewallet.p12'
-          sudo sh -c  'echo "${{secrets.WALLET_KEYSTORE}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/keystore.jks'
-          sudo sh -c  'echo "${{secrets.WALLET_OJDBC}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/ojdbc.properties'
-          sudo sh -c  'echo "${{secrets.WALLET_SQLNET}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/sqlnet.ora'
-          sudo sh -c  'echo "${{secrets.WALLET_TNSNAMES}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/tnsnames.ora'
-          sudo sh -c  'echo "${{secrets.WALLET_TRUSTSTORE}}" | base64 -d >> /home/runner/work/recursive-codes/recursive-codes/wallet/truststore.jks'
 
       - name: 'Install OCI CLI'
         run: |
