@@ -46,6 +46,7 @@ grails:
 ---
 codes:
     recursive:
+        commitHash: ${COMMIT_HASH}
         generateSiteMap: ${GENERATE_SITE_MAP}
         ociCreds: ${OCI_CONFIG_PATH}
         github:

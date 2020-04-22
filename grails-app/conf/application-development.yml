@@ -29,6 +29,7 @@ grails:
 ---
 codes:
     recursive:
+        commitHash: ${COMMIT_HASH}
         ociCreds: ${OCI_CONFIG_PATH}
         github:
             user: ${GITHUB_USER_1}

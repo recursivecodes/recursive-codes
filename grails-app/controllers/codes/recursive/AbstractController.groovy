@@ -1,8 +1,12 @@
 package codes.recursive
 
-abstract class AbstractController{
+import grails.util.Holders
 
+abstract class AbstractController{
     Map getDefaultModel(){
-        return [:]
+        def config = Holders.getGrailsApplication().config
+        return [
+                commitHash: config?.codes?.recursive?.commitHash ?: 'unknown',
+        ]
     }
 }

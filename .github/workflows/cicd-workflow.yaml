@@ -122,6 +122,10 @@ jobs:
         run: |
           echo "::set-env name=INSTANCE_IP::150.136.137.200"
 
+      - name: 'Set Commit Hash'
+        run: |
+          echo "::set-env name=COMMIT_HASH::${git rev-parse --short HEAD}"
+
       - name: 'Write ENV File On VM'
         uses: appleboy/ssh-action@master
         with:
@@ -130,7 +134,7 @@ jobs:
           key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
           script: |
             [ ! -f /u01/tomcat/latest/bin/setenv.sh ] || sudo mv /u01/tomcat/latest/bin/setenv.sh /u01/tomcat/latest/bin/setenv.old.sh && sudo rm -rf /u01/tomcat/latest/bin/setenv.sh
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -Doracle.jdbc.fanEnabled=fa\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -Doracle.jdbc.fanEnabled=false\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_URL=${{secrets.DB_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_USERNAME=${{secrets.DB_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_PASSWORD=${{secrets.DB_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
@@ -165,6 +169,7 @@ jobs:
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER_ROLE=${{secrets.SEQUENCE_USER_ROLE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_SITEMAP=${{secrets.SEQUENCE_SITEMAP}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_SUBSCRIBER=${{secrets.SEQUENCE_SUBSCRIBER}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DCOMMIT_HASH=${{env.COMMIT_HASH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
 
       - name: 'Publish Presentation JSON'
         run: |
