@@ -176,7 +176,7 @@ jobs:
           username: opc
           key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
           source: "build/libs/recursive-codes-${{env.VERSION}}.war"
-          target: ""
+          target: ":"
           strip_components: 2
 
       - name: 'Write Wallet & OCI Config To VM'
