@@ -38,6 +38,7 @@ jobs:
         with:
           name: 'recursive-codes-${{env.VERSION}}-all.jar'
           path: build/libs/recursive-codes-*.war
+
       - name: 'Write Config & Key Files'
         run: |
           mkdir ~/.oci
@@ -129,7 +130,7 @@ jobs:
           key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
           script: |
             [ ! -f /u01/tomcat/latest/bin/setenv.sh ] || sudo mv /u01/tomcat/latest/bin/setenv.sh /u01/tomcat/latest/bin/setenv.old.sh && rm -rf /u01/tomcat/latest/bin/setenv.sh
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -Doracle.jdbc.fanEnabled=fa\"lse >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -Doracle.jdbc.fanEnabled=fa\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_URL=${{secrets.DB_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_USERNAME=${{secrets.DB_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_PASSWORD=${{secrets.DB_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
