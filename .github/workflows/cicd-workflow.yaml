@@ -79,6 +79,7 @@ jobs:
               -DSEQUENCE_SITEMAP='${{secrets.SEQUENCE_SITEMAP}}' \
               -DSEQUENCE_SUBSCRIBER='${{secrets.SEQUENCE_SUBSCRIBER}}' \
               -Doracle.jdbc.fanEnabled='false' \
+              --stacktrace \
               dbmUpdate
 
       - name: 'Write Config & Key Files'
