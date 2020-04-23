@@ -182,7 +182,7 @@ jobs:
           username: opc
           key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
           source: "build/libs/recursive-codes-${{env.VERSION}}.war"
-          target: ":"
+          target: "app"
           strip_components: 2
 
       - name: 'Write Wallet & OCI Config To VM'
@@ -217,5 +217,5 @@ jobs:
           username: opc
           key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
           script: |
-            sudo mv ~/recursive-codes-${{env.VERSION}}.war /u01/tomcat/latest/webapps/ROOT.war
+            sudo mv ~/app/recursive-codes-${{env.VERSION}}.war /u01/tomcat/latest/webapps/ROOT.war
             sudo systemctl restart tomcat
