@@ -157,7 +157,7 @@
                             <small><i>Env: ${grails.util.Environment.current}</i></small>
                         </div>
                         <div>
-                            <small><i>Built From: ${commitHash ?: ''}</i></small>
+                            <small><i>Build Commit: ${commitHash ?: ''}</i></small>
                         </div>
                     </div>
                 </div>
