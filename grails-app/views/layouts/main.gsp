@@ -1,3 +1,4 @@
+<%@ page import="grails.util.Holders" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -157,7 +158,7 @@
                             <small><i>Env: ${grails.util.Environment.current}</i></small>
                         </div>
                         <div>
-                            <small><i>Build Commit: ${commitHash ?: ''}</i></small>
+                            <small><i>Build Commit: ${grails.util.Holders.getGrailsApplication().config?.codes?.recursive?.commitHash ?: 'unknown'}</i></small>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,6 @@ import groovy.json.JsonSlurper
 import org.springframework.cache.CacheManager
 
 import javax.annotation.PostConstruct
-import java.nio.file.Files
 
 @Secured('permitAll')
 class PageController extends AbstractController{
