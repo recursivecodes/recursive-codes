@@ -14,8 +14,8 @@
         <g:each in="${presentations}" var="presentation">
             <div class="col-xs-12">
                 <div class="row mb-5 ">
-                    <div class="col-xs-12 col-lg-7 my-auto">
-                        <iframe src="https://drive.google.com/file/d/${presentation['google-embed-id']}/preview" width="640" height="480"></iframe>
+                    <div class="col-xs-12 col-lg-7 my-auto embed-responsive embed-responsive-4by3" style="padding-bottom: 45%;">
+                        <iframe src="https://drive.google.com/file/d/${presentation['google-embed-id']}/preview" width="640" height="480" style="height: 480px;"></iframe>
                     </div>
                     <div class="col-xs-12 col-lg-5 ">
                         <h2 class="mt-3 mt-lg-0">${presentation.title}</h2>
