@@ -72,9 +72,6 @@ jobs:
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_SITEMAP=${{secrets.SEQUENCE_SITEMAP}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DCOMMIT_HASH=${{env.COMMIT_HASH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
 
-      - name: 'Abort'
-        run: exit 1
-
       - name: 'Build WAR'
         run: |
           ./gradlew -Dgrails.env=prod war
