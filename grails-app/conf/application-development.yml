@@ -62,4 +62,3 @@ codes:
                 user: ${SEQUENCE_USER}
                 userRole: ${SEQUENCE_USER_ROLE}
                 sitemap: ${SEQUENCE_SITEMAP}
-                subscriber: ${SEQUENCE_SUBSCRIBER}

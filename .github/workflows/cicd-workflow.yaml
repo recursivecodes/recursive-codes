@@ -100,7 +100,6 @@ jobs:
               -DSEQUENCE_USER='${{secrets.SEQUENCE_USER}}' \
               -DSEQUENCE_USER_ROLE='${{secrets.SEQUENCE_USER_ROLE}}' \
               -DSEQUENCE_SITEMAP='${{secrets.SEQUENCE_SITEMAP}}' \
-              -DSEQUENCE_SUBSCRIBER='${{secrets.SEQUENCE_SUBSCRIBER}}' \
               -Doracle.jdbc.fanEnabled='false' \
               --stacktrace \
               dbmUpdate
@@ -168,7 +167,6 @@ jobs:
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER=${{secrets.SEQUENCE_USER}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER_ROLE=${{secrets.SEQUENCE_USER_ROLE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_SITEMAP=${{secrets.SEQUENCE_SITEMAP}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_SUBSCRIBER=${{secrets.SEQUENCE_SUBSCRIBER}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DCOMMIT_HASH=${{env.COMMIT_HASH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
 
       - name: 'Publish Presentation JSON'
