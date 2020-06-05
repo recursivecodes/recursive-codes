@@ -78,7 +78,6 @@ dependencies {
     compile group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
     compile 'com.github.slugify:slugify:2.4'
-
 }
 
 springBoot {

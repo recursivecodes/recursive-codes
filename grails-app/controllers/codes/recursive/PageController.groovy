@@ -1,5 +1,6 @@
 package codes.recursive
 
+
 import codes.recursive.blog.BlogService
 import codes.recursive.blog.Subscriber
 import codes.recursive.blog.command.ContactFormCommand
@@ -10,11 +11,13 @@ import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.mail.MailService
 import groovy.json.JsonSlurper
+import groovy.util.logging.Slf4j
 import org.springframework.cache.CacheManager
 
 import javax.annotation.PostConstruct
 
 @Secured('permitAll')
+@Slf4j
 class PageController extends AbstractController{
 
     BlogService blogService
@@ -23,6 +26,7 @@ class PageController extends AbstractController{
     MailService mailService
     AmazonS3Service amazonS3Service
     CacheManager grailsCacheManager
+    Util util
 
     @PostConstruct
     void init() {
@@ -116,10 +120,17 @@ class PageController extends AbstractController{
             // Enforce XSRF token
 
             withForm {
+                if(util.isSpam(command.comments)) {
+                    // <sarcasm> all good dude, no problems here! </sarcasm>
+                    log.info("Contact form with spam from [${command?.name} : ${command.email}] was rejected. Comment: [${command.comments}]")
+                    flash.message = g.message(code: 'contact.form.success')
+                    redirect(action: 'contact')
+                    return
+                }
+
                 command.validate()
 
                 if (!command.hasErrors()) {
-
                     def msg = mailService.sendMail {
                         subject "recursive.codes contact from ${command.name}"
                         text "Message from: ${command.name} (${command.email}).\n\nMessage: ${command.comments}"
@@ -127,17 +138,11 @@ class PageController extends AbstractController{
                         from grailsApplication.config.codes.recursive.email
                     }
 
-
-
-                    // Tell the end user about it and redirect back to the form
                     flash.message = g.message(code: 'contact.form.success')
-
-                    // Redirect to prevent the old "reload saves it again" issue,
                     redirect(action: 'contact')
                     return
 
                 } else {
-                    // Command has errors, send the user a message
                     flash.error = g.message(code: 'default.error.message')
                 }
             }
