@@ -75,3 +75,8 @@ codes:
                 user:
                 userRole:
                 sitemap:
+        unsplash:
+            accessKey:
+            secretKey:
+        pixabay:
+            apiKey:

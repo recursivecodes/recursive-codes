@@ -237,4 +237,10 @@ class PageController extends AbstractController{
         render([complete: true] as JSON)
         return
     }
+
+    def updateNullBannerImages() {
+        UpdateNullBannerImageJob.triggerNow()
+        render([complete: true] as JSON)
+        return
+    }
 }

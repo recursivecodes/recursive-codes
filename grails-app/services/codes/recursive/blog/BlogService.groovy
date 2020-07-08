@@ -41,6 +41,10 @@ class BlogService extends AbstractService {
         return tagged?.first()
     }
 
+    def listWithoutBanners() {
+        return Post.findAllByBannerImgIsNull()
+    }
+
     def list() {
         return Post.list([sort: 'publishedDate', order: 'desc'])
     }

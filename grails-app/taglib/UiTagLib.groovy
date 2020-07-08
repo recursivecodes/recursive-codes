@@ -474,8 +474,9 @@ class UiTagLib {
                 })
             """
         out << g.javascript(null, js)
+        def padBody = post.substring(0, 1) != '<p'
         if( bannerImg ) {
-            post = """<img class="img-responsive img-thumbnail" src="${bannerImg}">""" + post
+            post = """<img class="img-responsive img-thumbnail" src="${bannerImg}">""" + ( padBody ? '<p></p>' : '') + post
         }
         post = post.replaceAll("\\[spoiler(.*?)\\](.*?)\\[/spoiler\\]", { full, label, content -> spoiler(label: label.tokenize('=').last(), content: content) })
         post = post.replaceAll("\\[gist2(.*?)\\]", { full, word -> gist2(id: word.tokenize('=').last()) })

@@ -23,6 +23,7 @@ class UrlMappings {
         "/sitemap**"(controller: 'page', action: 'sitemap')
         "/import"(controller: 'page', action: 'importPosts')
         "/updateBannerImages"(controller: 'page', action: 'updateBannerImgs')
+        "/updateNullBannerImages"(controller: 'page', action: 'updateNullBannerImages')
         "/"(controller: 'page', action: 'index')
         "500"(view:'/error')
         "404"(view:'/notFound')

@@ -62,3 +62,8 @@ codes:
                 user: ${SEQUENCE_USER}
                 userRole: ${SEQUENCE_USER_ROLE}
                 sitemap: ${SEQUENCE_SITEMAP}
+        unsplash:
+            accessKey: ${UNSPLASH_ACCESS_KEY}
+            secretKey: ${UNSPLASH_SECRET_KEY}
+        pixabay:
+            apiKey: ${PIXABAY_API_KEY}

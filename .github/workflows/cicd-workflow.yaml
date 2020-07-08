@@ -99,6 +99,9 @@ jobs:
               -DSEQUENCE_USER='${{secrets.SEQUENCE_USER}}' \
               -DSEQUENCE_USER_ROLE='${{secrets.SEQUENCE_USER_ROLE}}' \
               -DSEQUENCE_SITEMAP='${{secrets.SEQUENCE_SITEMAP}}' \
+              -DUNSPLASH_ACCESS_KEY='${{secrets.UNSPLASH_ACCESS_KEY}}' \
+              -DUNSPLASH_SECRET_KEY='${{secrets.UNSPLASH_SECRET_KEY}}' \
+              -DPIXABAY_API_KEY='${{secrets.PIXABAY_API_KEY}}' \
               -Doracle.jdbc.fanEnabled='false' \
               --stacktrace \
               dbmUpdate
@@ -180,6 +183,9 @@ jobs:
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER=${{secrets.SEQUENCE_USER}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER_ROLE=${{secrets.SEQUENCE_USER_ROLE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_SITEMAP=${{secrets.SEQUENCE_SITEMAP}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DUNSPLASH_ACCESS_KEY=${{secrets.UNSPLASH_ACCESS_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DUNSPLASH_SECRET_KEY=${{secrets.UNSPLASH_SECRET_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DPIXABAY_API_KEY=${{secrets.PIXABAY_API_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DCOMMIT_HASH=${{env.COMMIT_HASH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
 
 
