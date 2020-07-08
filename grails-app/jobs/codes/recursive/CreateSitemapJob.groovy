@@ -23,15 +23,10 @@ class CreateSitemapJob {
     AmazonS3Service amazonS3Service
 
     static triggers = {
-      simple repeatInterval: 1000 * 60 * 60 // execute job once an hour
+        cron name: 'createSitemapTrigger', cronExpression: "0 0 20 1/1 * ? *"
     }
 
     def execute() {
-        boolean genSiteMap = grailsApplication.config.codes.recursive?.generateSiteMap ?: true
-        if( !genSiteMap ) {
-            println 'Exiting sitemap job because of system property override (probably running a migration)'
-            return false
-        }
         if( Environment.current == Environment.DEVELOPMENT ) {
             println 'Exiting sitemap job because Environment == DEVELOP'
             return false
