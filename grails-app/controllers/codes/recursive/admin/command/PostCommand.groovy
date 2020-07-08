@@ -16,6 +16,7 @@ class PostCommand implements Validateable{
     String title
     String slug
     String article
+    String bannerImg
     String keywords
     String summary
     @BindingFormat('MM/dd/yyyy hh:mm a')
@@ -32,6 +33,7 @@ class PostCommand implements Validateable{
                 keywords: post?.keywords,
                 summary: post?.summary,
                 article: post?.article,
+                bannerImg: post?.bannerImg,
                 publishedDate: post?.publishedDate ?: new Date(),
                 isPublished: post?.isPublished,
                 authoredBy: post?.authoredBy,
@@ -48,6 +50,7 @@ class PostCommand implements Validateable{
         post.keywords = this?.keywords
         post.summary = this?.summary
         post.article = this?.article
+        post.bannerImg = this?.bannerImg
         post.publishedDate = this?.publishedDate
         post.isPublished = this?.isPublished
         post.authoredBy = this?.authoredBy
@@ -68,6 +71,7 @@ class PostCommand implements Validateable{
         keywords nullable: true, maxSize: 500
         summary nullable: true, maxSize: 500
         article nullable: false
+        bannerImg nullable: true, maxSize: 2000
         authoredBy nullable: false
         publishedDate nullable: false
         tags minSize: 1

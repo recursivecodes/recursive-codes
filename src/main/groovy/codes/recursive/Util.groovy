@@ -6,7 +6,6 @@ import groovy.json.JsonSlurper
 class Util {
 
     Boolean isSpam(String msg) {
-
         def plino = 'https://plino.herokuapp.com/api/v1/classify/'
         def body = [email_text: msg]
         def result = [:]

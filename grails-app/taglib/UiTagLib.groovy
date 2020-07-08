@@ -1,3 +1,4 @@
+import codes.recursive.blog.Post
 import grails.core.GrailsApplication
 import grails.util.Environment
 import org.springframework.web.servlet.support.RequestContextUtils
@@ -460,7 +461,8 @@ class UiTagLib {
     }
 
     def render = { attrs, body ->
-        def post = attrs?.post
+        String post = attrs?.post
+        String bannerImg = attrs?.bannerImg
         def js = """
                 \$().ready(function(){
                     \$('.spoiler').hide()
@@ -472,6 +474,9 @@ class UiTagLib {
                 })
             """
         out << g.javascript(null, js)
+        if( bannerImg ) {
+            post = """<img class="img-responsive img-thumbnail" src="${bannerImg}">""" + post
+        }
         post = post.replaceAll("\\[spoiler(.*?)\\](.*?)\\[/spoiler\\]", { full, label, content -> spoiler(label: label.tokenize('=').last(), content: content) })
         post = post.replaceAll("\\[gist2(.*?)\\]", { full, word -> gist2(id: word.tokenize('=').last()) })
         post = post.replaceAll("\\[gist(.*?)\\]", { full, word -> gist(id: word.tokenize('=').last()) })

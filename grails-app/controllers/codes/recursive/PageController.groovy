@@ -227,7 +227,13 @@ class PageController extends AbstractController{
     }
 
     def importPosts() {
-        ImportBlogPostJob.triggerNow();
+        ImportBlogPostJob.triggerNow()
+        render([complete: true] as JSON)
+        return
+    }
+
+    def updateBannerImgs() {
+        UpdateBannerImageJob.triggerNow()
         render([complete: true] as JSON)
         return
     }

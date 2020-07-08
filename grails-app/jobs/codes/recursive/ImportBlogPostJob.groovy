@@ -181,17 +181,14 @@ class ImportBlogPostJob {
                     }
                 }
 
-                // move & update featured image url & update body
+                // move & update featured image url & update post
                 String banner = postDetails.featured_image
                 if( banner ) {
                     URL bannerUrl = banner.toURL()
-                    Element bannerEl = new Element(org.jsoup.parser.Tag.valueOf("img"), "")
-                    bannerEl.addClass("img-thumbnail").addClass("img-responsive")
                     String bannerFileName = FilenameUtils.getName(bannerUrl.path)
                     String path = importId + '/banner_' + bannerFileName
                     String newBannerUrl = transferAsset(bannerUrl, path)
-                    bannerEl.attr("src", newBannerUrl)
-                    parsedBody.select("body").first().children().first().before(bannerEl)
+                    newPost.bannerImg = newBannerUrl
                 }
 
                 // fix "alert" classes

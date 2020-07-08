@@ -79,7 +79,7 @@
         </h6>
     </g:if>
     <div class="">
-        <ui:render post="${raw(post.article)}" />
+        <ui:render bannerImg="${raw(post.bannerImg)}" post="${raw(post.article)}" />
     </div>
 
     <%--

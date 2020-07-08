@@ -11,6 +11,7 @@ class Post {
     String keywords
     String summary
     String article
+    String bannerImg
     Date publishedDate
     Boolean isPublished = true
     Long version
@@ -44,6 +45,7 @@ class Post {
         keywords nullable: true, maxSize: 500
         summary nullable: true, maxSize: 500
         article nullable: false
+        bannerImg nullable: true, maxSize: 2000
         authoredBy nullable: false
         publishedDate nullable: false
         importedOn nullable: true

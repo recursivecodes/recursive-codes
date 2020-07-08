@@ -41,6 +41,10 @@ class BlogService extends AbstractService {
         return tagged?.first()
     }
 
+    def list() {
+        return Post.list([sort: 'publishedDate', order: 'desc'])
+    }
+
     def list(Long max, Long offset) {
         return Post.list([sort: 'publishedDate', order: 'desc', max: max, offset: offset])
     }
