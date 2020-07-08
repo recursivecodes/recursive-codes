@@ -112,7 +112,7 @@ jobs:
         run: |
           ./gradlew \
               -Dgrails.env=prod \
-              -DGENERATE_SITE_MAP='false' \
+              -DGENERATE_SITE_MAP=false \
               -DDB_URL='${{secrets.DB_URL}}' \
               -DSERVER_URL='${{secrets.SERVER_URL}}' \
               -DDB_USERNAME='${{secrets.DB_USERNAME}}' \
