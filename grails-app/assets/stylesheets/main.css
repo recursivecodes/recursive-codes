@@ -47,3 +47,19 @@ a {
         margin-bottom: 10px !important;
     }
 }
+
+@media (max-width: 1199px) {
+    .img-banner-thumb {
+        margin-bottom: 20px !important;
+    }
+}
+
+.post-title {
+    font-weight: normal !important;
+}
+.post-subtitle {
+    margin: 5px 0 0 0;
+}
+.post-meta {
+    margin-bottom: 0 !important;
+}
