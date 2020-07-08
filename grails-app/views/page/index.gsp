@@ -27,7 +27,7 @@
                 </g:link>
             </div>
             <div class="col-lg-9 col-sm-12">
-                <div class="post-preview">
+                <div class="post-preview post-homepage-preview">
                     <g:link controller="blog" action="post" id="${post.id}">
                         <h2 class="post-title" style="margin-top: 0;">
                             ${post.title}

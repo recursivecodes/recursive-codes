@@ -60,6 +60,6 @@ a {
 .post-subtitle {
     margin: 5px 0 0 0;
 }
-.post-meta {
+.post-homepage-preview > .post-meta {
     margin-bottom: 0 !important;
 }
