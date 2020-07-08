@@ -38,7 +38,7 @@
     </style>
     <g:javascript>
         $().ready(function(){
-            $('img').each(function(i,e) {
+            $('img').not('.img-related-thumb').each(function(i,e) {
                 $(e).wrap('<div class="img-wrapper"></div>')
             })
 
@@ -52,7 +52,7 @@
                 shares: ["reddit","twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp", "email"]
             });
 
-            $('img').on('click', function(e) {
+            $('img').not('.img-related-thumb').on('click', function(e) {
               $('#imgViewer').html('').append( $(e.currentTarget).clone().removeClass('img-responsive').removeClass('img-thumbnail') )
               $('#viewImg').modal('show')
             })
@@ -91,6 +91,22 @@
     <hr/>
     <div id="share"></div>
     <hr/>
+
+    <h3>Related Posts</h3>
+
+    <div class="row">
+        <g:each in="${relatedPosts}" var="relatedPost">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <g:link controller="blog" action="post" id="${relatedPost.id}">
+                    <img src="${relatedPost.bannerImg}" alt="${relatedPost.title}" class="img-related-thumb img-thumbnail" />
+                    <h3>${relatedPost.title}</h3>
+                </g:link>
+                <p>
+                    <ui:truncatePost article="${relatedPost.article}"/>
+                </p>
+            </div>
+        </g:each>
+    </div>
 
     <div class="alert alert-info">
         <b>Note:</b> Comments are currently closed on this blog. Disqus is simply too bloated to justify its use with the low volume of comments on this blog. Please visit my <a href="/page/contact">contact page</a> if you have something to say!

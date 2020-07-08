@@ -46,11 +46,22 @@ a {
     .embed-responsive {
         margin-bottom: 10px !important;
     }
-}
-
-@media (max-width: 1199px) {
     .img-banner-thumb {
         margin-bottom: 20px !important;
+    }
+}
+
+@media (min-width: 990px) and (max-width: 1199px) {
+    .img-related-thumb {
+        height: 300px;
+        object-fit: cover;
+    }
+}
+
+@media (min-width: 1199px) {
+    .img-related-thumb {
+        height: 250px;
+        object-fit: cover;
     }
 }
 

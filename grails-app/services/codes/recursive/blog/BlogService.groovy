@@ -3,6 +3,7 @@ package codes.recursive.blog
 import codes.recursive.AbstractService
 import codes.recursive.subscriber.SubscriberService
 import groovy.sql.Sql
+import org.hibernate.SessionFactory
 
 /**
  * Created by Todd Sharp on 2/25/2017.
@@ -10,6 +11,7 @@ import groovy.sql.Sql
 class BlogService extends AbstractService {
     Sql sql
     SubscriberService subscriberService
+    SessionFactory sessionFactory
 
     def findById(Long id) {
         return Post.findById(id)
@@ -21,6 +23,47 @@ class BlogService extends AbstractService {
 
     def findByImportId(String importId) {
         return Post.findByImportedId(importId)
+    }
+
+    def findRelatedPosts(Post post) {
+        def session = sessionFactory.currentSession
+        def qry = """
+select id, title, article, authored_by_id, is_published, version, published_date, date_created, last_updated, keywords, summary, imported_id, slug, imported_on, banner_img
+from (
+     select 1 as q, id, title, DBMS_LOB.substr(article, 4000) as article, authored_by_id, is_published, version, published_date, date_created, last_updated, keywords,
+            summary, imported_id, slug, imported_on, banner_img
+     from post p
+     where id in (
+         select ip.id
+         from post ip
+                  left join post_tag ipt on ip.id = ipt.post_id
+         where ipt.tag_id in (select iipt.tag_id from post_tag iipt where iipt.post_id = :postId)
+         and ip.is_published = 1
+         and ip.published_date < sysdate
+     )
+     and id != :postId
+     and p.is_published = 1
+     and p.published_date < sysdate
+
+     union
+
+     select 2 as q, id, title, DBMS_LOB.substr(article, 4000) as article, authored_by_id, is_published, version, published_date, date_created, last_updated, keywords,
+            summary, imported_id, slug, imported_on, banner_img
+     from post p2
+     where p2.is_published = 1
+     and p2.published_date < sysdate
+)
+order by q, published_date desc
+FETCH FIRST 3 ROWS ONLY
+"""
+        def sqlQuery = session.createSQLQuery(qry)
+
+        List<Post> relatedPosts = sqlQuery.with {
+            addEntity(Post)
+            setLong('postId', post.id)
+            list()
+        }
+        return relatedPosts
     }
 
     def save(Post post) {

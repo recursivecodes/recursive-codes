@@ -51,6 +51,7 @@ class BlogController extends AbstractAdminController {
         }
         return model << [
                 post: post,
+                relatedPosts: blogService.findRelatedPosts(post),
         ]
     }
 
