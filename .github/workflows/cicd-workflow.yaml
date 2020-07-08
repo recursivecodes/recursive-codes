@@ -24,54 +24,6 @@ jobs:
         run: |
           java -version
 
-      - name: 'Set Instance IP'
-        run: |
-          echo "::set-env name=INSTANCE_IP::150.136.137.200"
-
-      - name: 'Write ENV File On VM'
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.INSTANCE_IP }}
-          username: opc
-          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
-          script: |
-            [ ! -f /u01/tomcat/latest/bin/setenv.sh ] || sudo mv /u01/tomcat/latest/bin/setenv.sh /u01/tomcat/latest/bin/setenv.old.sh && sudo rm -rf /u01/tomcat/latest/bin/setenv.sh
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -Doracle.jdbc.fanEnabled=false\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_URL=${{secrets.DB_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_USERNAME=${{secrets.DB_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_PASSWORD=${{secrets.DB_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DACCESS_KEY=${{secrets.ACCESS_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSECRET_KEY=${{secrets.SECRET_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DS3_BUCKET=${{secrets.S3_BUCKET}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSMTP_HOST=${{secrets.SMTP_HOST}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSMTP_PORT=${{secrets.SMTP_PORT}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSMTP_USERNAME=${{secrets.SMTP_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSMTP_PASSWORD=${{secrets.SMTP_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOCI_CONFIG_PATH=${{secrets.OCI_CONFIG_PATH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_USER_1=${{secrets.GH_USER_1}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_USER_2=${{secrets.GH_USER_2}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_PASSWORD=${{secrets.GH_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DEMAIL_FROM=${{secrets.EMAIL_FROM}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_FEED_URL=${{secrets.YOUTUBE_FEED_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_CHANNEL_URL=${{secrets.YOUTUBE_CHANNEL_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_CHANNEL_ID=${{secrets.YOUTUBE_CHANNEL_ID}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_API_KEY=${{secrets.YOUTUBE_API_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOBJECT_STORAGE_REGION=${{secrets.OBJECT_STORAGE_REGION}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOBJECT_STORAGE_IMG_BUCKET=${{secrets.OBJECT_STORAGE_IMG_BUCKET}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOBJECT_STORAGE_NAMESPACE=${{secrets.OBJECT_STORAGE_NAMESPACE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOBJECT_STORAGE_ENDPOINT=${{secrets.OBJECT_STORAGE_ENDPOINT}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DIMPORT_FEED_URL=${{secrets.IMPORT_FEED_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DIMPORT_USERNAME=${{secrets.IMPORT_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DIMPORT_API_KEY=${{secrets.IMPORT_API_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_POST=${{secrets.SEQUENCE_POST}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_POST_TAG=${{secrets.SEQUENCE_POST_TAG}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_TAG=${{secrets.SEQUENCE_TAG}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_ROLE=${{secrets.SEQUENCE_ROLE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER=${{secrets.SEQUENCE_USER}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER_ROLE=${{secrets.SEQUENCE_USER_ROLE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_SITEMAP=${{secrets.SEQUENCE_SITEMAP}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DCOMMIT_HASH=${{env.COMMIT_HASH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
-
       - name: 'Build WAR'
         run: |
           ./gradlew -Dgrails.env=prod war
@@ -172,6 +124,10 @@ jobs:
         run: |
           oci os object put --force --bucket-name ${{secrets.S3_BUCKET}} --file /home/runner/work/recursive-codes/recursive-codes/grails-app/conf/presentations.json
 
+      - name: 'Set Instance IP'
+        run: |
+          echo "::set-env name=INSTANCE_IP::150.136.137.200"
+
       - name: 'Push WAR'
         uses: appleboy/scp-action@master
         with:
@@ -181,6 +137,51 @@ jobs:
           source: "build/libs/recursive-codes-${{env.VERSION}}.war"
           target: "app"
           strip_components: 2
+
+      - name: 'Write ENV File On VM'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.INSTANCE_IP }}
+          username: opc
+          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+          script: |
+            [ ! -f /u01/tomcat/latest/bin/setenv.sh ] || sudo mv /u01/tomcat/latest/bin/setenv.sh /u01/tomcat/latest/bin/setenv.old.sh && sudo rm -rf /u01/tomcat/latest/bin/setenv.sh
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -Doracle.jdbc.fanEnabled=false\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_URL=${{secrets.DB_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_USERNAME=${{secrets.DB_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DDB_PASSWORD=${{secrets.DB_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DACCESS_KEY=${{secrets.ACCESS_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSECRET_KEY=${{secrets.SECRET_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DS3_BUCKET=${{secrets.S3_BUCKET}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSMTP_HOST=${{secrets.SMTP_HOST}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSMTP_PORT=${{secrets.SMTP_PORT}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSMTP_USERNAME=${{secrets.SMTP_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSMTP_PASSWORD=${{secrets.SMTP_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOCI_CONFIG_PATH=${{secrets.OCI_CONFIG_PATH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_USER_1=${{secrets.GH_USER_1}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_USER_2=${{secrets.GH_USER_2}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_PASSWORD=${{secrets.GH_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DEMAIL_FROM=${{secrets.EMAIL_FROM}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_FEED_URL=${{secrets.YOUTUBE_FEED_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_CHANNEL_URL=${{secrets.YOUTUBE_CHANNEL_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_CHANNEL_ID=${{secrets.YOUTUBE_CHANNEL_ID}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_API_KEY=${{secrets.YOUTUBE_API_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOBJECT_STORAGE_REGION=${{secrets.OBJECT_STORAGE_REGION}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOBJECT_STORAGE_IMG_BUCKET=${{secrets.OBJECT_STORAGE_IMG_BUCKET}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOBJECT_STORAGE_NAMESPACE=${{secrets.OBJECT_STORAGE_NAMESPACE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOBJECT_STORAGE_ENDPOINT=${{secrets.OBJECT_STORAGE_ENDPOINT}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DIMPORT_FEED_URL=${{secrets.IMPORT_FEED_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DIMPORT_USERNAME=${{secrets.IMPORT_USERNAME}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DIMPORT_API_KEY=${{secrets.IMPORT_API_KEY}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_POST=${{secrets.SEQUENCE_POST}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_POST_TAG=${{secrets.SEQUENCE_POST_TAG}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_TAG=${{secrets.SEQUENCE_TAG}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_ROLE=${{secrets.SEQUENCE_ROLE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER=${{secrets.SEQUENCE_USER}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_USER_ROLE=${{secrets.SEQUENCE_USER_ROLE}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DSEQUENCE_SITEMAP=${{secrets.SEQUENCE_SITEMAP}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DCOMMIT_HASH=${{env.COMMIT_HASH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+
 
       - name: 'Write Wallet & OCI Config To VM'
         uses: appleboy/ssh-action@master

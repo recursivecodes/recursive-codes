@@ -31,6 +31,12 @@ class ImportBlogPostJob {
     def execute() {
         println 'Import job running...'
 
+        boolean genSiteMap = grailsApplication.config.codes.recursive?.generateSiteMap ?: true
+        if( !genSiteMap ) {
+            println 'Exiting ImportBlogPostJob because of system property override (probably running a migration)'
+            return false
+        }
+
         // set compatibility for OCI Object Storage
         amazonS3Service.client.clientOptions.pathStyleAccess = true
         amazonS3Service.client.clientOptions.chunkedEncodingDisabled = true
