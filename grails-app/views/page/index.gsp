@@ -20,17 +20,15 @@
 
     <div class="row flex-row">
         <g:each in="${posts}" var="post" status="i">
-            <g:if test="${i == 0 || (i % 3 == 0)}">
-            </g:if>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <g:link controller="blog" action="post" id="${post.id}">
-                        <img src="${post.bannerImg}" alt="${post.title}" class="img-related-thumb img-thumbnail" />
-                        <h3>${post.title}</h3>
-                    </g:link>
-                    <p>
-                        <ui:truncatePost article="${post.article}"/>
-                    </p>
-                </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <g:link controller="blog" action="post" id="${post.id}">
+                    <img src="${post.bannerImg}" alt="${post.title}" class="img-related-thumb img-thumbnail" />
+                    <h3>${post.title}</h3>
+                </g:link>
+                <p>
+                    <ui:truncatePost article="${post.article}"/>
+                </p>
+            </div>
         </g:each>
     </div>
     <ui:paginate total="${postCount}" params="${params}" />

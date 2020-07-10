@@ -14,6 +14,7 @@
                 <link>${grailsApplication.config.grails.serverURL}/blog/post/${post.id}</link>
                 <pubDate>${formatter.format(post.dateCreated)}</pubDate>
                 <description><![CDATA[ ${post.article} ]]></description>
+                <enclosure url="${post.bannerImg}" />
             </item>
         </g:each>
     </channel>
