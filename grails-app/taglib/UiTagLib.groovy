@@ -73,14 +73,13 @@ class UiTagLib {
 
         def messageSource = grailsAttributes.messageSource
         def locale = RequestContextUtils.getLocale(request)
-
         def total = attrs.int('total') ?: 0
         def offset = params.int('offset') ?: 0
         def max = params.int('max')
         def maxsteps = (attrs.int('maxsteps') ?: 10)
 
         if (!offset) offset = (attrs.int('offset') ?: 0)
-        if (!max) max = (attrs.int('max') ?: 10)
+        if (!max) max = (attrs.int('max') ?: 12)
 
         def linkParams = [:]
         if (attrs.params) linkParams.putAll(attrs.params)

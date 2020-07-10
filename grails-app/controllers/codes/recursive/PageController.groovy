@@ -37,19 +37,20 @@ class PageController extends AbstractController{
 
     def index() {
         def model = defaultModel
-        def max = params.long('max') ?: 10
+        def max = params.long('max') ?: 12
         def offset = params.long('offset') ?: 0
         return model << [
                 posts: blogService.listPublished(max, offset),
                 postCount: blogService.countPublished(),
                 offset: offset,
                 max: max,
+                params: params,
         ]
     }
 
     def tagged() {
         def model = defaultModel
-        def max = params.long('max') ?: 10
+        def max = params.long('max') ?: 12
         def offset = params.long('offset') ?: 0
         def tag = params?.tag
         if( !tag ) {

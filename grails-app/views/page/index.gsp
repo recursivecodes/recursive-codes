@@ -18,30 +18,21 @@
         </div>
     </div>
 
-
-    <g:each in="${posts}" var="post">
-        <div class="row">
-            <div class="col-lg-3 col-sm-12">
-                <g:link controller="blog" action="post" id="${post.id}">
-                    <img src="${post.bannerImg}" alt="${post.title}" class="img-thumbnail img-responsive img-banner-thumb">
-                </g:link>
-            </div>
-            <div class="col-lg-9 col-sm-12">
-                <div class="post-preview post-homepage-preview">
+    <div class="row flex-row">
+        <g:each in="${posts}" var="post" status="i">
+            <g:if test="${i == 0 || (i % 3 == 0)}">
+            </g:if>
+                <div class="col-lg-4 col-md-6 col-sm-12">
                     <g:link controller="blog" action="post" id="${post.id}">
-                        <h2 class="post-title" style="margin-top: 0;">
-                            ${post.title}
-                        </h2>
+                        <img src="${post.bannerImg}" alt="${post.title}" class="img-related-thumb img-thumbnail" />
+                        <h3>${post.title}</h3>
                     </g:link>
-                    <p class="post-meta">Posted by ${post?.authoredBy?.fullName} on <g:formatDate date="${post.publishedDate}"/></p>
-                    <p class="post-subtitle">
+                    <p>
                         <ui:truncatePost article="${post.article}"/>
                     </p>
                 </div>
-            </div>
-        </div>
-        <hr>
-    </g:each>
+        </g:each>
+    </div>
     <ui:paginate total="${postCount}" params="${params}" />
 </body>
 </html>
