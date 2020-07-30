@@ -16,7 +16,7 @@ class UrlMappings {
         "/privacy"(controller: 'page', action: 'privacy')
         "/videos"(controller: 'page', action: 'videos')
         "/p/$slug"(controller: 'blog', action: 'bySlug')
-        "/presentations"(controller: 'page', action: 'videos')
+        "/presentations"(controller: 'page', action: 'presentations')
         "/subscribe"(controller: 'page', action: 'subscribe')
         "/unsubscribe"(controller: 'page', action: 'unsubscribe')
         "/search"(controller: 'page', action: 'search')

@@ -1,5 +1,19 @@
 [
   {
+    "title": "Hidden Gems In The Oracle Cloud",
+    "alias": "oci-hidden-gems",
+    "google-embed-id": "1xYzjrLWKlfiZ2NduAIdUztFqhZOqytGF",
+    "conferences": [
+      {
+        "name": "Webinar",
+        "date": "July, 2020",
+        "link": "https://go.oracle.com/LP=95643",
+        "recording": ""
+      }
+    ],
+    "abstract": "There are tons of amazing products and services in the Oracle Cloud Infrastructure catalog and I’m sure you’re using many of them in your tenancies to develop, deploy and maintain your data-driven applications. But there are also many services and features that you might not be as familiar with. \n\nIn this session, I’ll show you where to find and how to use these lesser-known features. You’ll be sure to learn a few tips for saving money on your cloud bill, ensuring compliance, manage your database instances, monitor performance and even some tips for writing more efficient code in your applications."
+  },
+  {
     "title": "Easier Microservice Persistence With Micronaut Data",
     "alias": "micronaut-data",
     "google-embed-id": "1RvdgcyM_Zt8oUDjapy4XKBH6p6Ee93-X",
