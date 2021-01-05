@@ -29,6 +29,8 @@ jobs:
           ./gradlew -Dgrails.env=prod war
 
       - name: 'Get Version Number'
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           echo "::set-env name=VERSION::$(./gradlew properties -q | grep "version:" | awk '{print $2}')"
 
@@ -120,6 +122,8 @@ jobs:
           oci setup repair-file-permissions --file /home/runner/.oci/key.pem
 
       - name: 'Set Commit Hash'
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           echo "::set-env name=COMMIT_HASH::$(git rev-parse --short HEAD)"
 
@@ -128,6 +132,8 @@ jobs:
           oci os object put --force --bucket-name ${{secrets.S3_BUCKET}} --file /home/runner/work/recursive-codes/recursive-codes/grails-app/conf/presentations.json
 
       - name: 'Set Instance IP'
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           echo "::set-env name=INSTANCE_IP::150.136.137.200"
 
