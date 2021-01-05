@@ -30,7 +30,7 @@ jobs:
 
       - name: 'Get Version Number'
         run: |
-          echo "VERSION::$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
+          echo "VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
 
       - name: 'Publish WAR'
         uses: actions/upload-artifact@v2-preview
@@ -121,7 +121,7 @@ jobs:
 
       - name: 'Set Commit Hash'
         run: |
-          echo "COMMIT_HASH::$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: 'Publish Presentation JSON'
         run: |
@@ -129,7 +129,7 @@ jobs:
 
       - name: 'Set Instance IP'
         run: |
-          echo "INSTANCE_IP::150.136.137.200" >> $GITHUB_ENV
+          echo "INSTANCE_IP=150.136.137.200" >> $GITHUB_ENV
 
       - name: 'Push WAR'
         uses: appleboy/scp-action@master
