@@ -54,7 +54,7 @@ class ImportBlogPostJob {
         def authenticatedApiCall = { url ->
             def connection = (HttpURLConnection)url.openConnection()
             connection.setRequestMethod("GET")
-            connection.setRequestProperty("Authorization", "Basic " + "${apiUsername}:${apiKey}".bytes.encodeBase64().toString())
+            connection.setRequestProperty("Authorization", "Basic " + "Eloqua - Compendium\\${apiUsername}:${apiKey}".bytes.encodeBase64().toString())
             connection.setRequestProperty("Accept", "application/vnd.compendium.blog;version=2,application/json")
             return new JsonSlurper().parse( connection.getInputStream() )
         }
