@@ -203,12 +203,14 @@ class ImportBlogPostJob {
                 // update gists to shortcode
                 parsedBody.select("script").each { Element script ->
                     String src = script.attributes.src
-                    URL srcUrl = src.toURL()
-                    String gistId = FilenameUtils.getBaseName(srcUrl.getPath())
-                    String shortCode = "[gist2 id=${gistId}]"
-                    Element gistWrapper = new Element(org.jsoup.parser.Tag.valueOf("span"), "")
-                    gistWrapper.text(shortCode)
-                    script.replaceWith( gistWrapper )
+                    if( src.contains("gist.github.com") ) {
+                        URL srcUrl = src.toURL()
+                        String gistId = FilenameUtils.getBaseName(srcUrl.getPath())
+                        String shortCode = "[gist2 id=${gistId}]"
+                        Element gistWrapper = new Element(org.jsoup.parser.Tag.valueOf("span"), "")
+                        gistWrapper.text(shortCode)
+                        script.replaceWith( gistWrapper )
+                    }
                 }
 
                 // save post
