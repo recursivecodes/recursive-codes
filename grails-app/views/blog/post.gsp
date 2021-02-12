@@ -78,7 +78,7 @@
         </g:each>
         </h6>
     </g:if>
-    <div class="">
+    <div class="post-container" id="post-container">
         <ui:render bannerImg="${raw(post.bannerImg)}" post="${raw(post.article)}" />
     </div>
 
