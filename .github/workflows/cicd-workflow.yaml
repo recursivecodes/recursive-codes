@@ -79,6 +79,7 @@ jobs:
               -DOCI_CONFIG_PATH='${{secrets.OCI_CONFIG_PATH}}' \
               -DGITHUB_USER_1='${{secrets.GH_USER_1}}' \
               -DGITHUB_USER_2='${{secrets.GH_USER_2}}' \
+              -DGITHUB_TOKEN='${{secrets.GH_TOKEN}}' \
               -DGITHUB_PASSWORD='${{secrets.GH_PASSWORD}}' \
               -DEMAIL_FROM='${{secrets.EMAIL_FROM}}' \
               -DYOUTUBE_FEED_URL='${{secrets.YOUTUBE_FEED_URL}}' \
@@ -163,6 +164,7 @@ jobs:
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DOCI_CONFIG_PATH=${{secrets.OCI_CONFIG_PATH}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_USER_1=${{secrets.GH_USER_1}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_USER_2=${{secrets.GH_USER_2}}\" >> /u01/tomcat/latest/bin/setenv.sh'
+            sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_TOKEN=${{secrets.GH_TOKEN}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DGITHUB_PASSWORD=${{secrets.GH_PASSWORD}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DEMAIL_FROM=${{secrets.EMAIL_FROM}}\" >> /u01/tomcat/latest/bin/setenv.sh'
             sudo sh -c 'echo export CATALINA_OPTS=\"\$CATALINA_OPTS -DYOUTUBE_FEED_URL=${{secrets.YOUTUBE_FEED_URL}}\" >> /u01/tomcat/latest/bin/setenv.sh'

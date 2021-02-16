@@ -48,6 +48,7 @@ codes:
             user:
             user2:
             password2:
+            token:
         email:
         youtubeFeed:
         youtubeChannel:

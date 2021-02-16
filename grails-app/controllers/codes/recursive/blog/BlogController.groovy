@@ -242,7 +242,7 @@ class BlogController extends AbstractAdminController {
         gist.setDescription(description)
         gist.setFiles(Collections.singletonMap(name, file))
         GistService service = new GistService()
-        service.getClient().setCredentials(grailsApplication.config.codes.recursive.github.user2, grailsApplication.config.codes.recursive.github.password2)
+        service.getClient().setOAuth2Token(grailsApplication.config.codes.recursive.github.token);
         gist = service.createGist(gist)
 
         render([gist: gist] as JSON)

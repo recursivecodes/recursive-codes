@@ -35,6 +35,7 @@ codes:
             user: ${GITHUB_USER_1}
             user2: ${GITHUB_USER_2}
             password2: ${GITHUB_PASSWORD}
+            token: ${GITHUB_TOKEN}
         email: ${EMAIL_FROM}
         youtubeFeed: ${YOUTUBE_FEED_URL}
         youtubeChannel: ${YOUTUBE_CHANNEL_URL}
