@@ -1,5 +1,19 @@
 [
   {
+    "title": "Message Driven Microservices & Monoliths with Micronaut",
+    "alias": "message-driven-microservices",
+    "google-embed-id": "11ebFMpRXkny95n1wLZypNNOxdF4BZ1F1",
+    "conferences": [
+      {
+        "name": "Webinar",
+        "date": "March, 2021",
+        "link": "https://go.oracle.com/LP=106593",
+        "recording": "https://youtu.be/yOPIv3G8uSI"
+      }
+    ],
+    "abstract": "One of the biggest challenges that developers face when working in a microservice environment is ensuring data consistency. Distributed services must be able to communicate with each other in order for your application to deliver all of the requirements and functionality that your users expect. Think about an e-commerce application, for example. Your shipment service needs to know when an order is placed, right? Your order service, in turn, should also know when it has been shipped! Even if your application is less “pure microservice” and more of a hybrid approach you probably have at least a few distributed services that ultimately need to communicate with each other. Communication between distributed services is challenging and I want to show you a few tricks for simplifying this difficult task by using Micronaut and some fairly popular messaging solutions. We’ll break this down in in this session to help you get started  implement messaging in your applications using some popular open source tools as such as Apache Kafka and RabbitMQ, well as a managed Oracle Cloud based option that can be plugged into your service with very little setup and configuration."
+  },
+  {
     "title": "Getting Started with JSON Document Collections in the Autonomous JSON Database",
     "alias": "intro-to-ajd",
     "google-embed-id": "1688Cco91Kfb13lcbAaTgfTGLRSwiaHoS",
