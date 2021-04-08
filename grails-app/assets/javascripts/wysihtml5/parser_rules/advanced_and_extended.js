@@ -477,6 +477,8 @@ var wysihtmlParserRules = {
                 "align": "align_text"
             },
             "check_attributes": {
+                "data-*": "any",
+                "lang": "any",
                 "cite": "url",
                 "id": "any"
             }
@@ -597,6 +599,7 @@ var wysihtmlParserRules = {
         },
         "script": {
             "check_attributes": {
+                "async": "any",
                 "type": "any",
                 "src": "any",
                 "charset": "any"
