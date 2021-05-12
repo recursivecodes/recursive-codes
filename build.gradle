@@ -85,6 +85,7 @@ springBoot {
 }
 
 [bootRun, dbmUpdate].each { runTask ->
+    System.setProperty("user.dir", projectDir.toString())
     configure(runTask) {
         systemProperties System.properties
     }

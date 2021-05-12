@@ -182,12 +182,24 @@ class PageController extends AbstractController{
 
     def presentations() {
         def model = defaultModel
-        def configBucket = grailsApplication.config.codes.recursive.aws.configBucket
-        def tempFilePath = '/tmp/presentations.json'
-        def tempFile = amazonS3Service.getFile('presentations.json', tempFilePath)
-        def presentations = new JsonSlurper().parse(tempFile)
+        def presentations = grailsCacheManager.getCache('object').get('presentations')?.get()
+        if(!presentations) {
+            def configBucket = grailsApplication.config.codes.recursive.aws.configBucket
+            def tempFilePath = '/tmp/presentations.json'
+            def tempFile = amazonS3Service.getFile('presentations.json', tempFilePath)
+            presentations = new JsonSlurper().parse(tempFile)
+            grailsCacheManager.getCache('object').put('presentations', presentations)
+        }
+        def max = params.int('max') ?: 5
+        def offset = params.int('offset') ?: 0
+        def pageEnd = (offset + max) < presentations.size() ? (offset + max) : presentations.size()
+        def page = presentations.subList(offset, pageEnd)
         return model << [
-                presentations: presentations,
+                presentations: page,
+                totalPresentations: presentations.size(),
+                offset: offset,
+                max: max,
+                params: params,
         ]
     }
 

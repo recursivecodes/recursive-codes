@@ -1,5 +1,19 @@
 [
   {
+    "title": "Growing in the Cloud - My Journey to Create Hot Sauce Using IoT, Messaging & Micronaut\n",
+    "alias": "growing-in-the-cloud",
+    "google-embed-id": "1at8mZGcUOi4UmF3Q9eo-HZvPOWkG1hvb",
+    "conferences": [
+      {
+        "name": "TEQNation",
+        "date": "May, 2021",
+        "link": "https://conference.teqnation.com/timetable-2021/",
+        "recording": ""
+      }
+    ],
+    "abstract": "It all started with a small project to pass the time during The Great Quarantine of 2020. I bought some chiles from the local farmer’s market (with proper face coverings and social distancing, of course), fermented my first batch of hot sauce, and shared it with a few friends around the globe. I had no idea the sauce would be such a massive success, so I resolved to build on that triumph in 2021. But this time, I knew that I would have to start from the very beginning and grow the chiles myself. Of course, this presented the wonderful opportunity to combine two of my life’s greatest passions - the culinary arts and technology - to ensure that my growth operation was the ultimate success. Join me in this session where I show you how I used a microcontroller, some sensors and the cloud to monitor and automate the germination and maturation of this year’s crop."
+  },
+  {
     "title": "Message Driven Microservices & Monoliths with Micronaut",
     "alias": "message-driven-microservices",
     "google-embed-id": "11ebFMpRXkny95n1wLZypNNOxdF4BZ1F1",
