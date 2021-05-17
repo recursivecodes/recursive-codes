@@ -35,14 +35,14 @@
         </form>
     </div>
 
-    <g:if test="${!results?.count && searchString}">
+    <g:if test="${!results?.total?.value && searchString}">
         <div class="alert alert-info">This is catastrophic!!  I can't show you any results for <i><b>${searchString}</b></i>!</div>
     </g:if>
 
-    <g:if test="${results.count}">
-        <h1 class="mb-5">Found ${results.count} post${results.count > 1 ? 's' : ''} matching <i><b>${searchString}</b></i>.</h1>
+    <g:if test="${results?.total?.value}">
+        <h1 class="mb-5">Found ${results.total.value} post${results.total.value > 1 ? 's' : ''} matching <i><b>${searchString}</b></i>.</h1>
 
-        <g:each in="${results.posts}" var="post">
+        <g:each in="${results.searchResults}" var="post" status="p">
             <div class="post-preview">
                 <g:link controller="blog" action="post" id="${post.id}">
                     <div>
@@ -52,14 +52,17 @@
                 <div class="text-success">
                     <small><i>${baseUrl}${createLink( controller: 'blog', action:'post',params: [id: post.id] )}</i></small>
                 </div>
-                <div>
+                <div class="pb-3">
+                    <small class="text-muted result">${ raw( results.highlight[p].collect { h -> h + '...' }.flatten().join(' ') ) }</small>
+                    <%--
                     <small class="text-muted result"><ui:truncatePost context="${searchString}" contentLength="250" article="${post.article}"/></small>
+                    --%>
                 </div>
                 <p class="post-meta">Posted by ${post?.authoredBy?.fullName} on <g:formatDate date="${post.publishedDate}"/></p>
             </div>
         </g:each>
 
-        <ui:paginate total="${results.count}" params="${params}" action="search"/>
+        <ui:paginate total="${results.total.value}" params="${params}" action="search"/>
 
     </g:if>
 </body>

@@ -1,12 +1,11 @@
 package codes.recursive.blog
 
+import codes.recursive.DateConverter
 import codes.recursive.Role
 import codes.recursive.User
 import grails.util.Holders
 
-
 class Post {
-
     String title
     String keywords
     String summary
@@ -49,6 +48,15 @@ class Post {
         authoredBy nullable: false
         publishedDate nullable: false
         importedOn nullable: true
+    }
+
+    static searchable = {
+    authoredBy reference: true
+    publishedDate converter: DateConverter
+    dateCreated converter: DateConverter
+    lastUpdated converter: DateConverter
+    importedOn converter: DateConverter
+    except = ['postTags']
     }
 
 }

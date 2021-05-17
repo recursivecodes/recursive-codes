@@ -1,7 +1,7 @@
 package codes.recursive
 
-
 import codes.recursive.blog.BlogService
+import codes.recursive.blog.Post
 import codes.recursive.blog.Subscriber
 import codes.recursive.blog.command.ContactFormCommand
 import codes.recursive.subscriber.SubscriberService
@@ -9,9 +9,15 @@ import grails.converters.JSON
 import grails.core.GrailsApplication
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
+import grails.plugins.elasticsearch.ElasticSearchService
 import grails.plugins.mail.MailService
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
+import org.elasticsearch.index.query.Operator
+import org.elasticsearch.index.query.QueryBuilders
+import org.elasticsearch.index.query.QueryStringQueryBuilder
+import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
 import org.springframework.cache.CacheManager
 
 import javax.annotation.PostConstruct
@@ -26,6 +32,7 @@ class PageController extends AbstractController{
     MailService mailService
     AmazonS3Service amazonS3Service
     CacheManager grailsCacheManager
+    ElasticSearchService elasticSearchService
     Util util
 
     @PostConstruct
@@ -205,14 +212,45 @@ class PageController extends AbstractController{
 
     def search() {
         def model = defaultModel
-        def results = []
+        def results = [:]
         def searchString = params.get('searchString')
         def max = params.int('max') ?: 25
         def offset = params.int('offset') ?: 0
 
         if( searchString ) {
-            results = blogService.searchPosts(searchString, max, offset)
+            //results = blogService.searchPosts(searchString, max, offset)
+            QueryStringQueryBuilder query = QueryBuilders.queryStringQuery(searchString)
+            query.defaultOperator(Operator.OR)
+
+            def highlighter = {
+                field 'article'
+                preTags '<strong>'
+                postTags '</strong>'
+            }
+
+            results = elasticSearchService.search(query, {
+                bool {
+                    must {
+                        term{
+                            isPublished = true
+                        }
+                    }
+                    must {
+                            range {
+                                publishedDate {
+                                    lte = new Date()
+                                }
+                            }
+                    }
+                }
+            }, null, [indices: Post, types: Post, from: offset, size: max, highlight: highlighter])
         }
+
+        Whitelist allowedList = Whitelist.newInstance().addTags('strong')
+        List highlights = results?.highlight*.article?.fragments*.collect { it ->
+            return Jsoup.clean(it.toString(), allowedList)
+        }
+        results.highlight = highlights ?: []
         return model << [
                 results: results,
                 searchString: searchString,

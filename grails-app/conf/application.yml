@@ -134,3 +134,28 @@ grails:
         upload:
             maxFileSize: 26214400
             maxRequestSize: 26214400
+    databinding:
+        dateFormats:
+            - "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+---
+elasticSearch:
+    date:
+        formats: [ "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" ]
+---
+environments:
+    development:
+        elasticSearch:
+            datastoreImpl: hibernateDatastore
+            client:
+                mode: transport
+                hosts:
+                    - { host: localhost, port: 9200 }
+            cluster.name: docker-cluster
+    production:
+        elasticSearch:
+            datastoreImpl: hibernateDatastore
+            client:
+                mode: transport
+                hosts:
+                    - { host: localhost, port: 9200 }
+            cluster.name: docker-cluster

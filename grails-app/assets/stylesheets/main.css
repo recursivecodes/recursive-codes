@@ -28,6 +28,11 @@
 .bold{font-weight: bold;}
 .italic{font-style: italic;}
 
+.alert > p {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 .container-admin{
     margin-top: 80px;
     margin-left: 20px;

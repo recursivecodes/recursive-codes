@@ -59,4 +59,8 @@ class User implements Serializable {
 	}
 
 	static hasMany = [userRoles: UserRole]
+
+	static searchable = {
+		except = 'userRoles'
+	}
 }

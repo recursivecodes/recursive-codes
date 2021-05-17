@@ -41,6 +41,9 @@ dependencyManagement {
     applyMavenExclusions false
 }
 
+def elasticsearchVersion = '7.6.2'
+ext['elasticsearch.version'] = elasticsearchVersion
+
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
@@ -78,6 +81,9 @@ dependencies {
     compile group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
     compile 'com.github.slugify:slugify:2.4'
+    compile "org.elasticsearch.client:elasticsearch-rest-client:7.6.2"
+    compile "org.elasticsearch.client:elasticsearch-rest-high-level-client:7.6.2"
+    compile "org.grails.plugins:elasticsearch:2.7.0.RC1"
 }
 
 springBoot {
