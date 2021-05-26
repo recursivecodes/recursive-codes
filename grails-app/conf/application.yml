@@ -150,7 +150,7 @@ environments:
                 mode: transport
                 hosts:
                     - { host: localhost, port: 9200 }
-            cluster.name: docker-cluster
+            cluster.name: recursive-codes-es-cluster
     production:
         elasticSearch:
             datastoreImpl: hibernateDatastore
@@ -158,4 +158,4 @@ environments:
                 mode: transport
                 hosts:
                     - { host: localhost, port: 9200 }
-            cluster.name: docker-cluster
+            cluster.name: recursive-codes-es-cluster
