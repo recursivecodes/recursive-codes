@@ -108,15 +108,8 @@
             },
             options
         );
-
         return false;
     });
-
-    function enablePDF() {
-        let btn = document.querySelector('#showPDF');
-        btn.addEventListener('click', () => displayPDF());
-        btn.disabled = false;
-    }
 
 </script>
 </body>
