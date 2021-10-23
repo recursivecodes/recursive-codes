@@ -208,13 +208,13 @@ jobs:
             sudo sh -c 'echo "key_file=/.oci/key.pem" >> /.oci/config'
             sudo sh -c 'echo "${{secrets.OCI_KEY_FILE}}" >> /.oci/key.pem'
             sudo mkdir /wallet
-            sudo sh -c 'echo "${{secrets.WALLET_CWALLET}}" | base64 -d >> /wallet/cwallet.sso'
-            sudo sh -c 'echo "${{secrets.WALLET_EWALLET}}" | base64 -d >> /wallet/ewallet.p12'
-            sudo sh -c 'echo "${{secrets.WALLET_KEYSTORE}}" | base64 -d >> /wallet/keystore.jks'
-            sudo sh -c 'echo "${{secrets.WALLET_OJDBC}}" | base64 -d >> /wallet/ojdbc.properties'
-            sudo sh -c 'echo "${{secrets.WALLET_SQLNET}}" | base64 -d >> /wallet/sqlnet.ora'
-            sudo sh -c 'echo "${{secrets.WALLET_TNSNAMES}}" | base64 -d >> /wallet/tnsnames.ora'
-            sudo sh -c 'echo "${{secrets.WALLET_TRUSTSTORE}}" | base64 -d >> /wallet/truststore.jks'
+            sudo sh -c 'echo "${{secrets.WALLET_CWALLET}}" | base64 -d > /wallet/cwallet.sso'
+            sudo sh -c 'echo "${{secrets.WALLET_EWALLET}}" | base64 -d > /wallet/ewallet.p12'
+            sudo sh -c 'echo "${{secrets.WALLET_KEYSTORE}}" | base64 -d > /wallet/keystore.jks'
+            sudo sh -c 'echo "${{secrets.WALLET_OJDBC}}" | base64 -d > /wallet/ojdbc.properties'
+            sudo sh -c 'echo "${{secrets.WALLET_SQLNET}}" | base64 -d > /wallet/sqlnet.ora'
+            sudo sh -c 'echo "${{secrets.WALLET_TNSNAMES}}" | base64 -d > /wallet/tnsnames.ora'
+            sudo sh -c 'echo "${{secrets.WALLET_TRUSTSTORE}}" | base64 -d > /wallet/truststore.jks'
 
       - name: 'Restart Tomcat'
         uses: appleboy/ssh-action@master
