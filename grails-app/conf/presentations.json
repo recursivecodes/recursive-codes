@@ -1,13 +1,37 @@
 [
   {
+    "title": "Installing Node-RED on an ‘Always Free’ Arm Instance in the Oracle Cloud",
+    "alias": "node-red-on-always-free-oci",
+    "conferences": [
+      {
+        "name": "Node-RED Con 2021",
+        "date": "",
+        "link": "https://nodered.jp/noderedcon2021/index-en.html",
+        "recording": ""
+      }
+    ],
+    "abstract": "It's easy to install Node-RED on a Raspberry Pi or a spare laptop that we have lying around the house, but sometimes you need the power and flexibility of having an instance running in the cloud. Maybe you need to use it for a school or work project and need it to be accessible to the public web? In this session, I'll show you how to turn up an \"always free\" Ampere Arm instance in the Oracle Cloud and install Node-RED on that instance. We'll make sure the installation is web accessible and secure, and I'll show you a few other tips for integrating your Node-RED install into the free Oracle Cloud tier that can enable very powerful flows!"
+  },
+  {
     "title": "Growing in the Cloud - My Journey to Create Hot Sauce Using IoT, Messaging & Micronaut\n",
     "alias": "growing-in-the-cloud",
-    "google-embed-id": "1at8mZGcUOi4UmF3Q9eo-HZvPOWkG1hvb",
     "conferences": [
       {
         "name": "TEQNation",
         "date": "May, 2021",
         "link": "https://conference.teqnation.com/timetable-2021/",
+        "recording": ""
+      },
+      {
+        "name": "KC/DC",
+        "date": "July, 2021",
+        "link": "https://www.kcdc.info/",
+        "recording": ""
+      },
+      {
+        "name": "JCON",
+        "date": "October, 2021",
+        "link": "https://jcon.one/",
         "recording": ""
       }
     ],
@@ -16,7 +40,6 @@
   {
     "title": "Message Driven Microservices & Monoliths with Micronaut",
     "alias": "message-driven-microservices",
-    "google-embed-id": "11ebFMpRXkny95n1wLZypNNOxdF4BZ1F1",
     "conferences": [
       {
         "name": "Webinar",
@@ -30,7 +53,6 @@
   {
     "title": "Getting Started with JSON Document Collections in the Autonomous JSON Database",
     "alias": "intro-to-ajd",
-    "google-embed-id": "1688Cco91Kfb13lcbAaTgfTGLRSwiaHoS",
     "conferences": [
       {
         "name": "Webinar",
@@ -44,7 +66,6 @@
   {
     "title": "Hidden Gems In The Oracle Cloud",
     "alias": "oci-hidden-gems",
-    "google-embed-id": "1xYzjrLWKlfiZ2NduAIdUztFqhZOqytGF",
     "conferences": [
       {
         "name": "Webinar",
@@ -58,7 +79,6 @@
   {
     "title": "Easier Microservice Persistence With Micronaut Data",
     "alias": "micronaut-data",
-    "google-embed-id": "1RvdgcyM_Zt8oUDjapy4XKBH6p6Ee93-X",
     "conferences": [
       {
         "name": "DevNexus",
@@ -72,7 +92,6 @@
   {
     "title": "Fighting Diabetes with Technology",
     "alias": "fighting-diabetes",
-    "google-embed-id": "1N4H3divNAYLTn38GlGFB1uohpIybb08l",
     "conferences": [
       {
         "name": "Oracle Code One",
@@ -92,7 +111,6 @@
   {
     "title": "How I Automated My Barn...",
     "alias": "barn-automation",
-    "google-embed-id": "1Xyt10rhgg-VFNNtPxlVzuN0xcQx37yZK",
     "conferences": [
       {
         "name": "Oracle Code One",
@@ -118,7 +136,6 @@
   {
     "title": "Getting Groovy with Spark Java",
     "alias": "getting-groovy-with-spark-java",
-    "google-embed-id": "16nOWc-qU2FlfSQP_C6-QovNzAd6UVEvs",
     "conferences": [
       {
         "name": "DevNexus",
@@ -132,7 +149,6 @@
   {
     "title": "ECMA What? Getting Up To Speed With The JavaScript World",
     "alias": "ecma-what",
-    "google-embed-id": "1aNKP-cyohytCM2x43Mvd4oSueWjUilfU",
     "conferences": [
       {
         "name": "We RISE Tech Conference",
