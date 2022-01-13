@@ -18,7 +18,7 @@
         <g:each in="${presentations}" var="presentation" status="p">
             <div class="col-xs-12">
 
-                <div class="panel panel-default">
+                <div class="panel panel-default" id="${presentation.alias}">
                     <div class="panel-heading">${presentation.title}</div>
                     <div class="panel-body">
                         <div class="row ">

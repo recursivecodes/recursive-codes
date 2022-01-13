@@ -1,5 +1,18 @@
 [
   {
+    "title": "Launching Your Own Free Minecraft Server in the Cloud",
+    "alias": "node-red-on-always-free-oci",
+    "conferences": [
+      {
+        "name": "CodeMash 2022",
+        "date": "Jan, 2022",
+        "link": "https://codemash.org",
+        "recording": ""
+      }
+    ],
+    "abstract": "Have you ever created the perfect Minecraft world and wished that you could share that world with your friends and family that don't live near you? What about customizing every single aspect of the game - mods, difficulty, weather, spawn rates, physics, landscapes, etc? You probably already know that all of that is possible by running your own custom Minecraft server. But, it can be tricky to host your own server. First, you need a spare computer lying around to host it. Then, you need to make sure that your internet firewall ports are properly configured to allow other people to connect to the server. On top of all that, your computer needs enough CPU and RAM to handle running the game server and hosting multiple connections. It can be a real pain to launch, run and manage your own Minecraft server at home! Wouldn't it be better if you could run it from a really powerful computer that is managed by someone else in a secure data center with a really fast internet connection?\n\nIn this session, we'll look at how to sign up for a completely free account in the cloud that you can use forever to host your own Minecraft server. We'll launch the server, install Minecraft and configure the firewall so that you can connect to it from your own computer and share it with your friends. We'll also talk about some basic concepts (like - what exactly is \"the cloud\") and we'll look at some other things you can do with your free account."
+  },
+  {
     "title": "Installing Node-RED on an ‘Always Free’ Arm Instance in the Oracle Cloud",
     "alias": "node-red-on-always-free-oci",
     "conferences": [
@@ -32,6 +45,12 @@
         "name": "JCON",
         "date": "October, 2021",
         "link": "https://jcon.one/",
+        "recording": ""
+      },
+      {
+        "name": "CodeMash",
+        "date": "Jan, 2022",
+        "link": "https://codemash.org/",
         "recording": ""
       }
     ],
