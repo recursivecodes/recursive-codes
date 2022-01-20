@@ -14,7 +14,8 @@
                 <title>${post.title}</title>
                 <link>${grailsApplication.config.grails.serverURL}/blog/post/${post.id}</link>
                 <pubDate>${formatter.format(post.dateCreated)}</pubDate>
-                <description><![CDATA[ ${post.article} ]]></description>
+                <description>${post.summary}</description>
+                <content:encoded><![CDATA[ ${post.article} ]]></content:encoded>
                 <enclosure url="${post.bannerImg}" />
             </item>
         </g:each>
