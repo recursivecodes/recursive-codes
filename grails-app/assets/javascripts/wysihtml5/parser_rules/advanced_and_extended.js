@@ -484,6 +484,7 @@ var wysihtmlParserRules = {
             }
         },
         "style": {
+            "remove": 0,
             "check_attributes": {
                 "type": "any",
                 "src": "any",

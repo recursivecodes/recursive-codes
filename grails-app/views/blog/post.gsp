@@ -16,6 +16,14 @@
     <meta name="description" content="${post?.summary ? post?.summary : ui.makeDescription(article: post.article)}" />
     <meta name="keywords" content="${post?.postTags?.collect{it.tag.name}.join(',')}${post?.keywords ? ',' + post.keywords : ''}" />
     <meta name="author" content="${post?.authoredBy?.firstName} ${post?.authoredBy?.lastName}" />
+    <meta property="og:title" content="recursive.codes - ${post.title}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="${post?.summary ? post?.summary : ui.makeDescription(article: post.article)}">
+    <meta property="og:image" content="${raw(post.bannerImg)}" />
+    <meta property="og:url" content="https://recursive.codes${request.forwardURI}" />
+    <meta property="og:site_name" content="recursive.codes">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@recursivecodes">
     <title>${post.title} - recursive.codes</title>
     <asset:stylesheet src="jssocials.css"/>
     <asset:stylesheet src="jssocials-theme-flat.css"/>

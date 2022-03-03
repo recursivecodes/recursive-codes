@@ -198,7 +198,10 @@ const model = {
             "wysihtml-textarea", {
                 insertsLineBreaksOnReturn: false,
                 toolbar: "toolbar",
-                parserRules: wysihtmlParserRules
+                parserRules: wysihtmlParserRules,
+                parser: function (html) {
+                    return html;
+                },
             }
         )
         model.editor.on( "load", function() {
