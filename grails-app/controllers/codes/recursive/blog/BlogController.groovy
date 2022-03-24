@@ -75,6 +75,7 @@ class BlogController extends AbstractAdminController {
         def model = defaultModel
         DateFormat pubDateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         response.setContentType("application/xml")
+        // feed should be UTF-8
         response.setCharacterEncoding(CharEncoding.UTF_8)
         return model << [
                 posts    : params.boolean('all') ? blogService.listPublished() : blogService.listPublished(25, 0),
