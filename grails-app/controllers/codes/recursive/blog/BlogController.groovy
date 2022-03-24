@@ -10,6 +10,7 @@ import grails.converters.JSON
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.plugin.springsecurity.annotation.Secured
 import groovy.json.JsonSlurper
+import org.apache.commons.codec.CharEncoding
 import org.apache.commons.io.FilenameUtils
 import org.eclipse.egit.github.core.Gist
 import org.eclipse.egit.github.core.GistFile
@@ -74,6 +75,7 @@ class BlogController extends AbstractAdminController {
         def model = defaultModel
         DateFormat pubDateFormatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         response.setContentType("application/xml")
+        response.setCharacterEncoding(CharEncoding.UTF_8)
         return model << [
                 posts    : params.boolean('all') ? blogService.listPublished() : blogService.listPublished(25, 0),
                 formatter: pubDateFormatter,

@@ -6,18 +6,19 @@
         <description>The personal blog of Todd Sharp</description>
         <atom:link href="${grailsApplication.config.grails.serverURL}/blog/feed" rel="self" type="application/rss+xml" />
         <image>
-            <url>${grailsApplication.config.grails.serverURL}${assetPath(src: 'favicon.ico')}</url>
+            <url>${grailsApplication.config.grails.serverURL}${assetPath(src: 'logo.png')}</url>
             <title>recursive.codes</title>
             <link>${grailsApplication.config.grails.serverURL}</link>
         </image>
         <g:each in="${posts}" var="post">
             <item>
-                <title>${post.title}</title>
+                <title>${HtmlUtils.htmlEscape(post.title)}</title>
                 <link>${grailsApplication.config.grails.serverURL}/blog/post/${post.id}</link>
+                <guid>${grailsApplication.config.grails.serverURL}/blog/post/${post.id}</guid>
                 <pubDate>${formatter.format(post.dateCreated)}</pubDate>
                 <description>${post.summary}</description>
                 <content:encoded><![CDATA[ ${post.article} ]]></content:encoded>
-                <enclosure url="${post.bannerImg}" />
+                <enclosure url="${post.bannerImg}" type="image/png" length="${post.bannerImg.toURL().getBytes().size()}" />
             </item>
         </g:each>
     </channel>
