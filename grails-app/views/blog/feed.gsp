@@ -12,12 +12,12 @@
         </image>
         <g:each in="${posts}" var="post">
             <item>
-                <title>${HtmlUtils.htmlEscape(post.title)}</title>
+                <title>${post.title.replace('&', '%26')}</title>
                 <link>${grailsApplication.config.grails.serverURL}/blog/post/${post.id}</link>
                 <guid>${grailsApplication.config.grails.serverURL}/blog/post/${post.id}</guid>
                 <pubDate>${formatter.format(post.dateCreated)}</pubDate>
                 <description>${post.summary}</description>
-                <content:encoded><![CDATA[ ${post.article} ]]></content:encoded>
+                <content:encoded><![CDATA[ ${HtmlUtils.htmlEscape(post.article)} ]]></content:encoded>
                 <enclosure url="${post.bannerImg}" type="image/png" length="${post.bannerImg.toURL().getBytes().size()}" />
             </item>
         </g:each>
