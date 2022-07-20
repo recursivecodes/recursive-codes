@@ -98,7 +98,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <ul class="list-inline text-center">
-                        <li>
+                        <li class="p-0">
                             <a href="https://twitch.tv/recursivecodes" target="_blank">
                                 <span class="fa-stack">
                                     <i class="fas fa-circle fa-stack-2x"></i>
@@ -106,7 +106,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li class="p-0">
                             <a href="https://twitter.com/recursivecodes" target="_blank">
                                 <span class="fa-stack">
                                     <i class="fas fa-circle fa-stack-2x"></i>
@@ -114,7 +114,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li class="p-0">
                             <a href="https://instagram.com/toddrsharp" target="_blank">
                                 <span class="fa-stack">
                                     <i class="fas fa-circle fa-stack-2x"></i>
@@ -122,7 +122,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li class="p-0">
                             <a href="https://www.linkedin.com/in/toddrsharp/" target="_blank">
                                 <span class="fa-stack">
                                     <i class="fas fa-circle fa-stack-2x"></i>
@@ -130,7 +130,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li class="p-0">
                             <a href="https://github.com/cfsilence" target="_blank">
                                 <span class="fa-stack">
                                     <i class="fas fa-circle fa-stack-2x"></i>
@@ -138,7 +138,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li>
+                        <li class="p-0">
                             <a href="https://github.com/recursivecodes" target="_blank">
                                 <span class="fa-stack">
                                     <i class="fas fa-circle fa-stack-2x"></i>
