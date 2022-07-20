@@ -11,6 +11,5 @@
 *= require clean-blog
 *= require main
 *= require bootstrap-datetimepicker
-*= require font-awesome/css/font-awesome
 *= require_self
 */

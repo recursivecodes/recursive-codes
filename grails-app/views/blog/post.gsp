@@ -25,6 +25,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@recursivecodes">
     <title>${post.title}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <asset:stylesheet src="social-share.min.css"/>
     <asset:javascript src="social-share.min.js"/>
     <style>
