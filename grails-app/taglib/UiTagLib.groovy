@@ -491,8 +491,8 @@ class UiTagLib {
         """
         if( attrs?.tags ) {
             js += """
-                var dimensionValue = '${attrs?.tags}';
-                ga('set', 'dimension1', dimensionValue);
+            var dimensionValue = '${attrs?.tags}';
+            gtag('set', 'dimension1', dimensionValue);
             """
         }
         js += """
