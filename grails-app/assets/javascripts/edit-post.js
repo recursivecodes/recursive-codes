@@ -75,7 +75,7 @@ const model = {
         return false;
     },
     savePost: function() {
-        $('#btnSubmit').html('<i class="fa fa-refresh fa-spin"></i> Saving...').attr('disabled', 'disabled')
+        $('#btnSubmit').html('<i class="far fa-refresh fa-spin"></i> Saving...').attr('disabled', 'disabled')
         var form = model.objectifyForm( $('form[name="postForm"]').serializeArray() );
         form.tags = JSON.stringify( $("#postTags option:selected").toArray().map(item => item.value) );
 
@@ -150,7 +150,7 @@ const model = {
         $('#createGistModal').modal('show')
     },
     createGist: function(){
-        $('#createGistBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Creating...')
+        $('#createGistBtn').attr('disabled', 'disabled').html('<i class="far fa-refresh fa-spin"></i> Creating...')
         $.ajax({
             url: '/blog/createGist',
             method: 'POST',
@@ -254,7 +254,7 @@ const model = {
         } );
     },
     uploadPastedImage: function(){
-        $('#saveEditedImgBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Uploading...');
+        $('#saveEditedImgBtn').attr('disabled', 'disabled').html('<i class="far fa-refresh fa-spin"></i> Uploading...');
         $.ajax({
             url: '/blog/uploadBase64Image',
             method: 'POST',
@@ -356,7 +356,7 @@ const model = {
            formData.append(`key_${index}`, upload.key);
            formData.append(`upload_${index}`, $(`#uploadFile_${index}`).get(0).files[0]);
         });
-        $('#uploadFileBtn').attr('disabled', 'disabled').html('<i class="fa fa-refresh fa-spin"></i> Uploading...')
+        $('#uploadFileBtn').attr('disabled', 'disabled').html('<i class="far fa-refresh fa-spin"></i> Uploading...')
         $.ajax({
             url: '/blog/uploadFile',
             method: 'POST',

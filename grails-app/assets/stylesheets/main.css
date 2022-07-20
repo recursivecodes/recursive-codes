@@ -78,3 +78,6 @@ a {
     display: flex;
     flex-wrap: wrap;
 }
+#share {
+    font-size: .8em !important;
+}
