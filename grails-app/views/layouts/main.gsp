@@ -102,7 +102,7 @@
                             <a href="https://twitch.tv/recursivecodes" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fab-twitch fa-stack-1x fa-inverse"></i>
+                                    <i class="fab fa-twitch fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
                         </li>
@@ -110,7 +110,7 @@
                             <a href="https://twitter.com/recursivecodes" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fab-twitter fa-stack-1x fa-inverse"></i>
+                                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
                         </li>
@@ -118,7 +118,7 @@
                             <a href="https://instagram.com/toddrsharp" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fab-instagram fa-stack-1x fa-inverse"></i>
+                                    <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
                         </li>
@@ -126,7 +126,7 @@
                             <a href="https://www.linkedin.com/in/toddrsharp/" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fab-linkedin fa-stack-1x fa-inverse"></i>
+                                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
                         </li>
@@ -134,7 +134,7 @@
                             <a href="https://github.com/cfsilence" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fab-github fa-stack-1x fa-inverse"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
                         </li>
@@ -142,7 +142,7 @@
                             <a href="https://github.com/recursivecodes" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fab-github fa-stack-1x fa-inverse"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
                         </li>
