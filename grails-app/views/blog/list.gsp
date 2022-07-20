@@ -60,7 +60,7 @@
 
     <div class="row pad-bottom-10">
         <div class="col-sm-12">
-            <g:link controller="blog" action="edit" class="btn btn-primary"><i class="fa fa-edit"></i> Create New Blog Post</g:link>
+            <g:link controller="blog" action="edit" class="btn btn-primary"><i class="fas fa-edit"></i> Create New Blog Post</g:link>
         </div>
     </div>
 
@@ -77,9 +77,9 @@
                 <td><g:formatDate date="${post?.publishedDate}" formatName="default.datetime.format"/></td>
                 <td><g:formatBoolean boolean="${post?.isPublished}"/></td>
                 <td>
-                    <g:link action="edit" id="${post?.id}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit Post</g:link>
-                    <ui:toggleLink enabled="${post?.isPublished}" action="post" controller="blog" id="${post?.id}" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-external-link"></i> View Post</ui:toggleLink>
-                    <a href="#" data-post-id="${post?.id}" data-is-published="${post?.isPublished}" class="btn btn-sm ${post?.isPublished ? 'btn-danger' : 'btn-primary'} delete-post"><i class="fa ${post?.isPublished ? 'fa-trash-o' : 'fa-bullhorn'}"></i> ${post?.isPublished ? 'Unpublish' : 'Publish'} Post</a>
+                    <g:link action="edit" id="${post?.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit Post</g:link>
+                    <ui:toggleLink enabled="${post?.isPublished}" action="post" controller="blog" id="${post?.id}" class="btn btn-sm btn-info" target="_blank"><i class="fas fa-external-link"></i> View Post</ui:toggleLink>
+                    <a href="#" data-post-id="${post?.id}" data-is-published="${post?.isPublished}" class="btn btn-sm ${post?.isPublished ? 'btn-danger' : 'btn-primary'} delete-post"><i class="fas ${post?.isPublished ? 'fa-trash-o' : 'fa-bullhorn'}"></i> ${post?.isPublished ? 'Unpublish' : 'Publish'} Post</a>
                 </td>
             </tr>
         </g:each>

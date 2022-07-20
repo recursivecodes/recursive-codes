@@ -73,7 +73,7 @@
             <h1 class="mt-0">${params.id ? 'Edit' : 'Create'} Blog Post</h1>
         </div>
         <div class="align-self-center ml-auto">
-            <g:link controller="blog" action="list" class="btn btn-primary"><i class="far fa-angle-double-left"></i> List Blog Posts</g:link>
+            <g:link controller="blog" action="list" class="btn btn-primary"><i class="fas fa-angle-double-left"></i> List Blog Posts</g:link>
         </div>
     </div>
     -->
@@ -142,82 +142,82 @@
                         <div id="toolbar" style="display: none;" class="pad-bottom-10">
                             <div class="btn-group">
                                 <%--
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="justifyLeft" title="Left align text"><i class="far fa-align-left"></i></a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="justifyCenter" title="Center text"><i class="far fa-align-center"></i></a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="justifyRight" title="Right align text"><i class="far fa-align-right"></i></a>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="justifyLeft" title="Left align text"><i class="fas fa-align-left"></i></a>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="justifyCenter" title="Center text"><i class="fas fa-align-center"></i></a>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="justifyRight" title="Right align text"><i class="fas fa-align-right"></i></a>
                                 --%>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="bold" title="Make text bold (CTRL + B)"><i class="far fa-bold"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="bold" title="Make text bold (CTRL + B)"><i class="fas fa-bold"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="italic" title="Make text italic (CTRL + I)"><i class="far fa-italic"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="italic" title="Make text italic (CTRL + I)"><i class="fas fa-italic"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="underline" title="Make text underlined (CTRL + u)"><i class="far fa-underline"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="underline" title="Make text underlined (CTRL + u)"><i class="fas fa-underline"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="strikethrough" title="Make text strikethrough"><i class="far fa-strikethrough"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="strikethrough" title="Make text strikethrough"><i class="fas fa-strikethrough"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="createLink" title="Insert a link" class="command" href="javascript:;" unselectable="on"><i class="far fa-link"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="createLink" title="Insert a link" class="command" href="javascript:;" unselectable="on"><i class="fas fa-link"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertImage" title="Insert an image" class="command" href="javascript:;" unselectable="on"><i class="far fa-picture-o"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertImage" title="Insert an image" class="command" href="javascript:;" unselectable="on"><i class="fas fa-picture-o"></i>
                                 </a>
                                 <!--
-                                <a class="btn btn-sm btn-default browse-s3-trigger" rv-on-click="model.showS3Browser" data-toggle="tooltip" data-container="body" title="Browse S3" href="javascript:;" unselectable="on"><i class="far fa-amazon"></i>
+                                <a class="btn btn-sm btn-default browse-s3-trigger" rv-on-click="model.showS3Browser" data-toggle="tooltip" data-container="body" title="Browse S3" href="javascript:;" unselectable="on"><i class="fas fa-amazon"></i>
                                 </a>
                                 -->
-                                <a class="btn btn-sm btn-default upload-s3-trigger" data-toggle="tooltip" rv-on-click="model.showS3UploadModal" data-container="body" title="Upload To Object Storage" href="javascript:;" unselectable="on"><i class="far fa-upload"></i>
+                                <a class="btn btn-sm btn-default upload-s3-trigger" data-toggle="tooltip" rv-on-click="model.showS3UploadModal" data-container="body" title="Upload To Object Storage" href="javascript:;" unselectable="on"><i class="fas fa-upload"></i>
                                 </a>
                             </div>
 
                             <div class="btn-group">
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[spoiler label=Spoiler]Spoiler Text Here[/spoiler]" title="Insert a spoiler tag" class="command" href="javascript:;" unselectable="on"><i class="far fa-exclamation-circle"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[spoiler label=Spoiler]Spoiler Text Here[/spoiler]" title="Insert a spoiler tag" class="command" href="javascript:;" unselectable="on"><i class="fas fa-exclamation-circle"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default create-gist-trigger" rv-on-click="model.showGistModal" data-toggle="tooltip" data-container="body" title="Create a gist" class="command" href="javascript:;" unselectable="on"><i class="far fa-github-alt"></i>
+                                <a class="btn btn-sm btn-default create-gist-trigger" rv-on-click="model.showGistModal" data-toggle="tooltip" data-container="body" title="Create a gist" class="command" href="javascript:;" unselectable="on"><i class="fab fa-github-alt"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[gist2 id=]" title="Insert a gist" class="command" href="javascript:;" unselectable="on"><i class="far fa-github"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="[gist2 id=]" title="Insert a gist" class="command" href="javascript:;" unselectable="on"><i class="fab fa-github"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default youtube-search-trigger" rv-on-click="model.showYouTubeModal" data-toggle="tooltip" data-container="body" title="Embed a YouTube video" href="javascript:;" unselectable="on"><i class="far fa-youtube"></i>
-                                </a>
-                            </div>
-
-                            <div class="btn-group">
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-info'>Info</div>" title="Insert an info alert" class="command" href="javascript:;" unselectable="on"><i class="far fa-exclamation text-info"></i>
-                                </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-success'>Success</div>" title="Insert a success alert" class="command" href="javascript:;" unselectable="on"><i class="far fa-smile-o text-success"></i>
-                                </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-warning'>Warning</div>" title="Insert a warning alert" class="command" href="javascript:;" unselectable="on"><i class="far fa-exclamation-triangle text-warning"></i>
-                                </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-danger'>Danger</div>" title="Insert a danger alert" class="command" href="javascript:;" unselectable="on"><i class="far fa-minus-circle text-danger"></i>
+                                <a class="btn btn-sm btn-default youtube-search-trigger" rv-on-click="model.showYouTubeModal" data-toggle="tooltip" data-container="body" title="Embed a YouTube video" href="javascript:;" unselectable="on"><i class="fab fa-youtube"></i>
                                 </a>
                             </div>
 
                             <div class="btn-group">
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertUnorderedList" title="Insert an unordered list"><i class="far fa-list-ul"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-info'>Info</div>" title="Insert an info alert" class="command" href="javascript:;" unselectable="on"><i class="fas fa-exclamation text-info"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertOrderedList" title="Insert an ordered list"><i class="far fa-list-ol"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-success'>Success</div>" title="Insert a success alert" class="command" href="javascript:;" unselectable="on"><i class="fas fa-smile-o text-success"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="p" title="Insert paragraph"><i class="far fa-paragraph"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-warning'>Warning</div>" title="Insert a warning alert" class="command" href="javascript:;" unselectable="on"><i class="fas fa-exclamation-triangle text-warning"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatInline" data-wysihtml-command-value="code" title="Insert code"><i class="far fa-code"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-danger'>Danger</div>" title="Insert a danger alert" class="command" href="javascript:;" unselectable="on"><i class="fas fa-minus-circle text-danger"></i>
+                                </a>
+                            </div>
+
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertUnorderedList" title="Insert an unordered list"><i class="fas fa-list-ul"></i>
+                                </a>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertOrderedList" title="Insert an ordered list"><i class="fas fa-list-ol"></i>
+                                </a>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="p" title="Insert paragraph"><i class="fas fa-paragraph"></i>
+                                </a>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatInline" data-wysihtml-command-value="code" title="Insert code"><i class="fas fa-code"></i>
                                 </a>
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatInline" data-wysihtml-command-value="pre" title="Insert pre"><small>pre</small>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertBlockQuote" class="wysihtml-command-active" title="Insert blockquote"><i class="far fa-quote-right"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertBlockQuote" class="wysihtml-command-active" title="Insert blockquote"><i class="fas fa-quote-right"></i>
                                 </a>
                             </div>
 
                             <div class="btn-group">
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h1" title="Insert headline 1" style=""><span style="font-size: 12px;">&nbsp;</span><i class="far fa-header">1</i><span style="font-size: 12px;">&nbsp;</span>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h1" title="Insert headline 1" style=""><span style="font-size: 12px;">&nbsp;</span><i class="fas fa-header">1</i><span style="font-size: 12px;">&nbsp;</span>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h2" title="Insert headline 2" style=""><span style="font-size: 12px;">&nbsp;</span><i class="far fa-header">2</i><span style="font-size: 12px;">&nbsp;</span>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h2" title="Insert headline 2" style=""><span style="font-size: 12px;">&nbsp;</span><i class="fas fa-header">2</i><span style="font-size: 12px;">&nbsp;</span>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h3" title="Insert headline 3" style=""><span style="font-size: 12px;">&nbsp;</span><i class="far fa-header">3</i><span style="font-size: 12px;">&nbsp;</span>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="formatBlock" data-wysihtml-command-value="h3" title="Insert headline 3" style=""><span style="font-size: 12px;">&nbsp;</span><i class="fas fa-header">3</i><span style="font-size: 12px;">&nbsp;</span>
                                 </a>
                             </div>
 
                             <div class="btn-group">
-                                <a class="btn btn-sm btn-default action full-screen-trigger" rv-on-click="model.goFullscreen" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" title="Full Screen" unselectable="on"><i class="far fa-arrows-alt"></i>
+                                <a class="btn btn-sm btn-default action full-screen-trigger" rv-on-click="model.goFullscreen" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" title="Full Screen" unselectable="on"><i class="fas fa-arrows-alt"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default action" id="viewSourceBtn" rv-on-click="model.viewSource" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" data-wysihtml-action="change_view" title="Show HTML"><i class="far fa-code"></i>
+                                <a class="btn btn-sm btn-default action" id="viewSourceBtn" rv-on-click="model.viewSource" href="javascript:;" unselectable="on" data-toggle="tooltip" data-container="body" data-wysihtml-action="change_view" title="Show HTML"><i class="fas fa-code"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default help-modal-trigger pointer" rv-on-click="model.showHelpModal" data-toggle="tooltip" data-container="body" title="Blog Editor Help" unselectable="on"><i class="far fa-question"></i>
+                                <a class="btn btn-sm btn-default help-modal-trigger pointer" rv-on-click="model.showHelpModal" data-toggle="tooltip" data-container="body" title="Blog Editor Help" unselectable="on"><i class="fas fa-question"></i>
                                 </a>
                             </div>
 
@@ -258,7 +258,7 @@
                         <div class="">
                             <div class="text-center">
                                 <button id="btnSubmit" rv-on-click="model.submitClicked" name="btnSubmit" class="btn btn-primary">Save</button>
-                                <a class="btn btn-sm btn-info preview-post-trigger pointer" rv-on-click="model.previewPost" data-toggle="tooltip" data-container="body" title="Preview Post" unselectable="on"><i class="far fa-binoculars"></i> Preview Post</a>
+                                <a class="btn btn-sm btn-info preview-post-trigger pointer" rv-on-click="model.previewPost" data-toggle="tooltip" data-container="body" title="Preview Post" unselectable="on"><i class="fas fa-binoculars"></i> Preview Post</a>
                                 <g:link action="list" class="btn btn-default">Cancel</g:link>
                             </div>
                         </div>
@@ -299,14 +299,14 @@
                     <div class="input-group">
                         <input type="text" id="youTubeSearchString" name="youTubeSearchString" placeholder="Search" maxlength="100" class="form-control" />
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" id="youTubeSearchBtn" name="youTubeSearchBtn" rv-on-click="model.doYouTubeSearch"><i class="far fa-search"></i></button>
+                            <button class="btn btn-primary" id="youTubeSearchBtn" name="youTubeSearchBtn" rv-on-click="model.doYouTubeSearch"><i class="fas fa-search"></i></button>
                         </span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="alert alert-info" rv-hide="model.youTubeHasResults">
-            <i class="far fa-info-circle"></i> There are no results to show.
+            <i class="fas fa-info-circle"></i> There are no results to show.
         </div>
         <div class="row">
             <div rv-each-item="model.youTubeResults">
@@ -364,7 +364,7 @@
                         <label rv-for="index | prepend 'uploadFolder_'" class="control-label folder-label">Folder</label>
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button class="btn btn-danger remove-upload" rv-enabled="model.canRemoveUpload" rv-on-click="model.removeS3Upload"><i class="far fa-times"></i></button>
+                                <button class="btn btn-danger remove-upload" rv-enabled="model.canRemoveUpload" rv-on-click="model.removeS3Upload"><i class="fas fa-times"></i></button>
                             </span>
                             <input type="text" rv-value="upload.folder" rv-id="index | prepend 'uploadFolder_'" class="form-control upload-folder" rv-name="index | prepend 'uploadFolder_'" />
                         </div>
@@ -387,7 +387,7 @@
             </div>
 
             <div>
-                <button class="btn btn-success" id="addUploadBtn" rv-on-click="model.addUpload"><i class="far fa-plus"></i> Add File</button>
+                <button class="btn btn-success" id="addUploadBtn" rv-on-click="model.addUpload"><i class="fas fa-plus"></i> Add File</button>
             </div>
         </form>
     </ui:modal>

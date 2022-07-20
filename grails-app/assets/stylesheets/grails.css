@@ -958,7 +958,7 @@ html, body, .st-container, .st-pusher, .st-content {
     text-decoration: none
 }
 
-.st-menu ul li a span.far {
+.st-menu ul li a span.fas {
     display: block;
     position: absolute;
     left: 12px;
