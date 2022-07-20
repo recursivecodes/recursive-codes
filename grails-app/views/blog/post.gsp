@@ -86,7 +86,7 @@
     </div>
     --%>
     <hr/>
-    <div class="ss-box ss-shadow ss-responsive text-center mb-3"></div>
+    <div id="share" class="ss-box ss-shadow ss-responsive text-center mb-3"></div>
 
     <hr/>
 
