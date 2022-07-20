@@ -25,9 +25,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@recursivecodes">
     <title>${post.title}</title>
-    <asset:stylesheet src="jssocials.css"/>
-    <asset:stylesheet src="jssocials-theme-flat.css"/>
-    <asset:javascript src="jssocials.js"/>
+    <asset:stylesheet src="social-share.min.css"/>
+    <asset:javascript src="social-share.min.js"/>
     <style>
         .img-wrapper::after {
             font-size: 12px;
@@ -49,16 +48,6 @@
             $('img').not('.img-related-thumb').each(function(i,e) {
                 $(e).wrap('<div class="img-wrapper"></div>')
             })
-
-            jsSocials.shares.reddit = {
-                label: "Reddit",
-                logo: "fa fa-reddit-alien",
-                shareUrl: "https://reddit.com/submit?url={url}&title=" + $.trim(document.querySelector('#postTitle').textContent),
-                countUrl: ""
-            };
-            $("#share").jsSocials({
-                shares: ["reddit","twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp", "email"]
-            });
 
             $('img').not('.img-related-thumb').on('click', function(e) {
               $('#imgViewer').html('').append( $(e.currentTarget).clone().removeClass('img-responsive').removeClass('img-thumbnail') )
@@ -97,7 +86,8 @@
     </div>
     --%>
     <hr/>
-    <div id="share"></div>
+    <div class="ss-box ss-shadow ss-responsive text-center mb-3"></div>
+
     <hr/>
 
     <h3>Related Posts</h3>
