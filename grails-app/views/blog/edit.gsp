@@ -180,7 +180,7 @@
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-info'>Info</div>" title="Insert an info alert" class="command" href="javascript:;" unselectable="on"><i class="fas fa-exclamation text-info"></i>
                                 </a>
-                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-success'>Success</div>" title="Insert a success alert" class="command" href="javascript:;" unselectable="on"><i class="fas fa-smile-o text-success"></i>
+                                <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-success'>Success</div>" title="Insert a success alert" class="command" href="javascript:;" unselectable="on"><i class="fas fa-smile text-success"></i>
                                 </a>
                                 <a class="btn btn-sm btn-default" data-toggle="tooltip" data-container="body" data-wysihtml-command="insertHTML" data-wysihtml-command-value="<div class='alert alert-warning'>Warning</div>" title="Insert a warning alert" class="command" href="javascript:;" unselectable="on"><i class="fas fa-exclamation-triangle text-warning"></i>
                                 </a>

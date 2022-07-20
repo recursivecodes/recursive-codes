@@ -78,8 +78,8 @@
                 <td><g:formatBoolean boolean="${post?.isPublished}"/></td>
                 <td>
                     <g:link action="edit" id="${post?.id}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit Post</g:link>
-                    <ui:toggleLink enabled="${post?.isPublished}" action="post" controller="blog" id="${post?.id}" class="btn btn-sm btn-info" target="_blank"><i class="fas fa-external-link"></i> View Post</ui:toggleLink>
-                    <a href="#" data-post-id="${post?.id}" data-is-published="${post?.isPublished}" class="btn btn-sm ${post?.isPublished ? 'btn-danger' : 'btn-primary'} delete-post"><i class="fas ${post?.isPublished ? 'fa-trash-o' : 'fa-bullhorn'}"></i> ${post?.isPublished ? 'Unpublish' : 'Publish'} Post</a>
+                    <ui:toggleLink enabled="${post?.isPublished}" action="post" controller="blog" id="${post?.id}" class="btn btn-sm btn-info" target="_blank"><i class="fas fa-external-link-alt"></i> View Post</ui:toggleLink>
+                    <a href="#" data-post-id="${post?.id}" data-is-published="${post?.isPublished}" class="btn btn-sm ${post?.isPublished ? 'btn-danger' : 'btn-primary'} delete-post"><i class="fas ${post?.isPublished ? 'fa-trash' : 'fa-bullhorn'}"></i> ${post?.isPublished ? 'Unpublish' : 'Publish'} Post</a>
                 </td>
             </tr>
         </g:each>
