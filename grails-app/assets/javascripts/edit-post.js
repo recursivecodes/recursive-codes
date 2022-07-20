@@ -294,7 +294,7 @@ const model = {
                 url:   '/blog/ajaxSaveTag?tag=' + tagEl.val(),
                 success: function(result){
                     $('#newTagModal').modal('hide')
-                    currentTags = $('#postTags').val()
+                    currentTags = $('#postTags').val() || []
                     currentTags.push( result.tag.id.toString() )
                     model.listTags()
                 },
