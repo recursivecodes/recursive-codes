@@ -1,7 +1,7 @@
 "use strict";
 
 class Upload {
-    constructor(folder='', key='', file) {
+    constructor(folder = '', key = '', file) {
         this.folder = folder;
         this.key = key;
         this.file = file;
@@ -9,17 +9,17 @@ class Upload {
 }
 
 rivets.formatters.showRemoveBtn = (value) => value.length > 1;
-rivets.formatters.gt = function(value, args) {
+rivets.formatters.gt = function (value, args) {
     return value > args;
 };
-rivets.formatters.length = function(value) {
+rivets.formatters.length = function (value) {
     return value ? (value.length || 0) : 0;
 };
-rivets.formatters.prepend = function(value, prepend) {
+rivets.formatters.prepend = function (value, prepend) {
     return prepend + value
 };
 
-rivets.formatters.append = function(value, append) {
+rivets.formatters.append = function (value, append) {
     return value + append
 };
 
@@ -30,76 +30,77 @@ const model = {
     editor: null,
     aceEditor: null,
     s3Uploads: [],
-    selectYouTube: function(event, context) {
+    selectYouTube: function (event, context) {
         const item = context.item;
         const id = item.id.videoId;
         model.editor.focus();
-        model.editor.composer.commands.exec("insertHTML","[youtube id=" + id + "]");
+        model.editor.composer.commands.exec("insertHTML", "[youtube id=" + id + "]");
         $('#youTubeSearchModal').modal('hide')
     },
-    doYouTubeSearch: function() {
+    doYouTubeSearch: function () {
         model.youTubeResults = [];
         model.youTubeHasResults = false;
-        const results = model.searchYouTube( $('#youTubeSearchString').val(), $('#youTubeChannel').val() );
-        results.then(function(result){
+        const results = model.searchYouTube($('#youTubeSearchString').val(), $('#youTubeChannel').val());
+        results.then(function (result) {
             model.youTubeResults = result.result.items;
             model.youTubeHasResults = model.youTubeResults.length > 0;
         })
     },
-    searchYouTube: function(q, channelId) {
+    searchYouTube: function (q, channelId) {
         const params = {
             q: q,
             part: 'snippet',
             type: 'video',
             maxResults: 48
         };
-        if( channelId ) {
+        if (channelId) {
             params['channelId'] = channelId;
         }
         const request = gapi.client.youtube.search.list(params);
         return request;
     },
-    showYouTubeModal: function() {
-        $('#youTubeSearchModal').on('shown.bs.modal', function(){}).modal('show')
+    showYouTubeModal: function () {
+        $('#youTubeSearchModal').on('shown.bs.modal', function () {
+        }).modal('show')
     },
-    viewSource: function() {
-        if( $('.nicehide').size() > 0 ) {
+    viewSource: function () {
+        if ($('.nicehide').size() > 0) {
             $('.nicehide').addClass('nonicehide').removeClass('nicehide')
         }
     },
-    submitClicked: function() {
-        if( $('.nonicehide').size() > 0 ) {
+    submitClicked: function () {
+        if ($('.nonicehide').size() > 0) {
             $('.nonicehide').addClass('nicehide').removeClass('nonicehide')
         }
         model.savePost();
         return false;
     },
-    savePost: function() {
+    savePost: function () {
         $('#btnSubmit').html('<i class="fas fa-refresh fa-spin"></i> Saving...').attr('disabled', 'disabled')
-        var form = model.objectifyForm( $('form[name="postForm"]').serializeArray() );
-        form.tags = JSON.stringify( $("#postTags option:selected").toArray().map(item => item.value) );
+        var form = model.objectifyForm($('form[name="postForm"]').serializeArray());
+        form.tags = JSON.stringify($("#postTags option:selected").toArray().map(item => item.value));
 
         $.ajax({
             url: '/blog/edit',
             dataType: 'json',
             data: form,
             method: 'POST',
-            success: function(result) {
+            success: function (result) {
                 $('#SYNCHRONIZER_TOKEN').val(result.token);
                 $('#id').val(result.post.id);
                 $('#version').val(result.post.version);
                 window.history.pushState("", "", '/blog/edit/' + result.post.id);
             },
-            error: function(e) {
+            error: function (e) {
                 console.error(e);
                 alert('Error saving post.  See console.')
             },
-            complete: function(){
+            complete: function () {
                 $('#btnSubmit').html('Save').removeAttr('disabled')
             }
         })
     },
-    previewPost: function(){
+    previewPost: function () {
         $.ajax(
             {
                 method: 'POST',
@@ -108,13 +109,13 @@ const model = {
                 data: {
                     post: $('#wysihtml-textarea').val()
                 },
-                success: function(result) {
+                success: function (result) {
                     $('#previewBody').html('')
                     postscribe('#previewBody', result, {
-                        done: function() {
+                        done: function () {
                             // a bit hackish, but need to do what's in "onReady" of the post manually...
                             $('#previewBody').find('.spoiler').hide()
-                            $('#previewBody').on('click', '.showSpoiler', function(){
+                            $('#previewBody').on('click', '.showSpoiler', function () {
                                 $(this).closest('div').find('.spoiler').show()
                                 $(this).hide()
                                 return false
@@ -123,24 +124,24 @@ const model = {
                     })
                     $('#previewModal').modal('show')
                 },
-                error: function(e) {
+                error: function (e) {
                     console.error(e);
                     alert('Error generating preview!')
                 }
             }
         )
     },
-    showHelpModal: function(){
+    showHelpModal: function () {
         $('#helpModal').modal('show')
     },
-    showGistModal: function(){
-        $('#createGistModal').on('shown.bs.modal', function(){
+    showGistModal: function () {
+        $('#createGistModal').on('shown.bs.modal', function () {
             $('#createGistCode').val('')
             $('#createGistDescription').val('')
             $('#createGistName').val('')
 
             // create code editor
-            if( !model.aceEditor ) {
+            if (!model.aceEditor) {
                 model.aceEditor = ace.edit("createGistCode");
                 model.aceEditor.setTheme("ace/theme/dracula");
                 model.aceEditor.session.setMode("ace/mode/javascript");
@@ -149,7 +150,7 @@ const model = {
         })
         $('#createGistModal').modal('show')
     },
-    createGist: function(){
+    createGist: function () {
         $('#createGistBtn').attr('disabled', 'disabled').html('<i class="fas fa-refresh fa-spin"></i> Creating...')
         $.ajax({
             url: '/blog/createGist',
@@ -159,41 +160,41 @@ const model = {
                 description: $('#createGistDescription').val(),
                 code: model.aceEditor.getValue()
             },
-            success: function(result) {
+            success: function (result) {
                 model.editor.focus();
-                model.editor.composer.commands.exec("insertHTML","[gist2 id=" + result.gist.id + "]");
+                model.editor.composer.commands.exec("insertHTML", "[gist2 id=" + result.gist.id + "]");
                 $('#createGistModal').modal('hide')
             },
-            error: function(e) {
+            error: function (e) {
                 console.error(e);
                 alert('Error posting Gist.  Check console.');
             },
-            complete: function(){
+            complete: function () {
                 $('#createGistBtn').html('Create').removeAttr('disabled')
             }
         })
     },
-    showS3Browser: function(){
-        $('#s3Modal').on('shown.bs.modal', function(){
+    showS3Browser: function () {
+        $('#s3Modal').on('shown.bs.modal', function () {
             $('#s3BrowserIframe').get(0).src += ' ';
         });
         $('#s3Modal').modal('show')
     },
-    goFullscreen: function() {
+    goFullscreen: function () {
         $('#editor').toggleClass('fullscreen')
         return false;
     },
-    initIframe: function() {
+    initIframe: function () {
         var f = document.querySelector('.wysihtml-sandbox');
         var iframeDoc = f.contentDocument || f.contentWindow.document;
 
-        $('iframe').load(function(){
+        $('iframe').load(function () {
             var styles = 'br{content: ".";display: inline-block;width: 100%;border-bottom: 2px dashed red;}p{border:1px dotted}code{padding:2px 4px;font-size:90%;color:#c7254e;background-color:#f9f2f4;border-radius:4px}.alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}.alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}.alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}.alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}';
             $(iframeDoc).contents().find("head")
-                .append($("<style type='text/css'>"+styles+"</style>"));
+                .append($("<style type='text/css'>" + styles + "</style>"));
         });
     },
-    initEditor: function() {
+    initEditor: function () {
         model.editor = new wysihtml.Editor(
             "wysihtml-textarea", {
                 insertsLineBreaksOnReturn: false,
@@ -204,24 +205,24 @@ const model = {
                 },
             }
         )
-        model.editor.on( "load", function() {
+        model.editor.on("load", function () {
             // Trick browser into showing HTML5 required validation popups.
             $('#wysihtml-textarea').addClass('nicehide');
-        } );
-        model.editor.on( "paste:composer", function(event) {
+        });
+        model.editor.on("paste:composer", function (event) {
             const items = (event.clipboardData || event.originalEvent.clipboardData).items;
             for (let index in items) {
                 const item = items[index];
                 if (item.kind === 'file') {
                     const blob = item.getAsFile();
                     const reader = new FileReader();
-                    reader.onload = function(event){
+                    reader.onload = function (event) {
                         const pastedImg = $('<img>').attr('src', event.target.result).attr('id', 'tempImg');
                         $('body').append(pastedImg);
                         pastedImg.on('load', () => {
                             let w = pastedImg.width() > 800 ? 800 : pastedImg.width();
                             let h = pastedImg.height();
-                            if( pastedImg.width() > 800 ) {
+                            if (pastedImg.width() > 800) {
                                 h = h / (pastedImg.width() / 800)
                             }
                             $('#tempImg').remove();
@@ -233,15 +234,15 @@ const model = {
                             const resizedImg = $('<img>').attr('src', mainCanvas.toDataURL("image/png")).addClass('img-responsive img-thumbnail').attr('id', 'pastedImg');
 
                             $('#imageEditor').html('').append(resizedImg);
-                            $('#editImageModal').one('shown.bs.modal', function(){
+                            $('#editImageModal').one('shown.bs.modal', function () {
                                 /* a little failsafe to prevent overwriting images - if the current name has a number, increment it */
                                 const name = $('#editedImageName').val()
-                                if( name ) {
+                                if (name) {
                                     let nameNums = name.match(/\d+/)
-                                    if( nameNums.length ) {
+                                    if (nameNums.length) {
                                         let num = parseInt(nameNums[0]);
-                                        if( !isNaN(num) ) {
-                                            $('#editedImageName').val(name.replace(num, num+1))
+                                        if (!isNaN(num)) {
+                                            $('#editedImageName').val(name.replace(num, num + 1))
                                         }
                                     }
                                 }
@@ -251,9 +252,9 @@ const model = {
                     reader.readAsDataURL(blob);
                 }
             }
-        } );
+        });
     },
-    uploadPastedImage: function(){
+    uploadPastedImage: function () {
         $('#saveEditedImgBtn').attr('disabled', 'disabled').html('<i class="fas fa-refresh fa-spin"></i> Uploading...');
         $.ajax({
             url: '/blog/uploadBase64Image',
@@ -263,55 +264,54 @@ const model = {
                 title: $('#title').val(),
                 key: $('#editedImageName').val(),
             },
-            success: function(result) {
+            success: function (result) {
                 //console.log(result);
                 model.editor.focus();
-                model.editor.composer.commands.exec("insertHTML",`<img src="${result.url}" class="img-thumbnail img-responsive"/>`);
+                model.editor.composer.commands.exec("insertHTML", `<img src="${result.url}" class="img-thumbnail img-responsive"/>`);
                 $('#editImageModal').modal('hide')
             },
-            error: function(e) {
+            error: function (e) {
                 console.error(e);
                 alert('Upload failed.  See console.')
             },
-            complete: function() {
+            complete: function () {
                 $('#saveEditedImgBtn').removeAttr('disabled').html('Upload');
             }
         })
     },
-    addTag: function() {
+    addTag: function () {
         $('#newTagModal').modal({show: true})
         $('#newTag').val('')
     },
-    saveNewTag: function() {
+    saveNewTag: function () {
         var tagEl = $('#newTag')
-        if( !tagEl.val().length ) {
+        if (!tagEl.val().length) {
             tagEl.closest('.form-group').addClass('has-error')
-        }
-        else {
+        } else {
             tagEl.closest('.form-group').removeClass('has-error')
 
             $.ajax({
-                url:   '/blog/ajaxSaveTag?tag=' + tagEl.val(),
-                success: function(result){
+                url: '/blog/ajaxSaveTag?tag=' + tagEl.val(),
+                success: function (result) {
                     $('#newTagModal').modal('hide')
                     currentTags = $('#postTags').val() || []
-                    currentTags.push( result.tag.id.toString() )
+                    currentTags.push(result.tag.id.toString())
                     model.listTags()
                 },
-                error: function(){
+                error: function () {
                     alert('An error occurred trying to save this tag.  Please try again.')
                 }
             })
         }
     },
-    keepSessionAlive: function() {
-        setInterval(function(){
+    keepSessionAlive: function () {
+        setInterval(function () {
             // keep the session alive so that it doesn't expire in the middle of a blog post
             $.ajax({url: '/'})
         }, 30000)
     },
-    initDatePickers: function() {
-        $('.datepicker').datetimepicker({ format: dateFormat})
+    initDatePickers: function () {
+        $('.datepicker').datetimepicker({format: dateFormat})
     },
     aceExtMapping: {
         'js': 'ace/mode/javascript',
@@ -321,16 +321,16 @@ const model = {
         'gson': 'ace/mode/groovy',
         'java': 'ace/mode/java',
     },
-    setAceMode: function() {
+    setAceMode: function () {
         var nameArr = $(this).val().split('.');
-        var ext = nameArr[nameArr.length-1];
+        var ext = nameArr[nameArr.length - 1];
         var aceMode = model.aceExtMapping[ext];
-        if( aceMode ) {
-            model.aceEditor.session.setMode( aceMode )
+        if (aceMode) {
+            model.aceEditor.session.setMode(aceMode)
         }
     },
-    showS3UploadModal: function(){
-        $('#s3UploadModal').on('shown.bs.modal', function(){
+    showS3UploadModal: function () {
+        $('#s3UploadModal').on('shown.bs.modal', function () {
             $('.upload-row').not(':last').remove()
             $('.upload-folder, .upload-key, .upload-file').val('')
             model.s3Uploads = [
@@ -340,21 +340,21 @@ const model = {
         $('#s3UploadModal').modal('show')
     },
     canRemoveUpload: false,
-    removeS3Upload: function(event, context) {
+    removeS3Upload: function (event, context) {
         const upload = context.upload;
         const idx = model.s3Uploads.indexOf(upload);
-        if( idx != -1 ) {
-            model.s3Uploads.splice( idx, 1 );
+        if (idx != -1) {
+            model.s3Uploads.splice(idx, 1);
         }
         model.canRemoveUpload = model.s3Uploads.length != 1;
         return false;
     },
-    s3Upload: function() {
+    s3Upload: function () {
         const formData = new FormData();
-        model.s3Uploads.forEach( (upload, index)=> {
-           formData.append(`folder_${index}`, upload.folder);
-           formData.append(`key_${index}`, upload.key);
-           formData.append(`upload_${index}`, $(`#uploadFile_${index}`).get(0).files[0]);
+        model.s3Uploads.forEach((upload, index) => {
+            formData.append(`folder_${index}`, upload.folder);
+            formData.append(`key_${index}`, upload.key);
+            formData.append(`upload_${index}`, $(`#uploadFile_${index}`).get(0).files[0]);
         });
         $('#uploadFileBtn').attr('disabled', 'disabled').html('<i class="fas fa-refresh fa-spin"></i> Uploading...')
         $.ajax({
@@ -363,84 +363,84 @@ const model = {
             data: formData,
             processData: false,
             contentType: false,
-            success: function(result) {
+            success: function (result) {
                 $('#uploadFileBtn').removeAttr('disabled').html('Upload')
-                result.urls.forEach( url => {
+                result.urls.forEach(url => {
                     model.editor.focus();
-                    model.editor.composer.commands.exec("insertHTML",`<img src="${url}" class="img-thumbnail img-responsive"/>`);
+                    model.editor.composer.commands.exec("insertHTML", `<img src="${url}" class="img-thumbnail img-responsive"/>`);
                 })
                 $('#s3UploadModal').modal('hide')
             },
-            error: function(e) {
+            error: function (e) {
                 console.error(e);
                 $('#uploadFileBtn').removeAttr('disabled').html('Upload')
                 alert('Error uploading file.  See console.');
             }
         })
     },
-    addUpload: function() {
-        model.s3Uploads.push( new Upload() );
+    addUpload: function () {
+        model.s3Uploads.push(new Upload());
         model.canRemoveUpload = model.s3Uploads.length != 1;
         return false;
     },
-    objectifyForm: function(formArray) {
+    objectifyForm: function (formArray) {
         var returnArray = {};
-        for (var i = 0; i < formArray.length; i++){
+        for (var i = 0; i < formArray.length; i++) {
             returnArray[formArray[i]['name']] = formArray[i]['value'];
         }
         return returnArray;
     },
-    exitFullScreen: function(e) {
-        if( e.which === 27 ) {
+    exitFullScreen: function (e) {
+        if (e.which === 27) {
             $(this).removeClass('fullscreen')
         }
         //return false;
     },
-    listTags: function(){
+    listTags: function () {
         $.ajax(
             {
                 url: '/blog/ajaxListTags',
-                success: function(result){
+                success: function (result) {
                     var sel = $('#postTags')
                     sel.html('')
 
-                    $(result).each(function(i,e){
+                    $(result).each(function (i, e) {
                         var opt = $('<option value="' + e.id + '">' + e.name + '</option>')
-                        if( $.inArray(e.id.toString(), currentTags) != -1 ) {
+                        if ($.inArray(e.id.toString(), currentTags) != -1) {
                             opt.attr('selected', 'selected')
                         }
                         sel.append(opt)
                     })
                 },
-                error: function(){
+                error: function () {
                     alert('An error occurred trying to list tags.  Please try again.')
                 }
             }
         )
     },
-    doDragOver: function(e) {
+    doDragOver: function (e) {
         console.log('dragging-->', e);
         e.preventDefault();
         e.stopPropagation();
     },
-    doDragEnd: function(e) {
+    doDragEnd: function (e) {
         console.log('drag end-->', e);
         e.preventDefault();
         e.stopPropagation();
     },
-    doDragEnter: function(e) {
+    doDragEnter: function (e) {
         console.log(e)
         $(e.currentTarget).addClass('dropzone');
         e.preventDefault();
         e.stopPropagation();
     },
-    doDragLeave: function(e) {
+    doDragLeave: function (e) {
         console.log(e)
         $(e.currentTarget).removeClass('dropzone');
         e.preventDefault();
         e.stopPropagation();
     },
-    doDrop: function(e) {
+    doDrop: function (e) {
         $(e.currentTarget).removeClass('dropzone');
         console.log('drop');
         console.log(e.originalEvent.dataTransfer.files);
@@ -450,7 +450,7 @@ const model = {
     }
 };
 
-$(document).ready(function(){
+$(document).ready(function () {
     model.initDatePickers();
     model.listTags();
     model.initEditor();

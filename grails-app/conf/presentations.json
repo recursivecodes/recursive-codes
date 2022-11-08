@@ -1,5 +1,18 @@
 [
   {
+    "title": "Add Live Interactive Video to Your Application with Amazon Interactive Video Service",
+    "alias": "intro-to-ivs",
+    "conferences": [
+      {
+        "name": "Connect Tech 2022",
+        "date": "Nov, 2022",
+        "link": "https://connect.tech",
+        "recording": ""
+      }
+    ],
+    "abstract": "In this session, we'll look at how you can use Amazon Interactive Video Service (IVS) to add live, interactive video streaming to your application with the IVS JavaScript SDK. In the first 5 months of 2022, users consumed over 543 billion minutes of live video created by almost 9 million creators on Twitch. There's no question that streaming is popular, but why is it so in-demand? Part of the draw for users is that streaming is unscripted, dynamic, and unpredictable. It's not the same old formulaic \"cookie-cutter\" content available via traditional mediums. Another attraction is the high level of interactivity with the content producer. What other medium provides live chat and interaction to viewers while they consume the content? Streaming gives the consumer a level of active participation in their entertainment instead of just passively consuming it. It's also highly accessible - anyone can set up a stream at little to no cost from the comfort of their own home or office - or anywhere as long as they have a modern mobile device and internet connectivity. But it's not just for video games - any application that needs to reach an audience can take advantage of the power of streaming to reach millions of users!"
+  },
+  {
     "title": "Launching Your Own Free Minecraft Server in the Cloud",
     "alias": "launching-your-own-free-minecraft-server-in-the-cloud",
     "conferences": [
