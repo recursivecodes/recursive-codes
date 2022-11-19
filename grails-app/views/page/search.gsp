@@ -26,9 +26,7 @@
                 <div class="col-lg-12">
                     <div class="input-group">
                         <input type="text" class="form-control" id="searchString" name="searchString" maxlength="50" value="${searchString}" placeholder="Search Blog For..." />
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" id="go" alt="Search" title="Search"><i class="fa fa-search"></i></button>
-                        </span>
+                        <button class="btn btn-primary" id="go" alt="Search" title="Search"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
             </div>

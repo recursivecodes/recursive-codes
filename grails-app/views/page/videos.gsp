@@ -17,7 +17,11 @@
 
     <div class="pad-bottom-20">
         <script src="https://apis.google.com/js/platform.js"></script>
-        <div class="g-ytsubscribe" data-channelid="UCTItj4gSM-1_fiTHzJRJqxQ" data-layout="full" data-count="default"></div>
+        <div class="d-flex">
+            <div class="border border-dark rounded p-3">
+                <div class="g-ytsubscribe" data-channelid="UCTItj4gSM-1_fiTHzJRJqxQ" data-layout="full" data-count="default"></div>
+            </div>
+        </div>
     </div>
 
     <g:if test="${!entries?.entry?.size()}">
@@ -28,7 +32,7 @@
         <g:each in="${entries.entry}" var="entry" status="i">
             <g:if test="${i < 12}">
                 <div class="col-xs-12 col-lg-6 mb-5 video-container">
-                    <div class="embed-responsive embed-responsive-16by9">
+                    <div class="ratio ratio-16x9">
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/${entry.'yt:videoId'}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     </div>
                 </div>

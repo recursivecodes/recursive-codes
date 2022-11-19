@@ -52,7 +52,7 @@
     <ui:messageContainer>
         <div class="text-center">
             <g:submitButton id="btnSubmit" name="btnSubmit" class="btn btn-primary" value="Save"/>
-            <g:link action="list" class="btn btn-default">Cancel</g:link>
+            <g:link action="list" class="btn btn-light">Cancel</g:link>
         </div>
     </ui:messageContainer>
 

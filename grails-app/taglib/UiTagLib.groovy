@@ -111,7 +111,7 @@ class UiTagLib {
         }
         linkTagAttrs.params = linkParams
 
-        writer << '<ul class="pagination">'
+        writer << '<div class="d-flex justify-content-center"><ul class="pagination">'
 
         // determine paging variables
         def steps = maxsteps > 0
@@ -121,16 +121,16 @@ class UiTagLib {
 
         // display previous link when not on firststep unless omitPrev is true
         if (currentstep > firststep && !attrs.boolean('omitPrev')) {
-            linkTagAttrs.class = 'prevLink'
+            linkTagAttrs.class = 'page-link'
             linkParams.offset = offset - max
-            writer << '<li>' + link(linkTagAttrs.clone()) {
-                (attrs.prev ?: messageSource.getMessage('paginate.prev', null, messageSource.getMessage('default.paginate.prev', null, 'Previous', locale), locale))
+            writer << '<li class="page-item">' + link(linkTagAttrs.clone()) {
+                (attrs.prev ?: messageSource.getMessage('paginate.prev', null, messageSource.getMessage('default.paginate.prev', null, 'Prev', locale), locale))
             } + '</li>'
         }
 
         // display steps when steps are enabled and laststep is not firststep
         if (steps && laststep > firststep) {
-            linkTagAttrs.class = 'step'
+            linkTagAttrs.class = 'page-link'
 
             // determine begin and endstep paging variables
             int beginstep = currentstep - Math.round(maxsteps / 2) + (maxsteps % 2)
@@ -151,7 +151,7 @@ class UiTagLib {
             // display firststep link when beginstep is not firststep
             if (beginstep > firststep && !attrs.boolean('omitFirst')) {
                 linkParams.offset = 0
-                writer << '<li>' + link(linkTagAttrs.clone()) { firststep.toString() } + '</li>'
+                writer << '<li class="page-item">' + link(linkTagAttrs.clone()) { firststep.toString() } + '</li>'
             }
 
             //show a gap if beginstep isn't immediately after firststep, and if were not omitting first or rev
@@ -164,10 +164,10 @@ class UiTagLib {
             // display paginate steps
             (beginstep..endstep).each { i ->
                 if (currentstep == i) {
-                    writer << "<li class=\"active\"><a href=\"#\">${g.formatNumber(number: i, type: 'number')}</a></li>"
+                    writer << "<li class=\"d-none d-md-block page-item active\"><a class=\"page-link\" href=\"#\">${g.formatNumber(number: i, type: 'number')}</a></li>"
                 } else {
                     linkParams.offset = (i - 1) * max
-                    writer << '<li>' + link(linkTagAttrs.clone()) {
+                    writer << '<li class="d-none d-md-block page-item">' + link(linkTagAttrs.clone()) {
                         g.formatNumber(number: i, type: 'number')
                     } + '</li>'
                 }
@@ -182,7 +182,7 @@ class UiTagLib {
             // display laststep link when endstep is not laststep
             if (endstep < laststep && !attrs.boolean('omitLast')) {
                 linkParams.offset = (laststep - 1) * max
-                writer << '<li>' + link(linkTagAttrs.clone()) {
+                writer << '<li class="d-none d-md-block page-item">' + link(linkTagAttrs.clone()) {
                     g.formatNumber(number: laststep, type: 'number')
                 } + '</li>'
             }
@@ -190,14 +190,14 @@ class UiTagLib {
 
         // display next link when not on laststep unless omitNext is true
         if (currentstep < laststep && !attrs.boolean('omitNext')) {
-            linkTagAttrs.class = 'nextLink'
+            linkTagAttrs.class = 'page-link'
             linkParams.offset = offset + max
-            writer << '<li>' + link(linkTagAttrs.clone()) {
+            writer << '<li class="page-item">' + link(linkTagAttrs.clone()) {
                 (attrs.next ? attrs.next : messageSource.getMessage('paginate.next', null, messageSource.getMessage('default.paginate.next', null, 'Next', locale), locale))
             } + '</li>'
         }
 
-        writer << '</ul>'
+        writer << '</ul></div>'
     }
 
     def errorContainer = { attrs, body ->
@@ -271,37 +271,22 @@ class UiTagLib {
         attrs.header = attrs.header ?: [:]
         attrs.containerId = attrs.containerId ?: 'lower-nav'
         attrs.depth = 0
-        attrs.navClass = attrs.navClass ?: 'navbar-default navbar-custom navbar-fixed-top navbar-admin'
+        attrs.navClass = attrs.navClass ?: 'navbar-dark bg-dark navbar-expand-lg'
 
         out << """
         <nav class="navbar ${attrs.navClass}">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#lower-nav">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-        """
-        if (attrs.header?.title) {
-            if (attrs.header?.controller && attrs.header?.action) {
-                out << g.link(class: 'navbar-brand', controller: attrs.header.controller, action: attrs.header.action) {
-                    attrs.header.title.encodeAsHTML()
-                }
-            } else if (attrs.header?.mapping) {
-                out << g.link(class: 'navbar-brand', mapping: attrs.header.mapping) {
-                    attrs.header.title.encodeAsHTML()
-                }
-            } else {
-                out << attrs.header.title
-            }
-        }
-        out << """
-                </div>
-
-                <div id="${attrs.containerId}" class="navbar-collapse collapse">
-                    ${ui.portalMenuDynamicContent(attrs)}
+                <a href="/admin/index" class="d-none d-md-flex align-items-center navbar-brand outlined-text-lg">
+                    <span class="fs-3 fw-bold">${attrs.header.title.encodeAsHTML()}</span>
+                </a>
+                <button class="ms-auto bg-transparent text-light border-light navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#basic-navbar-nav"
+                        aria-controls="basic-navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="navbar-collapse collapse" id="basic-navbar-nav">
+                    <div class="ms-auto navbar-nav">
+                        ${ui.portalMenuDynamicContent(attrs)}
+                    </div>
                 </div>
             </div>
         </nav>
@@ -312,12 +297,12 @@ class UiTagLib {
         attrs.menu = attrs.menu ?: []
         attrs.depth = attrs.depth ?: 0
 
-        def ulClass = attrs.ulClass ?: 'nav navbar-nav'
-        def liClass = attrs.liClass ?: 'dropdown'
-        def subMenuClass = attrs.subMenuClass ?: 'dropdown-toggle dropdown-title'
+        def ulClass = attrs.ulClass ?: 'navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll'
+        def liClass = attrs.liClass ?: ''
+        def subMenuClass = attrs.subMenuClass ?: 'nav-link dropdown-toggle'
         if (attrs.depth >= 1) {
             ulClass = 'dropdown-menu'
-            liClass = ''
+            liClass = 'nav-item'
             subMenuClass = 'dropdown-submenu'
         }
 
@@ -326,14 +311,14 @@ class UiTagLib {
             if (item?.mapping || item?.controller || item?.submenu) {
                 out << "<li class='${item?.submenu ? subMenuClass : liClass} ${item.active ? 'active' : ''}'>"
                 if (item?.mapping) {
-                    out << g.link(mapping: item.mapping, class: "nav-links") { item.text.encodeAsHTML() }
+                    out << g.link(mapping: item.mapping, class: "nav-link") { item.text.encodeAsHTML() }
                 } else if (item?.controller) {
                     if (item?.action) {
-                        out << g.link(controller: item.controller, action: item.action, params: item.params ?: [:], class: "nav-links") {
+                        out << g.link(controller: item.controller, action: item.action, params: item.params ?: [:], class: "nav-link") {
                             item.text.encodeAsHTML()
                         }
                     } else {
-                        out << g.link(controller: item.controller, class: 'nav-links') { item.text.encodeAsHTML() }
+                        out << g.link(controller: item.controller, class: 'nav-link') { item.text.encodeAsHTML() }
                     }
                 } else if (item?.submenu) {
                     out << """

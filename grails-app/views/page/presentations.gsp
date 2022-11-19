@@ -18,9 +18,12 @@
         <g:each in="${presentations}" var="presentation" status="p">
             <div class="col-xs-12">
 
-                <div class="panel panel-default" id="${presentation.alias}">
-                    <div class="panel-heading">${presentation.title}</div>
-                    <div class="panel-body">
+                <div class="card mb-3" id="${presentation.alias}">
+                    <div class="card-header">
+                        <h5 class="card-title"><a href="#${presentation.alias}" class="me-2"><i class="fas fa-link"></i></a>${presentation.title}</h5>
+
+                    </div>
+                    <div class="card-body">
                         <div class="row ">
                             <div data-presentation-alias="${presentation.alias}" id="presentation_${p}" class="hide pdf-embed"></div>
                             <%--
@@ -58,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer">
+                    <div class="card-footer">
                         <a href="#" class="btn btn-primary show-presentation-btn" data-presentation-id="${p}" data-presentation-modal-id="presentation_${p}" >View Slides</a>
                     </div>
                 </div>
