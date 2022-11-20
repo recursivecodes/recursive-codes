@@ -2745,14 +2745,16 @@ a {
 }
 @media only screen and (max-device-width : 640px) {
   .navbar-custom {
-    --bs-bg-opacity: 1;
+    --bs-bg-opacity: .75;
     background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    padding: 12px !important;
   }
 }
 
 @media only screen and (max-device-width: 768px) {
   .navbar-custom {
-    --bs-bg-opacity: 1;
+    --bs-bg-opacity: .75;
     background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    padding: 12px !important;;
   }
 }
