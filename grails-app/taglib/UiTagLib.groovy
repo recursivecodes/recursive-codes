@@ -19,19 +19,17 @@ class UiTagLib {
      * @title the text to display in the panel header
      */
     def panel = { attrs, body ->
-        def pClass = attrs.panelClass ?: 'panel-primary'
+        def pClass = attrs.panelClass ?: 'bg-primary text-white'
+        def cClass = attrs.cardClass ?: '';
+        def bClass = attrs.bodyClass ?: '';
         def showRefreshBtn = attrs.showRefreshBtn.toString() == 'true'
         def pId = attrs.panelId ?: UUID.randomUUID().toString().replaceAll('-', '')
         out << """
-            <div class="panel ${pClass}" id="${pId}">
-				<div class="panel-heading">
-					<div class="pull-left">
-					    <h3 class="panel-title">${attrs.title}</h3>
-					</div>
-					<div class="clearfix"></div>
+            <div class="card ${cClass}" id="${pId}">
+				<div class="card-header  ${pClass}">
+					<h5 class="card-title">${attrs.title}</h5>
 				</div>
-
-				<div class="panel-body">
+				<div class="card-body ${bClass}">
 					${body()}
 				</div>
 			</div>
@@ -251,10 +249,10 @@ class UiTagLib {
               <div class="modal-dialog ${lg}">
                 <div class="modal-content">
                   <div class="modal-header">
-                    ${
-            canClose ? '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' : ''
-        }
                     <h4 class="modal-title">${attrs.title}</h4>
+                    ${
+            canClose ? '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' : ''
+        }
                   </div>
                   <div class="modal-body">
                     ${body()}

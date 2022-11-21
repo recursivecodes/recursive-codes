@@ -29,7 +29,7 @@
 .italic{font-style: italic;}
 
 .container-admin{
-    margin-top: 80px;
+    margin-top: 50px;
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -83,4 +83,7 @@ a {
 }
 .svg-inline--fa.fa-stack-2x {
     width: 1em !important;
+}
+.height-0 {
+    height: 0;
 }

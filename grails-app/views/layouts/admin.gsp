@@ -9,6 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <asset:stylesheet src="application.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -19,7 +22,7 @@
 
 <body>
 
-    <nav class="navbar p-0 navbar-default navbar-custom navbar-dark bg-dark navbar-expand-lg">
+    <nav class="navbar ps-3 pe-3 pt-0 pb-0 navbar-default navbar-custom navbar-dark bg-dark navbar-expand-lg">
         <div class="container-fluid">
             <a href="/admin/index" class="d-none d-md-flex align-items-center navbar-brand outlined-text-lg p-0">
                 <span class="fs-3 fw-bold">Admin</span>
@@ -61,7 +64,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="/index/logout" tabindex="-1" aria-disabled="true">Logout</a>
+                        <a class="nav-link" href="/logout/index">Logout</a>
                     </li>
                 </ul>
             </div>

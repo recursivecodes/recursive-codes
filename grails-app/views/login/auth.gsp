@@ -5,7 +5,7 @@
 
 <body>
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
+        <div class="col-sm-4 offset-4">
             <g:if test='${flash.message}'>
                 <ui:errorContainer>
                     <div class="login_message">${flash.message}</div>

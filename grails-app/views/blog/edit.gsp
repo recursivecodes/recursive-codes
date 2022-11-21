@@ -37,7 +37,7 @@
         background: #eee !important;
     }
     .wysihtml-sandbox{
-        height: 550px !important;
+        height: calc(100vh - 200px) !important;
         width: 100% !important;
     }
     .fullscreen .wysihtml-sandbox {
@@ -53,7 +53,7 @@
     .nicehide {
         resize: none !important;
         overflow: hidden !important;
-        display: block !important;
+        display: none !important;
         width: 0 !important;
         max-width: 0 !important;
         height: 0 !important;
@@ -89,8 +89,8 @@
 
     <g:form useToken="true" name="postForm" action="${actionName}" method="POST" class="" params="${defaultParams}">
         <div class="d-flex">
-            <div class="mr-5" style="width: 400px; min-height: calc(100vh - 160px); margin-bottom: 60px;">
-                <ui:panel title="Meta">
+            <div class="mr-3 overflow-scroll" style="width: 400px; min-height: calc(100vh - 160px); margin-bottom: 60px;">
+                <ui:panel title="Meta" cardClass="h-100" bodyClass="overflow-scroll height-0">
                     <g:hiddenField name="id" value="${defaultParams.id}"/>
                     <g:hiddenField name="version" id="version" value="${command.version}"/>
                     <g:hiddenField name="authoredBy.id" value="${command.authoredBy?.id ?: currentUser.id}"/>

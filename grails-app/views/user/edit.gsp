@@ -33,20 +33,20 @@
     <g:form useToken="true" action="${actionName}" method="POST" class="form-horizontal" params="${defaultParams}">
         <g:hiddenField name="version" value="${command.version}"/>
 
-        <bootform:horizontalField field="firstName" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-4" label="First Name" bean="${command}" description="">
-            <g:textField type="text" id="firstName" name="firstName" class="form-control" required="true" maxlength="100" value="${command.firstName}"/>
+        <bootform:horizontalField field="firstName" required="true" labelColumnClass="col-sm-2 form-label" controlColumnClass="col-sm-4" label="First Name" bean="${command}" description="">
+            <g:textField cssClass="mb-3" type="text" id="firstName" name="firstName" class="form-control" required="true" maxlength="100" value="${command.firstName}"/>
         </bootform:horizontalField>
 
-        <bootform:horizontalField field="lastName" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-4" label="Last Name" bean="${command}" description="">
-            <g:textField type="text" id="lastName" name="lastName" class="form-control" required="true" maxlength="100" value="${command.lastName}"/>
+        <bootform:horizontalField field="lastName" required="true" labelColumnClass="col-sm-2 form-label" controlColumnClass="col-sm-4" label="Last Name" bean="${command}" description="">
+            <g:textField cssClass="mb-3" type="text" id="lastName" name="lastName" class="form-control" required="true" maxlength="100" value="${command.lastName}"/>
         </bootform:horizontalField>
 
-        <bootform:horizontalField field="username" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-4" label="Username" bean="${command}" description="">
-            <g:textField type="text" id="username" name="username" class="form-control" required="true" maxlength="100" value="${command.username}"/>
+        <bootform:horizontalField field="username" required="true" labelColumnClass="col-sm-2 form-label" controlColumnClass="col-sm-4" label="Username" bean="${command}" description="">
+            <g:textField cssClass="mb-3" type="text" id="username" name="username" class="form-control" required="true" maxlength="100" value="${command.username}"/>
         </bootform:horizontalField>
 
-        <bootform:horizontalField field="password" required="true" labelColumnClass="col-sm-2" controlColumnClass="col-sm-4" label="Password" bean="${command}" description="">
-            <g:passwordField id="password" name="password" class="form-control" required="true" maxlength="100" value=""/>
+        <bootform:horizontalField field="password" required="true" labelColumnClass="col-sm-2 form-label" controlColumnClass="col-sm-4" label="Password" bean="${command}" description="">
+            <g:passwordField cssClass="mb-3" id="password" name="password" class="form-control" required="true" maxlength="100" value=""/>
         </bootform:horizontalField>
 
         <ui:messageContainer>

@@ -38,7 +38,7 @@
     </bootform:horizontalField>
 
     <bootform:horizontalField field="isActive" required="false" labelColumnClass="col-sm-2" controlColumnClass="col-sm-4" label="Active?" bean="${subscriber}" description="">
-        <g:checkBox id="isActive" name="isActive" class="checkbox" checked="${subscriber.isActive}" value="true" />
+        <g:checkBox id="isActive" name="isActive" class="form-check-input" checked="${subscriber.isActive}" value="true" />
     </bootform:horizontalField>
 
     <bootform:horizontalField field="verificationToken" required="false" labelColumnClass="col-sm-2" controlColumnClass="col-sm-4" label="Verification Token" bean="${subscriber}" description="">
@@ -46,7 +46,7 @@
     </bootform:horizontalField>
 
     <bootform:horizontalField field="isVerified" required="false" labelColumnClass="col-sm-2" controlColumnClass="col-sm-4" label="Verified?" bean="${subscriber}" description="">
-        <g:checkBox id="isVerified" name="isVerified" class="checkbox" checked="${subscriber.isVerified}" value="true" />
+        <g:checkBox id="isVerified" name="isVerified" class="form-check-input" checked="${subscriber.isVerified}" value="true" />
     </bootform:horizontalField>
 
     <ui:messageContainer>

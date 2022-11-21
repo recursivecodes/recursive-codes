@@ -188,7 +188,7 @@ const model = {
         var f = document.querySelector('.wysihtml-sandbox');
         var iframeDoc = f.contentDocument || f.contentWindow.document;
 
-        $('iframe').load(function () {
+        $('iframe').on('load', function () {
             var styles = 'br{content: ".";display: inline-block;width: 100%;border-bottom: 2px dashed red;}p{border:1px dotted}code{padding:2px 4px;font-size:90%;color:#c7254e;background-color:#f9f2f4;border-radius:4px}.alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}.alert-success{color:#3c763d;background-color:#dff0d8;border-color:#d6e9c6}.alert-warning{color:#8a6d3b;background-color:#fcf8e3;border-color:#faebcc}.alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}.alert-info{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}';
             $(iframeDoc).contents().find("head")
                 .append($("<style type='text/css'>" + styles + "</style>"));

@@ -64,21 +64,21 @@ class BootstrapFormTagLib extends ValidationTagLib {
     }
 
     def checkboxContainer = { attrs, body ->
-        attrs.type = 'checkbox'
+        attrs.type = 'form-check-input'
         out << checkboxRadioContainer( attrs, body() )
     }
 
 
     def radioContainer = { attrs, body ->
-        attrs.type = 'radio'
+        attrs.type = 'form-check-input'
         out << checkboxRadioContainer( attrs, body() )
     }
 
     def checkboxRadioContainer = { attrs, body ->
         def bean = attrs.bean
-        def crClass = attrs.type ?: 'checkbox'
+        def crClass = attrs.type ?: 'form-check-input'
         def horizontal = attrs.horizontal.toString() == 'true' ? true : false
-        labelOffsetClass = attrs.labelOffsetClass ?: 'col-sm-offset-4'
+        labelOffsetClass = attrs.labelOffsetClass ?: 'offset-sm-4'
         controlColumnClass = attrs.controlColumnClass ?: 'col-sm-8'
         def disabled = attrs.disabled.toString() == 'true' ? 'disabled' : ''
 
@@ -171,7 +171,7 @@ class BootstrapFormTagLib extends ValidationTagLib {
                 dataAttribs += ' ' + k + '="' + v + '"'
             }
         }
-        out << "\n<div ${dataAttribs} class=\"fieldcontainer ${className} ${attrs.class} ${hasErrors(bean: bean, field: field, 'has-error')} ${required ? 'required' : '' }\">\n\t"
+        out << "\n<div ${dataAttribs} class=\"row mb-3 ${className} ${attrs.class} ${hasErrors(bean: bean, field: field, 'has-error')} ${required ? 'required' : '' }\">\n\t"
         out << body()
         out << '\n</div>'
     }
