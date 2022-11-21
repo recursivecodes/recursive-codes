@@ -22,7 +22,7 @@
         <g:each in="${posts}" var="post" status="i">
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <g:link controller="blog" action="post" id="${post.id}">
-                    <img src="${post.bannerImg}" alt="${post.title}" class="img-related-thumb img-thumbnail w-100" />
+                    <img src="https://res.cloudinary.com/dqcwgg5le/image/fetch/c_fit,h_250/${post.bannerImg}" alt="${post.title}" class="img-related-thumb img-thumbnail w-100" />
                     <h3>${post.title}</h3>
                 </g:link>
                 <p>
