@@ -29,7 +29,7 @@
     <!-- Navigation -->
     <nav class="navbar p-0 navbar-default navbar-custom navbar-fixed-top navbar-expand-lg">
         <div class="container-fluid">
-            <a href="/#" class="d-none d-md-flex align-items-center navbar-brand outlined-text-lg">
+            <a href="/#" class="d-flex align-items-center navbar-brand outlined-text-lg">
                 <span class="fs-3 fw-bold">recursive.codes</span>
             </a>
             <button class="ms-auto bg-transparent text-light border-light navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#basic-navbar-nav"
