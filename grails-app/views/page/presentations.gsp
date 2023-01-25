@@ -77,6 +77,8 @@
     //const ADOBE_KEY = '4e6dfc2d75484f3ab8cc8403d69af0a6'; // localhost
 
     $('.show-presentation-btn').on('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         let pId = $(e.currentTarget).data('presentationId');
         let presentationContainer = 'presentation_' + pId;
         let alias = $('#' + presentationContainer).data('presentationAlias');
@@ -109,8 +111,6 @@
             },
             options
         );
-        e.preventDefault();
-        e.stopPropagation();
         return false;
     });
 
