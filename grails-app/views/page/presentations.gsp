@@ -109,6 +109,8 @@
             },
             options
         );
+        e.preventDefault();
+        e.stopPropagation();
         return false;
     });
 
