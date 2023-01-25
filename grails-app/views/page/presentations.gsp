@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="main"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
-    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script src="https://documentservices.adobe.com/view-sdk/viewer.js"></script>
 </head>
 <body>
     <div class="row">
@@ -81,8 +81,8 @@
         let presentationContainer = 'presentation_' + pId;
         let alias = $('#' + presentationContainer).data('presentationAlias');
         //$('#presentation_modal_' + pId).modal('show');
-        let adobeDCView = new AdobeDC.View({clientId: ADOBE_KEY, divId: presentationContainer});
-            adobeDCView.previewFile({
+        var adobeDCView = new AdobeDC.View({clientId: ADOBE_KEY, divId: presentationContainer});
+        adobeDCView.previewFile({
             content: {
                 location: {
                     url: 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/idatzojkinhi/b/presentations.recursive.codes/o/' + alias + '.pdf'
@@ -95,9 +95,7 @@
         {
             embedMode: "LIGHT_BOX" // IN_LINE
         });
-        const options = {
-            enablePDFAnalytics: true
-        }
+
         adobeDCView.registerCallback(
             AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
             function(event) {
