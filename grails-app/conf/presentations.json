@@ -1,5 +1,18 @@
 [
   {
+    "title": "I Can Do THAT in a Browser? Improving User Experience with Lesser Known Native JS APIs",
+    "alias": "i-can-do-that",
+    "conferences": [
+      {
+        "name": "DevNexus 2023",
+        "date": "Apr, 2023",
+        "link": "https://devnexus.com/presentations/i-can-do-that-in-a-browser-improving-user-experience-with-lesser-known-native-js-apis",
+        "recording": ""
+      }
+    ],
+    "abstract": "Did you know that you can access your user's geolocation coordinates via JavaScript? What about accessing a device's battery status, orientation, accelerometer, and gyroscope? Or connecting to a Bluetooth device. How about pulling data from an external device via a Serial or WebUSB? Are you aware of the Fullscreen or the GamePad API? Have an e-commerce app or an app that processes microtransactions? Does it use the PaymentRequest API? There are tons of really cool APIs that you might not be aware of. Or maybe you are aware of them, but you're just not sure how to use them to improve your application? In this session, I'll introduce you to some of the lesser known APIs that are available in most modern web browsers. I'll also show you some demos that I've created with these APIs to show you how they can actually be used to make engaging experiences that keep your users happy and keep them coming back to your site."
+  },
+  {
     "title": "Add Live Interactive Video to Your Application with Amazon Interactive Video Service",
     "alias": "intro-to-ivs",
     "conferences": [
