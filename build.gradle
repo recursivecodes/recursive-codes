@@ -75,7 +75,9 @@ dependencies {
     compile group: 'org.eclipse.mylyn.github', name: 'org.eclipse.egit.github.core', version: '2.1.5'
 
     compile 'commons-io:commons-io:2.6' //last released version
-    compile group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
+
+    compile 'com.oracle.database.jdbc:ojdbc8:23.2.0.0'
+    //compile group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.12.2'
     compile 'com.github.slugify:slugify:2.4'
 }
